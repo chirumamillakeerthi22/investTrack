@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react';
 
 import { useAuth } from '../context/AuthContext';
 import { supabase } from '../services/supabase';
+import CompanySearch from '../components/CompanySearch';
+
 
 function Dashboard() {
   const { user, signOut } = useAuth();
@@ -214,6 +216,12 @@ function Dashboard() {
           <p>Loading profile...</p>
         )}
       </section>
+
+
+      {/* ------------------------------------------------ */}
+      {/* Company Search                                   */}
+      {/* ------------------------------------------------ */}
+      <CompanySearch />
 
       {/* ------------------------------------------------ */}
       {/* Stocks                                           */}
