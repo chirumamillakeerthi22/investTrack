@@ -59,3 +59,31 @@ export async function getStockQuote(symbol) {
 
   return data.quote;
 }
+
+export async function getStockHistory(symbol) {
+  const normalizedSymbol = symbol.trim().toUpperCase();
+
+  if (!normalizedSymbol) {
+    throw new Error('Stock symbol is required.');
+  }
+
+  const { data, error } = await supabase.functions.invoke(
+    'stock-history',
+    {
+      body: {
+        symbol: normalizedSymbol,
+      },
+    }
+  );
+
+  if (error) {
+    console.error('Stock history failed:', error);
+    throw new Error('Unable to load historical stock data.');
+  }
+
+  if (data?.error) {
+    throw new Error(data.error);
+  }
+
+  return data?.history ?? [];
+}

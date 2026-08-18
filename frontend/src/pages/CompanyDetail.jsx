@@ -1,50 +1,165 @@
-import { useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import {
+  useEffect,
+  useMemo,
+  useState,
+} from 'react';
 
-import { getStockQuote } from '../services/marketData';
+import {
+  Link,
+  useParams,
+} from 'react-router-dom';
+
+import {
+  Line,
+  LineChart,
+  ResponsiveContainer,
+  Tooltip,
+  XAxis,
+  YAxis,
+} from 'recharts';
+
+import {
+  getStockHistory,
+  getStockQuote,
+} from '../services/marketData';
 
 function CompanyDetail() {
   const { symbol } = useParams();
 
   const [quote, setQuote] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState('');
+  const [history, setHistory] = useState([]);
 
-  useEffect(() => {
-    async function loadQuote() {
-      if (!symbol) {
-        setError('Stock symbol is missing.');
-        setLoading(false);
-        return;
-      }
+  const [quoteLoading, setQuoteLoading] =
+    useState(true);
 
-      setLoading(true);
-      setError('');
-      setQuote(null);
+  const [historyLoading, setHistoryLoading] =
+    useState(true);
 
-      try {
-        const data = await getStockQuote(
-          decodeURIComponent(symbol)
-        );
+  const [quoteError, setQuoteError] =
+    useState('');
 
-        setQuote(data);
-      } catch (err) {
-        console.error('Stock quote failed:', err);
-
-        setError(
-          err.message || 'Unable to load stock quote.'
-        );
-      } finally {
-        setLoading(false);
-      }
-    }
-
-    loadQuote();
-  }, [symbol]);
+  const [historyError, setHistoryError] =
+    useState('');
 
   const displaySymbol = symbol
     ? decodeURIComponent(symbol).toUpperCase()
     : '';
+
+  useEffect(() => {
+    async function loadQuote() {
+      if (!displaySymbol) {
+        setQuoteError('Stock symbol is missing.');
+        setQuoteLoading(false);
+        return;
+      }
+
+      setQuoteLoading(true);
+      setQuoteError('');
+
+      try {
+        const data =
+          await getStockQuote(displaySymbol);
+
+        setQuote(data);
+      } catch (err) {
+        console.error(
+          'Stock quote failed:',
+          err
+        );
+
+        setQuoteError(
+          err.message ||
+            'Unable to load stock quote.'
+        );
+      } finally {
+        setQuoteLoading(false);
+      }
+    }
+
+    loadQuote();
+  }, [displaySymbol]);
+
+  useEffect(() => {
+    async function loadHistory() {
+      if (!displaySymbol) {
+        setHistoryError('Stock symbol is missing.');
+        setHistoryLoading(false);
+        return;
+      }
+
+      setHistoryLoading(true);
+      setHistoryError('');
+
+      try {
+        const data =
+          await getStockHistory(displaySymbol);
+
+        setHistory(data);
+      } catch (err) {
+        console.error(
+          'Stock history failed:',
+          err
+        );
+
+        setHistoryError(
+          err.message ||
+            'Unable to load historical stock data.'
+        );
+      } finally {
+        setHistoryLoading(false);
+      }
+    }
+
+    loadHistory();
+  }, [displaySymbol]);
+
+  const chartData = useMemo(() => {
+    return history.map((item) => ({
+      date: item.date,
+      close: item.close,
+    }));
+  }, [history]);
+
+  function formatDate(value) {
+    if (!value) {
+      return '';
+    }
+
+    const date = new Date(value);
+
+    if (Number.isNaN(date.getTime())) {
+      return value;
+    }
+
+    return date.toLocaleDateString(
+      'en-US',
+      {
+        month: 'short',
+        year: 'numeric',
+      }
+    );
+  }
+
+  function formatTooltipDate(value) {
+    if (!value) {
+      return '';
+    }
+
+    const date = new Date(value);
+
+    if (Number.isNaN(date.getTime())) {
+      return value;
+    }
+
+    return date.toLocaleDateString(
+      'en-US',
+      {
+        month: 'short',
+        day: 'numeric',
+        year: 'numeric',
+      }
+    );
+  }
 
   return (
     <main>
@@ -56,66 +171,168 @@ function CompanyDetail() {
 
       <h1>{displaySymbol}</h1>
 
-      {loading && <p>Loading market data...</p>}
+      {/* Current Quote */}
 
-      {error && <p>Error: {error}</p>}
+      <section>
+        <h2>Current Market Data</h2>
 
-      {!loading && !error && quote && (
-        <section>
-          <h2>{displaySymbol}</h2>
+        {quoteLoading && (
+          <p>Loading current price...</p>
+        )}
 
+        {quoteError && (
+          <p>Error: {quoteError}</p>
+        )}
+
+        {!quoteLoading &&
+          !quoteError &&
+          quote && (
+            <>
+              <p>
+                Current Price: $
+                {quote.currentPrice?.toFixed(2)}
+              </p>
+
+              <p>
+                Change:{' '}
+                {quote.change >= 0
+                  ? '+'
+                  : ''}
+                {quote.change?.toFixed(2)}
+              </p>
+
+              <p>
+                Change %:{' '}
+                {quote.percentChange >= 0
+                  ? '+'
+                  : ''}
+                {quote.percentChange?.toFixed(2)}
+                %
+              </p>
+
+              <hr />
+
+              <p>
+                Open: $
+                {quote.open?.toFixed(2)}
+              </p>
+
+              <p>
+                Previous Close: $
+                {quote.previousClose?.toFixed(2)}
+              </p>
+
+              <p>
+                Day High: $
+                {quote.high?.toFixed(2)}
+              </p>
+
+              <p>
+                Day Low: $
+                {quote.low?.toFixed(2)}
+              </p>
+            </>
+          )}
+      </section>
+
+      {/* Historical Chart */}
+
+      <section>
+        <h2>5-Year Historical Price</h2>
+
+        {historyLoading && (
           <p>
-            Current Price: $
-            {quote.currentPrice?.toFixed(2)}
+            Loading historical price chart...
           </p>
+        )}
 
-          <p>
-            Change:{' '}
-            {quote.change >= 0 ? '+' : ''}
-            {quote.change?.toFixed(2)}
-          </p>
+        {historyError && (
+          <p>Error: {historyError}</p>
+        )}
 
-          <p>
-            Change %:{' '}
-            {quote.percentChange >= 0 ? '+' : ''}
-            {quote.percentChange?.toFixed(2)}%
-          </p>
+        {!historyLoading &&
+          !historyError &&
+          chartData.length > 0 && (
+            <div
+              style={{
+                width: '100%',
+                height: 400,
+              }}
+            >
+              <ResponsiveContainer
+                width="100%"
+                height="100%"
+              >
+                <LineChart
+                  data={chartData}
+                  margin={{
+                    top: 20,
+                    right: 30,
+                    left: 10,
+                    bottom: 20,
+                  }}
+                >
+                  <XAxis
+                    dataKey="date"
+                    tickFormatter={formatDate}
+                    minTickGap={50}
+                  />
 
-          <hr />
+                  <YAxis
+                    domain={['auto', 'auto']}
+                    tickFormatter={(value) =>
+                      `$${Number(value).toFixed(0)}`
+                    }
+                  />
 
-          <p>
-            Open: $
-            {quote.open?.toFixed(2)}
-          </p>
+                  <Tooltip
+                    labelFormatter={
+                      formatTooltipDate
+                    }
+                    formatter={(value) => [
+                      `$${Number(value).toFixed(2)}`,
+                      'Close',
+                    ]}
+                  />
 
-          <p>
-            Previous Close: $
-            {quote.previousClose?.toFixed(2)}
-          </p>
+                  <Line
+                    type="monotone"
+                    dataKey="close"
+                    dot={false}
+                    strokeWidth={2}
+                    isAnimationActive={false}
+                  />
+                </LineChart>
+              </ResponsiveContainer>
+            </div>
+          )}
 
-          <p>
-            Day High: $
-            {quote.high?.toFixed(2)}
-          </p>
+        {!historyLoading &&
+          !historyError &&
+          chartData.length === 0 && (
+            <p>
+              No historical data available.
+            </p>
+          )}
+      </section>
 
-          <p>
-            Day Low: $
-            {quote.low?.toFixed(2)}
-          </p>
+      {/* Actions */}
 
-          <button type="button">
-            Add to Watchlist
-          </button>
+      <section>
+        <h2>Actions</h2>
 
-          <button type="button">
-            Add to Wishlist
-          </button>
+        <button type="button">
+          Add to Watchlist
+        </button>
 
-          <button type="button">
-            Add to Portfolio
-          </button>
-        </section>
-      )}
+        <button type="button">
+          Add to Wishlist
+        </button>
+
+        <button type="button">
+          Add to Portfolio
+        </button>
+      </section>
     </main>
   );
 }
