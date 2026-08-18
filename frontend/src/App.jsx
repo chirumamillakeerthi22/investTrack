@@ -4,6 +4,7 @@ import ProtectedRoute from './components/ProtectedRoute';
 import Dashboard from './pages/Dashboard';
 import Login from './pages/Login';
 import Register from './pages/Register';
+import CompanyDetail from './pages/CompanyDetail';
 
 
 function PublicOnlyRoute({ children }) {
@@ -42,6 +43,16 @@ function App() {
         element={
           <ProtectedRoute>
             <Dashboard />
+          </ProtectedRoute>
+        }
+      />
+
+
+      <Route
+        path="/company/:symbol"
+        element={
+          <ProtectedRoute>
+            <CompanyDetail />
           </ProtectedRoute>
         }
       />

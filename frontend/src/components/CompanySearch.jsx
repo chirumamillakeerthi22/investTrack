@@ -1,8 +1,11 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import { searchCompanies } from '../services/marketData';
 
 function CompanySearch() {
+  const navigate = useNavigate();
+
   const [query, setQuery] = useState('');
   const [results, setResults] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -42,6 +45,16 @@ function CompanySearch() {
     }
   }
 
+  function handleCompanyClick(company) {
+    const symbol = company.symbol || company.displaySymbol;
+
+    if (!symbol) {
+      return;
+    }
+
+    navigate(`/company/${encodeURIComponent(symbol)}`);
+  }
+
   return (
     <section>
       <h2>Search Companies</h2>
@@ -71,15 +84,20 @@ function CompanySearch() {
               <li
                 key={`${company.symbol}-${company.displaySymbol}`}
               >
-                <strong>
-                  {company.displaySymbol || company.symbol}
-                </strong>
+                <button
+                  type="button"
+                  onClick={() => handleCompanyClick(company)}
+                >
+                  <strong>
+                    {company.displaySymbol || company.symbol}
+                  </strong>
 
-                {' — '}
+                  {' — '}
 
-                {company.description}
+                  {company.description}
 
-                {company.type && ` (${company.type})`}
+                  {company.type && ` (${company.type})`}
+                </button>
               </li>
             ))}
           </ul>

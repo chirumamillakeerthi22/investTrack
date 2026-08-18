@@ -27,3 +27,35 @@ export async function searchCompanies(query) {
 
   return data?.results ?? [];
 }
+
+export async function getStockQuote(symbol) {
+  const normalizedSymbol = symbol.trim().toUpperCase();
+
+  if (!normalizedSymbol) {
+    throw new Error('Stock symbol is required.');
+  }
+
+  const { data, error } = await supabase.functions.invoke(
+    'stock-quote',
+    {
+      body: {
+        symbol: normalizedSymbol,
+      },
+    }
+  );
+
+  if (error) {
+    console.error('Stock quote failed:', error);
+    throw new Error('Unable to load stock quote.');
+  }
+
+  if (data?.error) {
+    throw new Error(data.error);
+  }
+
+  if (!data?.quote) {
+    throw new Error('No stock quote was returned.');
+  }
+
+  return data.quote;
+}
