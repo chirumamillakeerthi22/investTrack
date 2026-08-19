@@ -45,15 +45,35 @@ function CompanySearch() {
     }
   }
 
-  function handleCompanyClick(company) {
-    const symbol = company.symbol || company.displaySymbol;
+    function handleCompanyClick(company) {
+        const symbol =
+            company.displaySymbol ||
+            company.symbol;
 
-    if (!symbol) {
-      return;
+        if (!symbol) {
+            return;
+        }
+
+        navigate(
+            `/company/${encodeURIComponent(symbol)}`,
+            {
+                state: {
+                    company: {
+                        symbol,
+                        companyName:
+                            company.description ||
+                            symbol,
+                        exchange:
+                            company.exchange ||
+                            '',
+                        type:
+                            company.type ||
+                            '',
+                    },
+                },
+            }
+        );
     }
-
-    navigate(`/company/${encodeURIComponent(symbol)}`);
-  }
 
   return (
     <section>

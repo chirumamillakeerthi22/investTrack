@@ -1,24 +1,27 @@
 import { Navigate, Route, Routes } from 'react-router-dom';
 
+import AppShell from './components/AppShell';
 import ProtectedRoute from './components/ProtectedRoute';
+import CompanyDetail from './pages/CompanyDetail';
 import Dashboard from './pages/Dashboard';
 import Login from './pages/Login';
 import Register from './pages/Register';
-import CompanyDetail from './pages/CompanyDetail';
-
+import Feedback from './pages/Feedback';
+import Holdings from './pages/Holdings';
+import Portfolio from './pages/Portfolio';
+import Settings from './pages/Settings';
+import TopCompanies from './pages/TopCompanies';
+import Watchlist from './pages/Watchlist';
+import Wishlist from './pages/Wishlist';
 
 function PublicOnlyRoute({ children }) {
   return children;
 }
 
-
 function App() {
   return (
     <Routes>
-      <Route
-        path="/"
-        element={<Navigate to="/dashboard" replace />}
-      />
+      {/* Public routes */}
 
       <Route
         path="/login"
@@ -38,28 +41,81 @@ function App() {
         }
       />
 
+      {/* Protected application */}
+
       <Route
-        path="/dashboard"
         element={
           <ProtectedRoute>
-            <Dashboard />
+            <AppShell />
           </ProtectedRoute>
         }
-      />
+      >
+        <Route
+          path="/dashboard"
+          element={<Dashboard />}
+        />
 
+        <Route
+          path="/portfolio"
+          element={<Portfolio />}
+        />
+
+        <Route
+          path="/holdings"
+          element={<Holdings />}
+        />
+
+        <Route
+          path="/wishlist"
+          element={<Wishlist />}
+        />
+
+        <Route
+          path="/watchlist"
+          element={<Watchlist />}
+        />
+
+        <Route
+          path="/top-companies"
+          element={<TopCompanies />}
+        />
+
+        <Route
+          path="/feedback"
+          element={<Feedback />}
+        />
+
+        <Route
+          path="/settings"
+          element={<Settings />}
+        />
+
+        <Route
+          path="/company/:symbol"
+          element={<CompanyDetail />}
+        />
+      </Route>
+
+      {/* Default route */}
 
       <Route
-        path="/company/:symbol"
+        path="/"
         element={
-          <ProtectedRoute>
-            <CompanyDetail />
-          </ProtectedRoute>
+          <Navigate
+            to="/dashboard"
+            replace
+          />
         }
       />
 
       <Route
         path="*"
-        element={<Navigate to="/dashboard" replace />}
+        element={
+          <Navigate
+            to="/dashboard"
+            replace
+          />
+        }
       />
     </Routes>
   );

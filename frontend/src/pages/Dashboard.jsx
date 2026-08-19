@@ -2,12 +2,12 @@ import { useEffect, useState } from 'react';
 
 import { useAuth } from '../context/AuthContext';
 import { supabase } from '../services/supabase';
-import CompanySearch from '../components/CompanySearch';
+import { getStockQuote } from '../services/marketData';
+
 
 
 function Dashboard() {
   const { user, signOut } = useAuth();
-
   const [profile, setProfile] = useState(null);
   const [stocks, setStocks] = useState([]);
   const [holdings, setHoldings] = useState([]);
@@ -15,6 +15,10 @@ function Dashboard() {
   const [wishlist, setWishlist] = useState([]);
   const [feedback, setFeedback] = useState([]);
   const [error, setError] = useState('');
+  const [marketQuotes, setMarketQuotes] =
+    useState([]);
+  const [marketLoading, setMarketLoading] =
+    useState(false);
 
   useEffect(() => {
     async function loadDashboardData() {
@@ -24,24 +28,6 @@ function Dashboard() {
 
       setError('');
 
-      // --------------------------------------------------
-      // Load current user's profile
-      // --------------------------------------------------
-
-      const { data: profileData, error: profileError } =
-        await supabase
-          .from('users')
-          .select('id, email, created_at')
-          .eq('id', user.id)
-          .single();
-
-      if (profileError) {
-        console.error('Profile query failed:', profileError);
-        setError(profileError.message);
-        return;
-      }
-
-      setProfile(profileData);
 
       // --------------------------------------------------
       // Load stocks
@@ -183,6 +169,93 @@ function Dashboard() {
     loadDashboardData();
   }, [user]);
 
+
+
+
+    useEffect(() => {
+        async function loadMarketOverview() {
+            if (!user) {
+                return;
+            }
+
+            setMarketLoading(true);
+
+            try {
+                const { data: stockData, error: stockError } =
+                    await supabase
+                        .from('stocks')
+                        .select(
+                            'id, symbol, company_name, exchange'
+                        )
+                        .order('symbol')
+                        .limit(5);
+
+                if (stockError) {
+                    console.error(
+                        'Market overview stocks query failed:',
+                        stockError
+                    );
+
+                    setError(stockError.message);
+                    return;
+                }
+
+                const stocksForOverview =
+                    stockData ?? [];
+
+                if (stocksForOverview.length === 0) {
+                    setMarketQuotes([]);
+                    return;
+                }
+
+                const quoteResults =
+                    await Promise.all(
+                        stocksForOverview.map(
+                            async (stock) => {
+                                try {
+                                    const quote =
+                                        await getStockQuote(
+                                            stock.symbol
+                                        );
+
+                                    return {
+                                        ...stock,
+                                        quote,
+                                    };
+                                } catch (quoteError) {
+                                    console.error(
+                                        `Quote failed for ${stock.symbol}:`,
+                                        quoteError
+                                    );
+
+                                    return {
+                                        ...stock,
+                                        quote: null,
+                                    };
+                                }
+                            }
+                        )
+                    );
+
+                setMarketQuotes(quoteResults);
+            } catch (loadError) {
+                console.error(
+                    'Market overview failed:',
+                    loadError
+                );
+
+                setError(
+                    loadError.message ||
+                    'Unable to load market overview.'
+                );
+            } finally {
+                setMarketLoading(false);
+            }
+        }
+
+        loadMarketOverview();
+    }, [user]);
+
   // --------------------------------------------------
   // Logout
   // --------------------------------------------------
@@ -196,32 +269,232 @@ function Dashboard() {
   }
 
   return (
-    <main>
-      <h1>investTrack Dashboard</h1>
+      <main className="dashboard">
+          <div className="dashboard-header">
+              <h1>Dashboard</h1>
 
-      {/* ------------------------------------------------ */}
-      {/* Profile                                          */}
-      {/* ------------------------------------------------ */}
+              <p>
+                  Welcome back. Here's an overview of your
+                  investment workspace.
+              </p>
+          </div>
 
-      <section>
-        <h2>Profile</h2>
+          <div className="dashboard-summary-grid">
+              <article className="dashboard-summary-card">
+                  <div className="dashboard-summary-label">
+                      My Holdings
+                  </div>
 
-        {profile ? (
-          <>
-            <p>Profile loaded successfully.</p>
-            <p>User ID: {profile.id}</p>
-            <p>Email: {profile.email}</p>
-          </>
-        ) : (
-          <p>Loading profile...</p>
-        )}
-      </section>
+                  <div className="dashboard-summary-value">
+                      {holdings.length}
+                  </div>
+
+                  <div className="dashboard-summary-description">
+                      Companies currently in your portfolio
+                  </div>
+              </article>
+
+              <article className="dashboard-summary-card">
+                  <div className="dashboard-summary-label">
+                      Watchlist
+                  </div>
+
+                  <div className="dashboard-summary-value">
+                      {watchlist.length}
+                  </div>
+
+                  <div className="dashboard-summary-description">
+                      Companies you're monitoring
+                  </div>
+              </article>
+
+              <article className="dashboard-summary-card">
+                  <div className="dashboard-summary-label">
+                      Wishlist
+                  </div>
+
+                  <div className="dashboard-summary-value">
+                      {wishlist.length}
+                  </div>
+
+                  <div className="dashboard-summary-description">
+                      Companies you're considering
+                  </div>
+              </article>
+          </div>
 
 
-      {/* ------------------------------------------------ */}
-      {/* Company Search                                   */}
-      {/* ------------------------------------------------ */}
-      <CompanySearch />
+          <div className="dashboard-preview-grid">
+
+              {/* Recent Holdings */}
+
+              <section className="dashboard-preview-card">
+                  <div className="dashboard-preview-header">
+                      <h2>Recent Holdings</h2>
+
+                      <button
+                          type="button"
+                          className="dashboard-preview-link"
+                          onClick={() => {
+                              window.location.href = '/holdings';
+                          }}
+                      >
+                          View all →
+                      </button>
+                  </div>
+
+                  {holdings.length === 0 ? (
+                      <div className="dashboard-preview-empty">
+                          No holdings yet.
+                      </div>
+                  ) : (
+                      <ul className="dashboard-preview-list">
+                          {holdings
+                              .slice(0, 5)
+                              .map((holding) => (
+                                  <li
+                                      key={holding.id}
+                                      className="dashboard-preview-item"
+                                  >
+                                      <div className="dashboard-preview-company">
+                                          <span className="dashboard-preview-symbol">
+                                              {holding.stocks?.symbol ||
+                                                  'Unknown'}
+                                          </span>
+
+                                          <span className="dashboard-preview-name">
+                                              {holding.stocks?.company_name ||
+                                                  'Unknown company'}
+                                          </span>
+                                      </div>
+
+                                      <span className="dashboard-preview-detail">
+                                          {holding.quantity} shares
+                                      </span>
+                                  </li>
+                              ))}
+                      </ul>
+                  )}
+              </section>
+
+              {/* Watchlist */}
+
+              <section className="dashboard-preview-card">
+                  <div className="dashboard-preview-header">
+                      <h2>My Watchlist</h2>
+
+                      <button
+                          type="button"
+                          className="dashboard-preview-link"
+                          onClick={() => {
+                              window.location.href = '/watchlist';
+                          }}
+                      >
+                          View all →
+                      </button>
+                  </div>
+
+                  {watchlist.length === 0 ? (
+                      <div className="dashboard-preview-empty">
+                          Your watchlist is empty.
+                      </div>
+                  ) : (
+                      <ul className="dashboard-preview-list">
+                          {watchlist
+                              .slice(0, 5)
+                              .map((item) => (
+                                  <li
+                                      key={item.id}
+                                      className="dashboard-preview-item"
+                                  >
+                                      <div className="dashboard-preview-company">
+                                          <span className="dashboard-preview-symbol">
+                                              {item.stocks?.symbol ||
+                                                  'Unknown'}
+                                          </span>
+
+                                          <span className="dashboard-preview-name">
+                                              {item.stocks?.company_name ||
+                                                  'Unknown company'}
+                                          </span>
+                                      </div>
+                                  </li>
+                              ))}
+                      </ul>
+                  )}
+              </section>
+
+          </div>
+
+
+
+          <section className="dashboard-market-card">
+              <div className="dashboard-preview-header">
+                  <h2>Market Overview</h2>
+              </div>
+
+              {marketLoading ? (
+                  <div className="dashboard-market-status">
+                      Loading market data...
+                  </div>
+              ) : marketQuotes.length === 0 ? (
+                  <div className="dashboard-market-status">
+                      No market data available.
+                  </div>
+              ) : (
+                  <div className="dashboard-market-list">
+                      {marketQuotes.map((stock) => {
+                          const quote = stock.quote;
+
+                          return (
+                              <div
+                                  key={stock.id}
+                                  className="dashboard-market-row"
+                              >
+                                  <div className="dashboard-market-company">
+                                      <strong>
+                                          {stock.symbol}
+                                      </strong>
+
+                                      <span>
+                                          {stock.company_name}
+                                      </span>
+                                  </div>
+
+                                  <div className="dashboard-market-exchange">
+                                      {stock.exchange || '—'}
+                                  </div>
+
+                                  <div className="dashboard-market-price">
+                                      {quote
+                                          ? `$${quote.currentPrice.toFixed(2)}`
+                                          : '—'}
+                                  </div>
+
+                                  <div
+                                      className={`dashboard-market-change ${quote &&
+                                              quote.percentChange >= 0
+                                              ? 'positive'
+                                              : 'negative'
+                                          }`}
+                                  >
+                                      {quote
+                                          ? `${quote.percentChange >= 0
+                                              ? '+'
+                                              : ''
+                                          }${quote.percentChange.toFixed(
+                                              2
+                                          )}%`
+                                          : '—'}
+                                  </div>
+                              </div>
+                          );
+                      })}
+                  </div>
+              )}
+          </section>
+
+
 
       {/* ------------------------------------------------ */}
       {/* Stocks                                           */}
