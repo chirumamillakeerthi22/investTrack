@@ -26,11 +26,12 @@ import {
 
 import { useAuth } from '../context/AuthContext';
 import { supabase } from '../services/supabase';
-
+import { ensureStock } from '../services/stocks';
 
 function CompanyDetail() {
   const { symbol } = useParams();
   const location = useLocation();
+  const company = location.state?.company;
   const { user } = useAuth();
 
   const [quote, setQuote] = useState(null);
@@ -289,56 +290,20 @@ function CompanyDetail() {
   // --------------------------------------------------
 
     async function getStockRecord() {
-        if (!displaySymbol) {
-            throw new Error(
-                'Stock symbol is missing.'
-            );
-        }
+  if (!displaySymbol) {
+    throw new Error('Stock symbol is missing.');
+  }
 
-        const companyName =
-            selectedCompany?.companyName ||
-            displaySymbol;
-
-        const exchange =
-            selectedCompany?.exchange || '';
-
-        const { data, error } =
-            await supabase.functions.invoke(
-                'ensure-stock',
-                {
-                    body: {
-                        symbol: displaySymbol,
-                        companyName,
-                        exchange,
-                    },
-                }
-            );
-
-        if (error) {
-            console.error(
-                'Ensure stock function failed:',
-                error
-            );
-
-            throw new Error(
-                'Unable to prepare this company.'
-            );
-        }
-
-        if (data?.error) {
-            throw new Error(data.error);
-        }
-
-        if (!data?.stock) {
-            throw new Error(
-                'Unable to prepare this company.'
-            );
-        }
-
-        return data.stock;
-    }
-
-
+  return ensureStock({
+    symbol: displaySymbol,
+    description:
+      location.state?.company?.companyName ||
+      displaySymbol,
+    exchange:
+      location.state?.company?.exchange ||
+      '',
+  });
+}
   // --------------------------------------------------
   // Add / Remove Watchlist
   // --------------------------------------------------
@@ -543,7 +508,17 @@ function CompanyDetail() {
     );
   }
 
-
+async function getOrCreateStock() {
+  return ensureStock({
+    symbol: displaySymbol,
+    description:
+      company?.description ||
+      displaySymbol,
+    exchange:
+      company?.exchange ||
+      '',
+  });
+}
   // --------------------------------------------------
   // Page
   // --------------------------------------------------
