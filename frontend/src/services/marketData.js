@@ -65,7 +65,10 @@ export async function getStockQuote(symbol) {
   return data.quote;
 }
 
-export async function getStockHistory(symbol) {
+export async function getStockHistory(
+  symbol,
+  range = '1Y'
+) {
   const normalized =
     symbol.trim().toUpperCase();
 
@@ -77,7 +80,10 @@ export async function getStockHistory(symbol) {
 
   const data = await invoke(
     'stock-history',
-    { symbol: normalized }
+    {
+      symbol: normalized,
+      range,
+    }
   );
 
   return data?.history ?? [];

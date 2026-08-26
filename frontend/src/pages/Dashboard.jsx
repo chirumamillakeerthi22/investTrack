@@ -1,59 +1,35 @@
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import { useAuth } from '../context/AuthContext';
 import { supabase } from '../services/supabase';
 import { getStockQuote } from '../services/marketData';
 
 
-
 function Dashboard() {
-  const { user, signOut } = useAuth();
-  const [profile, setProfile] = useState(null);
-  const [stocks, setStocks] = useState([]);
+  const { user } = useAuth();
+  const navigate = useNavigate();
+
   const [holdings, setHoldings] = useState([]);
-  const [watchlist, setWatchlist] = useState([]);
-  const [wishlist, setWishlist] = useState([]);
-  const [feedback, setFeedback] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
-  const [marketQuotes, setMarketQuotes] =
-    useState([]);
-  const [marketLoading, setMarketLoading] =
-    useState(false);
 
   useEffect(() => {
-    async function loadDashboardData() {
+    async function loadPortfolio() {
       if (!user) {
+        setHoldings([]);
+        setLoading(false);
         return;
       }
 
+      setLoading(true);
       setError('');
 
-
-      // --------------------------------------------------
-      // Load stocks
-      // --------------------------------------------------
-
-      const { data: stockData, error: stockError } =
-        await supabase
-          .from('stocks')
-          .select('id, symbol, company_name, exchange')
-          .order('symbol')
-          .limit(10);
-
-      if (stockError) {
-        console.error('Stock query failed:', stockError);
-        setError(stockError.message);
-        return;
-      }
-
-      setStocks(stockData ?? []);
-
-      // --------------------------------------------------
-      // Load portfolio holdings
-      // --------------------------------------------------
-
-      const { data: holdingData, error: holdingError } =
-        await supabase
+      try {
+        const {
+          data,
+          error: holdingsError,
+        } = await supabase
           .from('portfolio_holdings')
           .select(`
             id,
@@ -64,565 +40,571 @@ function Dashboard() {
             updated_at,
             stocks (
               symbol,
-              company_name
+              company_name,
+              exchange
             )
           `)
-          .order('created_at', { ascending: false });
+          .order('created_at', {
+            ascending: false,
+          });
 
-      if (holdingError) {
-        console.error(
-          'Portfolio query failed:',
-          holdingError
-        );
-        setError(holdingError.message);
-        return;
-      }
+        if (holdingsError) {
+          throw holdingsError;
+        }
 
-      setHoldings(holdingData ?? []);
+        const portfolioHoldings = data ?? [];
 
-      // --------------------------------------------------
-      // Load watchlist
-      // --------------------------------------------------
+        const holdingsWithQuotes =
+          await Promise.all(
+            portfolioHoldings.map(
+              async (holding) => {
+                const symbol =
+                  holding.stocks?.symbol;
 
-      const { data: watchlistData, error: watchlistError } =
-        await supabase
-          .from('watchlist')
-          .select(`
-            id,
-            stock_id,
-            created_at,
-            stocks (
-              symbol,
-              company_name
+                if (!symbol) {
+                  return {
+                    ...holding,
+                    quote: null,
+                    quoteError: true,
+                  };
+                }
+
+                try {
+                  const quote =
+                    await getStockQuote(symbol);
+
+                  return {
+                    ...holding,
+                    quote,
+                    quoteError: false,
+                  };
+                } catch (quoteError) {
+                  console.error(
+                    `Quote failed for ${symbol}:`,
+                    quoteError
+                  );
+
+                  return {
+                    ...holding,
+                    quote: null,
+                    quoteError: true,
+                  };
+                }
+              }
             )
-          `)
-          .order('created_at', { ascending: false });
+          );
 
-      if (watchlistError) {
+        setHoldings(holdingsWithQuotes);
+      } catch (loadError) {
         console.error(
-          'Watchlist query failed:',
-          watchlistError
+          'Portfolio loading failed:',
+          loadError
         );
-        setError(watchlistError.message);
-        return;
-      }
 
-      setWatchlist(watchlistData ?? []);
-
-      // --------------------------------------------------
-      // Load wishlist
-      // --------------------------------------------------
-
-      const { data: wishlistData, error: wishlistError } =
-        await supabase
-          .from('wishlist')
-          .select(`
-            id,
-            stock_id,
-            created_at,
-            stocks (
-              symbol,
-              company_name
-            )
-          `)
-          .order('created_at', { ascending: false });
-
-      if (wishlistError) {
-        console.error(
-          'Wishlist query failed:',
-          wishlistError
+        setError(
+          loadError.message ||
+            'Unable to load your portfolio.'
         );
-        setError(wishlistError.message);
-        return;
+
+        setHoldings([]);
+      } finally {
+        setLoading(false);
       }
-
-      setWishlist(wishlistData ?? []);
-
-      // --------------------------------------------------
-      // Load feedback
-      // --------------------------------------------------
-
-      const { data: feedbackData, error: feedbackError } =
-        await supabase
-          .from('feedback')
-          .select(`
-            id,
-            category,
-            rating,
-            message,
-            created_at
-          `)
-          .order('created_at', { ascending: false });
-
-      if (feedbackError) {
-        console.error(
-          'Feedback query failed:',
-          feedbackError
-        );
-        setError(feedbackError.message);
-        return;
-      }
-
-      setFeedback(feedbackData ?? []);
     }
 
-    loadDashboardData();
+    loadPortfolio();
   }, [user]);
 
 
 
+  /*
+   * Portfolio calculations
+   *
+   * Only holdings with a valid current market
+   * price are included in current value,
+   * gain/loss and return calculations.
+   *
+   * This prevents a failed market-data request
+   * from being displayed as a false loss.
+   */
+  const portfolio = holdings.reduce(
+    (totals, holding) => {
+      const quantity =
+        Number(holding.quantity) || 0;
 
-    useEffect(() => {
-        async function loadMarketOverview() {
-            if (!user) {
-                return;
-            }
+      const averagePrice =
+        Number(holding.average_price) || 0;
 
-            setMarketLoading(true);
+      const invested =
+        quantity * averagePrice;
 
-            try {
-                const { data: stockData, error: stockError } =
-                    await supabase
-                        .from('stocks')
-                        .select(
-                            'id, symbol, company_name, exchange'
-                        )
-                        .order('symbol')
-                        .limit(5);
+      totals.invested += invested;
 
-                if (stockError) {
-                    console.error(
-                        'Market overview stocks query failed:',
-                        stockError
-                    );
+      if (
+        holding.quote &&
+        Number.isFinite(
+          Number(holding.quote.currentPrice)
+        )
+      ) {
+        const currentPrice =
+          Number(
+            holding.quote.currentPrice
+          );
 
-                    setError(stockError.message);
-                    return;
-                }
+        const currentValue =
+          quantity * currentPrice;
 
-                const stocksForOverview =
-                    stockData ?? [];
+        const gainLoss =
+          currentValue - invested;
 
-                if (stocksForOverview.length === 0) {
-                    setMarketQuotes([]);
-                    return;
-                }
+        totals.currentValue += currentValue;
+        totals.gainLoss += gainLoss;
 
-                const quoteResults =
-                    await Promise.all(
-                        stocksForOverview.map(
-                            async (stock) => {
-                                try {
-                                    const quote =
-                                        await getStockQuote(
-                                            stock.symbol
-                                        );
-
-                                    return {
-                                        ...stock,
-                                        quote,
-                                    };
-                                } catch (quoteError) {
-                                    console.error(
-                                        `Quote failed for ${stock.symbol}:`,
-                                        quoteError
-                                    );
-
-                                    return {
-                                        ...stock,
-                                        quote: null,
-                                    };
-                                }
-                            }
-                        )
-                    );
-
-                setMarketQuotes(quoteResults);
-            } catch (loadError) {
-                console.error(
-                    'Market overview failed:',
-                    loadError
-                );
-
-                setError(
-                    loadError.message ||
-                    'Unable to load market overview.'
-                );
-            } finally {
-                setMarketLoading(false);
-            }
+        if (gainLoss > 0) {
+          totals.profit += gainLoss;
         }
 
-        loadMarketOverview();
-    }, [user]);
+        if (gainLoss < 0) {
+          totals.loss += Math.abs(gainLoss);
+        }
 
-  // --------------------------------------------------
-  // Logout
-  // --------------------------------------------------
+        totals.quotedHoldings += 1;
+      } else {
+        totals.unquotedHoldings += 1;
+      }
 
-  async function handleLogout() {
-    try {
-      await signOut();
-    } catch (error) {
-      console.error('Logout failed:', error);
+      return totals;
+    },
+    {
+      invested: 0,
+      currentValue: 0,
+      gainLoss: 0,
+      profit: 0,
+      loss: 0,
+      quotedHoldings: 0,
+      unquotedHoldings: 0,
     }
+  );
+
+  const totalReturn =
+    portfolio.invested > 0
+      ? (portfolio.gainLoss /
+          portfolio.invested) *
+        100
+      : 0;
+
+  function formatCurrency(value) {
+    return Number(value || 0).toLocaleString(
+      'en-US',
+      {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
+      }
+    );
+  }
+
+  function formatQuantity(value) {
+    const number = Number(value);
+
+    if (!Number.isFinite(number)) {
+      return '0';
+    }
+
+    return number.toLocaleString('en-US', {
+      maximumFractionDigits: 4,
+    });
+  }
+
+  function getPerformanceClass(value) {
+    if (value > 0) {
+      return 'profit';
+    }
+
+    if (value < 0) {
+      return 'loss';
+    }
+
+    return 'neutral';
+  }
+
+  function getSignedCurrency(value) {
+    if (value > 0) {
+      return `+$${formatCurrency(value)}`;
+    }
+
+    if (value < 0) {
+      return `-$${formatCurrency(
+        Math.abs(value)
+      )}`;
+    }
+
+    return '$0.00';
+  }
+
+  function getSignedPercent(value) {
+    if (value > 0) {
+      return `+${value.toFixed(2)}%`;
+    }
+
+    if (value < 0) {
+      return `${value.toFixed(2)}%`;
+    }
+
+    return '0.00%';
+  }
+
+  function handleHoldingClick(symbol) {
+    if (!symbol) {
+      return;
+    }
+
+    navigate(
+      `/company/${encodeURIComponent(symbol)}`
+    );
   }
 
   return (
-      <main className="dashboard">
-          <div className="dashboard-header">
-              <h1>Dashboard</h1>
+    <main className="dashboard">
+      <div className="dashboard-header">
+        <div>
+          <h1>Portfolio Overview</h1>
 
-              <p>
-                  Welcome back. Here's an overview of your
-                  investment workspace.
-              </p>
-          </div>
+          <p>
+            Track your investments and portfolio
+            performance in one place.
+          </p>
+        </div>
+      </div>
 
-          <div className="dashboard-summary-grid">
-              <article className="dashboard-summary-card">
-                  <div className="dashboard-summary-label">
-                      My Holdings
-                  </div>
+      {error && (
+        <div
+          className="dashboard-error"
+          role="alert"
+        >
+          {error}
+        </div>
+      )}
 
-                  <div className="dashboard-summary-value">
-                      {holdings.length}
-                  </div>
+      {loading ? (
+        <div className="dashboard-loading">
+          Loading your portfolio...
+        </div>
+      ) : (
+        <>
+          {/* Portfolio Summary */}
 
-                  <div className="dashboard-summary-description">
-                      Companies currently in your portfolio
-                  </div>
-              </article>
+          <section
+            className="portfolio-summary-grid"
+            aria-label="Portfolio summary"
+          >
+            <article className="portfolio-summary-card">
+              <span>Total Invested</span>
 
-              <article className="dashboard-summary-card">
-                  <div className="dashboard-summary-label">
-                      Watchlist
-                  </div>
+              <strong>
+                ${formatCurrency(
+                  portfolio.invested
+                )}
+              </strong>
 
-                  <div className="dashboard-summary-value">
-                      {watchlist.length}
-                  </div>
+              <small>
+                Amount invested across holdings
+              </small>
+            </article>
 
-                  <div className="dashboard-summary-description">
-                      Companies you're monitoring
-                  </div>
-              </article>
+            <article className="portfolio-summary-card">
+              <span>Current Portfolio Value</span>
 
-              <article className="dashboard-summary-card">
-                  <div className="dashboard-summary-label">
-                      Wishlist
-                  </div>
+              <strong>
+                ${formatCurrency(
+                  portfolio.currentValue
+                )}
+              </strong>
 
-                  <div className="dashboard-summary-value">
-                      {wishlist.length}
-                  </div>
+              <small>
+                Based on available market prices
+              </small>
+            </article>
 
-                  <div className="dashboard-summary-description">
-                      Companies you're considering
-                  </div>
-              </article>
-          </div>
+            <article className="portfolio-summary-card">
+              <span>Total Gain</span>
 
+              <strong
+                className={getPerformanceClass(
+                  portfolio.gainLoss
+                )}
+              >
+                {getSignedCurrency(
+                  portfolio.gainLoss
+                )}
+              </strong>
 
-          <div className="dashboard-preview-grid">
+              <small
+                className={getPerformanceClass(
+                  portfolio.gainLoss
+                )}
+              >
+                {getSignedPercent(
+                  totalReturn
+                )}
+              </small>
+            </article>
 
-              {/* Recent Holdings */}
+            <article className="portfolio-summary-card">
+              <span>Total Profit</span>
 
-              <section className="dashboard-preview-card">
-                  <div className="dashboard-preview-header">
-                      <h2>Recent Holdings</h2>
+              <strong className="profit">
+                +$
+                {formatCurrency(
+                  portfolio.profit
+                )}
+              </strong>
 
-                      <button
-                          type="button"
-                          className="dashboard-preview-link"
-                          onClick={() => {
-                              window.location.href = '/holdings';
-                          }}
-                      >
-                          View all →
-                      </button>
-                  </div>
+              <small>
+                Profitable positions
+              </small>
+            </article>
 
-                  {holdings.length === 0 ? (
-                      <div className="dashboard-preview-empty">
-                          No holdings yet.
-                      </div>
-                  ) : (
-                      <ul className="dashboard-preview-list">
-                          {holdings
-                              .slice(0, 5)
-                              .map((holding) => (
-                                  <li
-                                      key={holding.id}
-                                      className="dashboard-preview-item"
-                                  >
-                                      <div className="dashboard-preview-company">
-                                          <span className="dashboard-preview-symbol">
-                                              {holding.stocks?.symbol ||
-                                                  'Unknown'}
-                                          </span>
+            <article className="portfolio-summary-card">
+              <span>Total Loss</span>
 
-                                          <span className="dashboard-preview-name">
-                                              {holding.stocks?.company_name ||
-                                                  'Unknown company'}
-                                          </span>
-                                      </div>
+              <strong className="loss">
+                -$
+                {formatCurrency(
+                  portfolio.loss
+                )}
+              </strong>
 
-                                      <span className="dashboard-preview-detail">
-                                          {holding.quantity} shares
-                                      </span>
-                                  </li>
-                              ))}
-                      </ul>
-                  )}
-              </section>
-
-              {/* Watchlist */}
-
-              <section className="dashboard-preview-card">
-                  <div className="dashboard-preview-header">
-                      <h2>My Watchlist</h2>
-
-                      <button
-                          type="button"
-                          className="dashboard-preview-link"
-                          onClick={() => {
-                              window.location.href = '/watchlist';
-                          }}
-                      >
-                          View all →
-                      </button>
-                  </div>
-
-                  {watchlist.length === 0 ? (
-                      <div className="dashboard-preview-empty">
-                          Your watchlist is empty.
-                      </div>
-                  ) : (
-                      <ul className="dashboard-preview-list">
-                          {watchlist
-                              .slice(0, 5)
-                              .map((item) => (
-                                  <li
-                                      key={item.id}
-                                      className="dashboard-preview-item"
-                                  >
-                                      <div className="dashboard-preview-company">
-                                          <span className="dashboard-preview-symbol">
-                                              {item.stocks?.symbol ||
-                                                  'Unknown'}
-                                          </span>
-
-                                          <span className="dashboard-preview-name">
-                                              {item.stocks?.company_name ||
-                                                  'Unknown company'}
-                                          </span>
-                                      </div>
-                                  </li>
-                              ))}
-                      </ul>
-                  )}
-              </section>
-
-          </div>
-
-
-
-          <section className="dashboard-market-card">
-              <div className="dashboard-preview-header">
-                  <h2>Market Overview</h2>
-              </div>
-
-              {marketLoading ? (
-                  <div className="dashboard-market-status">
-                      Loading market data...
-                  </div>
-              ) : marketQuotes.length === 0 ? (
-                  <div className="dashboard-market-status">
-                      No market data available.
-                  </div>
-              ) : (
-                  <div className="dashboard-market-list">
-                      {marketQuotes.map((stock) => {
-                          const quote = stock.quote;
-
-                          return (
-                              <div
-                                  key={stock.id}
-                                  className="dashboard-market-row"
-                              >
-                                  <div className="dashboard-market-company">
-                                      <strong>
-                                          {stock.symbol}
-                                      </strong>
-
-                                      <span>
-                                          {stock.company_name}
-                                      </span>
-                                  </div>
-
-                                  <div className="dashboard-market-exchange">
-                                      {stock.exchange || '—'}
-                                  </div>
-
-                                  <div className="dashboard-market-price">
-                                      {quote
-                                          ? `$${quote.currentPrice.toFixed(2)}`
-                                          : '—'}
-                                  </div>
-
-                                  <div
-                                      className={`dashboard-market-change ${quote &&
-                                              quote.percentChange >= 0
-                                              ? 'positive'
-                                              : 'negative'
-                                          }`}
-                                  >
-                                      {quote
-                                          ? `${quote.percentChange >= 0
-                                              ? '+'
-                                              : ''
-                                          }${quote.percentChange.toFixed(
-                                              2
-                                          )}%`
-                                          : '—'}
-                                  </div>
-                              </div>
-                          );
-                      })}
-                  </div>
-              )}
+              <small>
+                Losing positions
+              </small>
+            </article>
           </section>
 
+          {/* Market Data Notice */}
 
+          {portfolio.unquotedHoldings > 0 && (
+            <div className="dashboard-market-notice">
+              Market data is currently unavailable
+              for{' '}
+              {portfolio.unquotedHoldings}{' '}
+              {portfolio.unquotedHoldings === 1
+                ? 'holding'
+                : 'holdings'}
+              . Those positions are excluded
+              from current-value and
+              gain/loss calculations until a
+              market price is available.
+            </div>
+          )}
 
-      {/* ------------------------------------------------ */}
-      {/* Stocks                                           */}
-      {/* ------------------------------------------------ */}
+          {/* Current Holdings */}
 
-      <section>
-        <h2>Stocks</h2>
+          <section className="dashboard-holdings-card">
+            <div className="dashboard-section-header">
+              <div>
+                <h2>Current Holdings</h2>
 
-        {stocks.length === 0 ? (
-          <p>No stocks available.</p>
-        ) : (
-          <ul>
-            {stocks.map((stock) => (
-              <li key={stock.id}>
-                {stock.symbol} — {stock.company_name}
-                {stock.exchange
-                  ? ` (${stock.exchange})`
-                  : ''}
-              </li>
-            ))}
-          </ul>
-        )}
-      </section>
+                <p>
+                  Your current investment
+                  positions.
+                </p>
+              </div>
+            </div>
 
-      {/* ------------------------------------------------ */}
-      {/* Portfolio Holdings                               */}
-      {/* ------------------------------------------------ */}
+            {holdings.length === 0 ? (
+              <div className="dashboard-empty">
+                <h3>No holdings yet</h3>
 
-      <section>
-        <h2>Portfolio Holdings</h2>
+                <p>
+                  Add an investment to your
+                  portfolio to see it here.
+                </p>
+              </div>
+            ) : (
+              <div className="holdings-table-wrapper">
+                <table className="holdings-table">
+                  <thead>
+                    <tr>
+                      <th>Company</th>
+                      <th>Symbol</th>
+                      <th>Quantity</th>
+                      <th>Current Value</th>
+                      <th>Gain / Loss</th>
+                    </tr>
+                  </thead>
 
-        {holdings.length === 0 ? (
-          <p>No portfolio holdings yet.</p>
-        ) : (
-          <ul>
-            {holdings.map((holding) => (
-              <li key={holding.id}>
-                {holding.stocks?.symbol} —{' '}
-                {holding.quantity} shares @ $
-                {holding.average_price}
-              </li>
-            ))}
-          </ul>
-        )}
-      </section>
+                  <tbody>
+                    {holdings.map(
+                      (holding) => {
+                        const quantity =
+                          Number(
+                            holding.quantity
+                          ) || 0;
 
-      {/* ------------------------------------------------ */}
-      {/* Watchlist                                        */}
-      {/* ------------------------------------------------ */}
+                        const averagePrice =
+                          Number(
+                            holding.average_price
+                          ) || 0;
 
-      <section>
-        <h2>Watchlist</h2>
+                        const invested =
+                          quantity *
+                          averagePrice;
 
-        {watchlist.length === 0 ? (
-          <p>Watchlist is empty.</p>
-        ) : (
-          <ul>
-            {watchlist.map((item) => (
-              <li key={item.id}>
-                {item.stocks?.symbol} —{' '}
-                {item.stocks?.company_name}
-              </li>
-            ))}
-          </ul>
-        )}
-      </section>
+                        const hasQuote =
+                          holding.quote &&
+                          Number.isFinite(
+                            Number(
+                              holding.quote
+                                .currentPrice
+                            )
+                          );
 
-      {/* ------------------------------------------------ */}
-      {/* Wishlist                                         */}
-      {/* ------------------------------------------------ */}
+                        const currentPrice =
+                          hasQuote
+                            ? Number(
+                                holding.quote
+                                  .currentPrice
+                              )
+                            : null;
 
-      <section>
-        <h2>Wishlist</h2>
+                        const currentValue =
+                          hasQuote
+                            ? quantity *
+                              currentPrice
+                            : null;
 
-        {wishlist.length === 0 ? (
-          <p>Wishlist is empty.</p>
-        ) : (
-          <ul>
-            {wishlist.map((item) => (
-              <li key={item.id}>
-                {item.stocks?.symbol} —{' '}
-                {item.stocks?.company_name}
-              </li>
-            ))}
-          </ul>
-        )}
-      </section>
+                        const gainLoss =
+                          hasQuote
+                            ? currentValue -
+                              invested
+                            : null;
 
-      {/* ------------------------------------------------ */}
-      {/* Feedback                                         */}
-      {/* ------------------------------------------------ */}
+                        const returnPercent =
+                          hasQuote &&
+                          invested > 0
+                            ? (gainLoss /
+                                invested) *
+                              100
+                            : null;
 
-      <section>
-        <h2>Feedback</h2>
+                        const symbol =
+                          holding.stocks
+                            ?.symbol;
 
-        {feedback.length === 0 ? (
-          <p>No feedback submitted yet.</p>
-        ) : (
-          <ul>
-            {feedback.map((item) => (
-              <li key={item.id}>
-                <strong>{item.category}</strong>
+                        return (
+                          <tr
+                            key={holding.id}
+                            className={
+                              symbol
+                                ? 'holding-row'
+                                : ''
+                            }
+                            onClick={() =>
+                              handleHoldingClick(
+                                symbol
+                              )
+                            }
+                            tabIndex={
+                              symbol
+                                ? 0
+                                : undefined
+                            }
+                            onKeyDown={(
+                              event
+                            ) => {
+                              if (
+                                symbol &&
+                                (event.key ===
+                                  'Enter' ||
+                                  event.key ===
+                                    ' ')
+                              ) {
+                                event.preventDefault();
 
-                {item.rating !== null &&
-                  ` — Rating: ${item.rating}`}
+                                handleHoldingClick(
+                                  symbol
+                                );
+                              }
+                            }}
+                          >
+                            <td>
+                              <div className="holding-company">
+                                <strong>
+                                  {holding
+                                    .stocks
+                                    ?.company_name ||
+                                    'Unknown company'}
+                                </strong>
 
-                <br />
+                                <span>
+                                  {holding
+                                    .stocks
+                                    ?.exchange ||
+                                    ''}
+                                </span>
+                              </div>
+                            </td>
 
-                {item.message}
-              </li>
-            ))}
-          </ul>
-        )}
-      </section>
+                            <td>
+                              <strong>
+                                {symbol || '—'}
+                              </strong>
+                            </td>
 
-      {/* ------------------------------------------------ */}
-      {/* Errors                                           */}
-      {/* ------------------------------------------------ */}
+                            <td>
+                              {formatQuantity(
+                                quantity
+                              )}
+                            </td>
 
-      {error && <p>Error: {error}</p>}
+                            <td>
+                              {hasQuote
+                                ? `$${formatCurrency(
+                                    currentValue
+                                  )}`
+                                : 'Unavailable'}
+                            </td>
 
-      {/* ------------------------------------------------ */}
-      {/* Logout                                           */}
-      {/* ------------------------------------------------ */}
+                            <td>
+                              {hasQuote ? (
+                                <div
+                                  className={getPerformanceClass(
+                                    gainLoss
+                                  )}
+                                >
+                                  <strong>
+                                    {getSignedCurrency(
+                                      gainLoss
+                                    )}
+                                  </strong>
 
-      <button onClick={handleLogout}>
-        Logout
-      </button>
+                                  <small>
+                                    {' '}
+                                    (
+                                    {getSignedPercent(
+                                      returnPercent
+                                    )}
+                                    )
+                                  </small>
+                                </div>
+                              ) : (
+                                <span className="neutral">
+                                  Market data
+                                  unavailable
+                                </span>
+                              )}
+                            </td>
+                          </tr>
+                        );
+                      }
+                    )}
+                  </tbody>
+                </table>
+              </div>
+            )}
+          </section>
+        </>
+      )}
     </main>
   );
 }

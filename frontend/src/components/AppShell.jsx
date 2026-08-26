@@ -6,6 +6,7 @@ import {
 } from 'react-router-dom';
 
 import { useAuth } from '../context/AuthContext';
+import { signOut } from '../services/auth';
 import {
     searchCompanies,
 } from '../services/marketData';
@@ -32,6 +33,9 @@ function AppShell() {
 
     const [highlightedIndex, setHighlightedIndex] =
         useState(-1);
+
+    const [isProfileOpen, setIsProfileOpen] =
+        useState(false);
 
     const navigationItems = [
         {
@@ -105,6 +109,28 @@ function AppShell() {
 
         loadRecentSearches();
     }, [user]);
+
+    async function handleLogout() {
+        try {
+            await signOut();
+
+            setIsProfileOpen(false);
+
+            navigate('/login', {
+                replace: true,
+            });
+        } catch (error) {
+            console.error(
+                'Logout failed:',
+                error
+            );
+
+            setError(
+                error.message ||
+                'Unable to sign out.'
+            );
+        }
+    }
 
     // --------------------------------------------------
     // Close search when clicking outside
@@ -650,9 +676,69 @@ function AppShell() {
                 {/* Profile */}
 
                 <div className="app-profile">
-                    <button type="button">
-                        Profile
+                    <button
+                        type="button"
+                        className="app-profile-button"
+                        onClick={() =>
+                            setIsProfileOpen(
+                                (current) => !current
+                            )
+                        }
+                        aria-expanded={isProfileOpen}
+                        aria-haspopup="menu"
+                    >
+                        <span className="app-profile-avatar">
+                            {user?.email
+                                ?.charAt(0)
+                                .toUpperCase() || 'U'}
+                        </span>
+
+                        <span className="app-profile-label">
+                            {user?.email || 'Profile'}
+                        </span>
+
+                        <span className="app-profile-chevron">
+                            {isProfileOpen ? '▲' : '▼'}
+                        </span>
                     </button>
+
+                    {isProfileOpen && (
+                        <div
+                            className="app-profile-menu"
+                            role="menu"
+                        >
+                            <div className="app-profile-menu-user">
+                                <span>
+                                    Signed in as
+                                </span>
+
+                                <strong>
+                                    {user?.email || 'User'}
+                                </strong>
+                            </div>
+
+                            <button
+                                type="button"
+                                className="app-profile-menu-item"
+                                role="menuitem"
+                                onClick={() => {
+                                    setIsProfileOpen(false);
+                                    navigate('/settings');
+                                }}
+                            >
+                                <span>Profile</span>
+                            </button>
+
+                            <button
+                                type="button"
+                                className="app-profile-menu-item app-profile-signout"
+                                role="menuitem"
+                                onClick={handleLogout}
+                            >
+                                <span>Sign Out</span>
+                            </button>
+                        </div>
+                    )}
                 </div>
             </header>
 

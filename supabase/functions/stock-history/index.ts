@@ -4,7 +4,16 @@ const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Headers":
     "authorization, x-client-info, apikey, content-type",
-  "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
+  "Access-Control-Allow-Methods":
+    "GET, POST, OPTIONS",
+};
+
+const DAILY_RANGES: Record<string, number> = {
+  "1W": 5,
+  "1M": 22,
+  "3M": 66,
+  "6M": 126,
+  "1Y": 252,
 };
 
 Deno.serve(async (req) => {
@@ -16,15 +25,30 @@ Deno.serve(async (req) => {
 
   try {
     let symbol = "";
+    let range = "1Y";
 
     if (req.method === "GET") {
       const url = new URL(req.url);
-      symbol = url.searchParams.get("symbol")?.trim() ?? "";
+
+      symbol =
+        url.searchParams.get("symbol")?.trim() ?? "";
+
+      range =
+        url.searchParams.get("range")
+          ?.trim()
+          .toUpperCase() ?? "1Y";
     }
 
     if (req.method === "POST") {
       const body = await req.json();
-      symbol = body?.symbol?.trim() ?? "";
+
+      symbol =
+        body?.symbol?.trim() ?? "";
+
+      range =
+        body?.range
+          ?.trim()
+          .toUpperCase() ?? "1Y";
     }
 
     if (!symbol) {
@@ -42,16 +66,14 @@ Deno.serve(async (req) => {
       );
     }
 
-    const apiKey = Deno.env.get("TWELVE_DATA_API_KEY");
+    const apiKey =
+      Deno.env.get("TWELVE_DATA_API_KEY");
 
     if (!apiKey) {
-      console.error(
-        "TWELVE_DATA_API_KEY is not configured."
-      );
-
       return new Response(
         JSON.stringify({
-          error: "Historical market data service is not configured.",
+          error:
+            "Historical market data service is not configured.",
         }),
         {
           status: 500,
@@ -63,17 +85,37 @@ Deno.serve(async (req) => {
       );
     }
 
-    const normalizedSymbol = symbol.toUpperCase();
+    const normalizedSymbol =
+      symbol.toUpperCase();
+
+    const isIntraday =
+      range === "1D";
+
+    let interval = "1day";
+    let outputsize = 252;
+
+    if (isIntraday) {
+      interval = "15min";
+      outputsize = 100;
+    } else {
+      outputsize =
+        DAILY_RANGES[range] ?? 252;
+    }
 
     const twelveDataUrl =
       "https://api.twelvedata.com/time_series" +
-      `?symbol=${encodeURIComponent(normalizedSymbol)}` +
-      "&interval=1day" +
-      "&outputsize=1300" +
+      `?symbol=${encodeURIComponent(
+        normalizedSymbol
+      )}` +
+      `&interval=${interval}` +
+      `&outputsize=${outputsize}` +
       "&format=JSON" +
-      `&apikey=${encodeURIComponent(apiKey)}`;
+      `&apikey=${encodeURIComponent(
+        apiKey
+      )}`;
 
-    const response = await fetch(twelveDataUrl);
+    const response =
+      await fetch(twelveDataUrl);
 
     if (!response.ok) {
       console.error(
@@ -83,7 +125,8 @@ Deno.serve(async (req) => {
 
       return new Response(
         JSON.stringify({
-          error: "Historical market data provider request failed.",
+          error:
+            "Historical market data provider request failed.",
         }),
         {
           status: 502,
@@ -95,7 +138,8 @@ Deno.serve(async (req) => {
       );
     }
 
-    const data = await response.json();
+    const data =
+      await response.json();
 
     if (data.status === "error") {
       console.error(
@@ -119,23 +163,8 @@ Deno.serve(async (req) => {
       );
     }
 
-    const values = data.values ?? [];
-
-    if (values.length === 0) {
-      return new Response(
-        JSON.stringify({
-          symbol: normalizedSymbol,
-          history: [],
-        }),
-        {
-          status: 200,
-          headers: {
-            ...corsHeaders,
-            "Content-Type": "application/json",
-          },
-        }
-      );
-    }
+    const values =
+      data.values ?? [];
 
     const history = values
       .map((item: any) => ({
@@ -163,6 +192,8 @@ Deno.serve(async (req) => {
     return new Response(
       JSON.stringify({
         symbol: normalizedSymbol,
+        range,
+        interval,
         history,
       }),
       {
@@ -181,7 +212,8 @@ Deno.serve(async (req) => {
 
     return new Response(
       JSON.stringify({
-        error: "Unable to retrieve historical stock data.",
+        error:
+          "Unable to retrieve historical stock data.",
       }),
       {
         status: 500,

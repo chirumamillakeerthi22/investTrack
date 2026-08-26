@@ -90,19 +90,61 @@ Deno.serve(async (req) => {
 
     const data = await response.json();
 
+    console.log(
+      `Finnhub quote response for ${symbol}:`,
+      data
+    );
+
+    const quote = {
+      currentPrice: Number(data.c),
+      change: Number(data.d),
+      percentChange: Number(data.dp),
+      high: Number(data.h),
+      low: Number(data.l),
+      open: Number(data.o),
+      previousClose: Number(data.pc),
+      timestamp: data.t ?? null,
+    };
+
+    const requiredValues = [
+      quote.currentPrice,
+      quote.change,
+      quote.percentChange,
+      quote.high,
+      quote.low,
+      quote.open,
+      quote.previousClose,
+    ];
+
+    if (
+      requiredValues.some(
+        (value) => !Number.isFinite(value)
+      )
+    ) {
+      console.error(
+        "Invalid Finnhub quote:",
+        data
+      );
+
+      return new Response(
+        JSON.stringify({
+          error:
+            "Current market data is unavailable.",
+        }),
+        {
+          status: 502,
+          headers: {
+            ...corsHeaders,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+    }
+
     return new Response(
       JSON.stringify({
         symbol: symbol.toUpperCase(),
-        quote: {
-          currentPrice: data.c ?? null,
-          change: data.d ?? null,
-          percentChange: data.dp ?? null,
-          high: data.h ?? null,
-          low: data.l ?? null,
-          open: data.o ?? null,
-          previousClose: data.pc ?? null,
-          timestamp: data.t ?? null,
-        },
+        quote,
       }),
       {
         status: 200,

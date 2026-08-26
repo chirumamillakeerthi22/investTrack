@@ -28,3 +28,11 @@ export async function signInWithEmail(email, password) {
 
   return data;
 }
+
+export async function signOut() {
+  const { error } = await supabase.auth.signOut();
+
+  if (error) {
+    throw error;
+  }
+}

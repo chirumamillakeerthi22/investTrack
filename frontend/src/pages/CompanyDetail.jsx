@@ -6,8 +6,9 @@ import {
 
 import {
   Link,
-  useParams,
   useLocation,
+  useNavigate,
+  useParams,
 } from 'react-router-dom';
 
 import {
@@ -31,11 +32,40 @@ import { ensureStock } from '../services/stocks';
 function CompanyDetail() {
   const { symbol } = useParams();
   const location = useLocation();
+  const navigate = useNavigate();
+
   const company = location.state?.company;
   const { user } = useAuth();
 
+  const displaySymbol = symbol
+    ? decodeURIComponent(symbol).toUpperCase()
+    : '';
+
+  function handleAddToHoldings() {
+    navigate(
+      `/holdings/add/${encodeURIComponent(displaySymbol)}`,
+      {
+        state: {
+          company,
+          quote,
+        },
+      }
+    );
+  }
+
+  const companyName =
+    company?.companyName ||
+    company?.description ||
+    displaySymbol;
+
+  const companyExchange =
+    company?.exchange || '';
+
   const [quote, setQuote] = useState(null);
   const [history, setHistory] = useState([]);
+
+  const [historyRange, setHistoryRange] =
+    useState('1Y');
 
   const [quoteLoading, setQuoteLoading] =
     useState(true);
@@ -64,15 +94,38 @@ function CompanyDetail() {
   const [actionError, setActionError] =
     useState('');
 
+  const [showHoldingForm, setShowHoldingForm] =
+    useState(false);
 
-  const displaySymbol = symbol
-    ? decodeURIComponent(symbol).toUpperCase()
-    : '';
+  const [holdingQuantity, setHoldingQuantity] =
+    useState('');
+
+  const [holdingPrice, setHoldingPrice] =
+    useState('');
+
+  const [holdingDate, setHoldingDate] =
+    useState('');
 
 
-  // --------------------------------------------------
-  // Load current stock quote
-  // --------------------------------------------------
+  /*
+   * --------------------------------------------------
+   * Safe number helper
+   * --------------------------------------------------
+   */
+
+  function toNumber(value) {
+    const number = Number(value);
+
+    return Number.isFinite(number)
+      ? number
+      : null;
+  }
+
+  /*
+   * --------------------------------------------------
+   * Load current stock quote
+   * --------------------------------------------------
+   */
 
   useEffect(() => {
     async function loadQuote() {
@@ -88,12 +141,62 @@ function CompanyDetail() {
 
       setQuoteLoading(true);
       setQuoteError('');
+      setQuote(null);
 
       try {
         const data =
           await getStockQuote(displaySymbol);
 
-        setQuote(data);
+        /*
+         * Accept the normalized response from
+         * stock-quote and also tolerate provider-style
+         * field names if they are returned.
+         */
+
+        const normalizedQuote = {
+          currentPrice: toNumber(
+            data?.currentPrice ?? data?.c
+          ),
+
+          change: toNumber(
+            data?.change ?? data?.d
+          ),
+
+          percentChange: toNumber(
+            data?.percentChange ?? data?.dp
+          ),
+
+          high: toNumber(
+            data?.high ?? data?.h
+          ),
+
+          low: toNumber(
+            data?.low ?? data?.l
+          ),
+
+          open: toNumber(
+            data?.open ?? data?.o
+          ),
+
+          previousClose: toNumber(
+            data?.previousClose ?? data?.pc
+          ),
+
+          timestamp:
+            data?.timestamp ??
+            data?.t ??
+            null,
+        };
+
+        setQuote(normalizedQuote);
+
+        if (
+          normalizedQuote.currentPrice === null
+        ) {
+          setQuoteError(
+            'Current market price is unavailable.'
+          );
+        }
       } catch (err) {
         console.error(
           'Stock quote failed:',
@@ -112,10 +215,11 @@ function CompanyDetail() {
     loadQuote();
   }, [displaySymbol]);
 
-
-  // --------------------------------------------------
-  // Load historical price data
-  // --------------------------------------------------
+  /*
+   * --------------------------------------------------
+   * Load historical price data
+   * --------------------------------------------------
+   */
 
   useEffect(() => {
     async function loadHistory() {
@@ -134,9 +238,16 @@ function CompanyDetail() {
 
       try {
         const data =
-          await getStockHistory(displaySymbol);
+          await getStockHistory(
+            displaySymbol,
+            historyRange
+          );
 
-        setHistory(data);
+        setHistory(
+          Array.isArray(data)
+            ? data
+            : []
+        );
       } catch (err) {
         console.error(
           'Stock history failed:',
@@ -147,175 +258,129 @@ function CompanyDetail() {
           err.message ||
             'Unable to load historical stock data.'
         );
+
+        setHistory([]);
       } finally {
         setHistoryLoading(false);
       }
     }
 
     loadHistory();
-  }, [displaySymbol]);
+  }, [
+    displaySymbol,
+    historyRange,
+  ]);
 
-
-  // --------------------------------------------------
-  // Prepare chart data
-  // --------------------------------------------------
+  /*
+   * --------------------------------------------------
+   * Prepare chart data
+   * --------------------------------------------------
+   */
 
   const chartData = useMemo(() => {
-    return history.map((item) => ({
-      date: item.date,
-      close: item.close,
-    }));
+    if (!history.length) {
+      return [];
+    }
+
+    return history
+      .map((item) => ({
+        date: item.date,
+        close: toNumber(item.close),
+      }))
+      .filter(
+        (item) =>
+          item.date &&
+          item.close !== null
+      );
   }, [history]);
 
-
-  // --------------------------------------------------
-  // Check Watchlist / Wishlist status
-  // --------------------------------------------------
+  /*
+   * --------------------------------------------------
+   * Check Watchlist / Wishlist state
+   * --------------------------------------------------
+   */
 
   useEffect(() => {
-    async function loadCompanyActions() {
-      if (!user || !displaySymbol) {
-        setIsInWatchlist(false);
-        setIsInWishlist(false);
-
+    async function loadUserActions() {
+      if (
+        !user ||
+        !displaySymbol
+      ) {
         return;
       }
 
-      setActionError('');
-
       try {
-        // --------------------------------------------
-        // Find stock record
-        // --------------------------------------------
+        const stock = await ensureStock({
+          displaySymbol,
+          description:
+            companyName ||
+            displaySymbol,
+          exchange:
+            companyExchange,
+        });
 
-        const {
-          data: stock,
-          error: stockError,
-        } = await supabase
-          .from('stocks')
-          .select(
-            'id, symbol, company_name'
-          )
-          .eq('symbol', displaySymbol)
-          .maybeSingle();
-
-        if (stockError) {
-          console.error(
-            'Stock lookup failed:',
-            stockError
-          );
-
-          setActionError(
-            'Unable to check company status.'
-          );
-
+        if (!stock?.id) {
           return;
         }
 
-        if (!stock) {
-          setIsInWatchlist(false);
-          setIsInWishlist(false);
+        const [
+          watchlistResult,
+          wishlistResult,
+        ] = await Promise.all([
+          supabase
+            .from('watchlist')
+            .select('id')
+            .eq('stock_id', stock.id)
+            .maybeSingle(),
 
-          return;
-        }
+          supabase
+            .from('wishlist')
+            .select('id')
+            .eq('stock_id', stock.id)
+            .maybeSingle(),
+        ]);
 
-        // --------------------------------------------
-        // Check Watchlist
-        // --------------------------------------------
-
-        const {
-          data: watchlistItem,
-          error: watchlistError,
-        } = await supabase
-          .from('watchlist')
-          .select('id')
-          .eq('user_id', user.id)
-          .eq('stock_id', stock.id)
-          .maybeSingle();
-
-        if (watchlistError) {
-          console.error(
-            'Watchlist status check failed:',
-            watchlistError
+        if (
+          !watchlistResult.error
+        ) {
+          setIsInWatchlist(
+            Boolean(watchlistResult.data)
           );
         }
 
-        // --------------------------------------------
-        // Check Wishlist
-        // --------------------------------------------
-
-        const {
-          data: wishlistItem,
-          error: wishlistError,
-        } = await supabase
-          .from('wishlist')
-          .select('id')
-          .eq('user_id', user.id)
-          .eq('stock_id', stock.id)
-          .maybeSingle();
-
-        if (wishlistError) {
-          console.error(
-            'Wishlist status check failed:',
-            wishlistError
+        if (
+          !wishlistResult.error
+        ) {
+          setIsInWishlist(
+            Boolean(wishlistResult.data)
           );
         }
-
-        setIsInWatchlist(
-          Boolean(watchlistItem)
-        );
-
-        setIsInWishlist(
-          Boolean(wishlistItem)
-        );
-      } catch (err) {
+      } catch (error) {
         console.error(
-          'Company action status failed:',
-          err
-        );
-
-        setActionError(
-          err.message ||
-            'Unable to check company status.'
+          'Unable to load company actions:',
+          error
         );
       }
     }
 
-    loadCompanyActions();
-  }, [user, displaySymbol]);
+    loadUserActions();
+  }, [
+    user,
+    displaySymbol,
+    companyName,
+    companyExchange,
+  ]);
 
-
-  // --------------------------------------------------
-  // Find stock record
-  // --------------------------------------------------
-
-    async function getStockRecord() {
-  if (!displaySymbol) {
-    throw new Error('Stock symbol is missing.');
-  }
-
-  return ensureStock({
-    symbol: displaySymbol,
-    description:
-      location.state?.company?.companyName ||
-      displaySymbol,
-    exchange:
-      location.state?.company?.exchange ||
-      '',
-  });
-}
-  // --------------------------------------------------
-  // Add / Remove Watchlist
-  // --------------------------------------------------
+  /*
+   * --------------------------------------------------
+   * Watchlist
+   * --------------------------------------------------
+   */
 
   async function handleWatchlist() {
-    console.log(
-      'Watchlist button clicked'
-    );
-
     if (!user) {
       setActionError(
-        'You must be signed in to manage your watchlist.'
+        'Please sign in to manage your watchlist.'
       );
 
       return;
@@ -326,55 +391,63 @@ function CompanyDetail() {
     setActionError('');
 
     try {
-      const stock =
-        await getStockRecord();
+      const stock = await ensureStock({
+        displaySymbol,
+        description:
+          companyName ||
+          displaySymbol,
+        exchange:
+          companyExchange,
+      });
+
+      if (!stock?.id) {
+        throw new Error(
+          'Unable to identify this company.'
+        );
+      }
 
       if (isInWatchlist) {
-        const {
-          error: deleteError,
-        } = await supabase
-          .from('watchlist')
-          .delete()
-          .eq('user_id', user.id)
-          .eq('stock_id', stock.id);
+        const { error } =
+          await supabase
+            .from('watchlist')
+            .delete()
+            .eq('stock_id', stock.id);
 
-        if (deleteError) {
-          throw deleteError;
+        if (error) {
+          throw error;
         }
 
         setIsInWatchlist(false);
 
         setActionMessage(
-          `${displaySymbol} removed from your watchlist.`
+          'Removed from your watchlist.'
         );
       } else {
-        const {
-          error: insertError,
-        } = await supabase
-          .from('watchlist')
-          .insert({
-            user_id: user.id,
-            stock_id: stock.id,
-          });
+        const { error } =
+          await supabase
+            .from('watchlist')
+            .insert({
+              stock_id: stock.id,
+            });
 
-        if (insertError) {
-          throw insertError;
+        if (error) {
+          throw error;
         }
 
         setIsInWatchlist(true);
 
         setActionMessage(
-          `${displaySymbol} added to your watchlist.`
+          'Added to your watchlist.'
         );
       }
-    } catch (err) {
+    } catch (error) {
       console.error(
         'Watchlist action failed:',
-        err
+        error
       );
 
       setActionError(
-        err.message ||
+        error.message ||
           'Unable to update your watchlist.'
       );
     } finally {
@@ -382,19 +455,16 @@ function CompanyDetail() {
     }
   }
 
-
-  // --------------------------------------------------
-  // Add / Remove Wishlist
-  // --------------------------------------------------
+  /*
+   * --------------------------------------------------
+   * Wishlist
+   * --------------------------------------------------
+   */
 
   async function handleWishlist() {
-    console.log(
-      'Wishlist button clicked'
-    );
-
     if (!user) {
       setActionError(
-        'You must be signed in to manage your wishlist.'
+        'Please sign in to manage your wishlist.'
       );
 
       return;
@@ -405,55 +475,63 @@ function CompanyDetail() {
     setActionError('');
 
     try {
-      const stock =
-        await getStockRecord();
+      const stock = await ensureStock({
+        displaySymbol,
+        description:
+          companyName ||
+          displaySymbol,
+        exchange:
+          companyExchange,
+      });
+
+      if (!stock?.id) {
+        throw new Error(
+          'Unable to identify this company.'
+        );
+      }
 
       if (isInWishlist) {
-        const {
-          error: deleteError,
-        } = await supabase
-          .from('wishlist')
-          .delete()
-          .eq('user_id', user.id)
-          .eq('stock_id', stock.id);
+        const { error } =
+          await supabase
+            .from('wishlist')
+            .delete()
+            .eq('stock_id', stock.id);
 
-        if (deleteError) {
-          throw deleteError;
+        if (error) {
+          throw error;
         }
 
         setIsInWishlist(false);
 
         setActionMessage(
-          `${displaySymbol} removed from your wishlist.`
+          'Removed from your wishlist.'
         );
       } else {
-        const {
-          error: insertError,
-        } = await supabase
-          .from('wishlist')
-          .insert({
-            user_id: user.id,
-            stock_id: stock.id,
-          });
+        const { error } =
+          await supabase
+            .from('wishlist')
+            .insert({
+              stock_id: stock.id,
+            });
 
-        if (insertError) {
-          throw insertError;
+        if (error) {
+          throw error;
         }
 
         setIsInWishlist(true);
 
         setActionMessage(
-          `${displaySymbol} added to your wishlist.`
+          'Added to your wishlist.'
         );
       }
-    } catch (err) {
+    } catch (error) {
       console.error(
         'Wishlist action failed:',
-        err
+        error
       );
 
       setActionError(
-        err.message ||
+        error.message ||
           'Unable to update your wishlist.'
       );
     } finally {
@@ -461,221 +539,480 @@ function CompanyDetail() {
     }
   }
 
+  /*
+   * --------------------------------------------------
+   * Open holding form
+   * --------------------------------------------------
+   */
 
-  // --------------------------------------------------
-  // Date formatting
-  // --------------------------------------------------
+  function handleOpenHoldingForm() {
+    navigate(
+      `/holdings/add/${encodeURIComponent(displaySymbol)}`,
+      {
+        state: {
+          company,
+          quote,
+        },
+      }
+    );
+  }
+
+  /*
+   * --------------------------------------------------
+   * Add holding
+   * --------------------------------------------------
+   */
+
+  async function handleAddHolding(
+    event
+  ) {
+    event.preventDefault();
+
+    if (!user) {
+      setActionError(
+        'Please sign in to manage your holdings.'
+      );
+
+      return;
+    }
+
+    const quantity =
+      Number(holdingQuantity);
+
+    const purchasePrice =
+      Number(holdingPrice);
+
+    if (
+      !Number.isFinite(quantity) ||
+      quantity <= 0
+    ) {
+      setActionError(
+        'Enter a valid number of shares.'
+      );
+
+      return;
+    }
+
+    if (
+      !Number.isFinite(purchasePrice) ||
+      purchasePrice <= 0
+    ) {
+      setActionError(
+        'Enter a valid purchase price.'
+      );
+
+      return;
+    }
+
+    if (!holdingDate) {
+      setActionError(
+        'Select a purchase date.'
+      );
+
+      return;
+    }
+
+    setActionLoading(true);
+    setActionMessage('');
+    setActionError('');
+
+    try {
+      const stock = await ensureStock({
+        displaySymbol,
+        description:
+          companyName ||
+          displaySymbol,
+        exchange:
+          companyExchange,
+      });
+
+      if (!stock?.id) {
+        throw new Error(
+          'Unable to identify this company.'
+        );
+      }
+
+      const { error } =
+        await supabase
+          .from('portfolio_holdings')
+          .insert({
+            stock_id: stock.id,
+            quantity,
+            average_price:
+              purchasePrice,
+            created_at:
+              new Date(
+                `${holdingDate}T00:00:00`
+              ).toISOString(),
+          });
+
+      if (error) {
+        throw error;
+      }
+
+      setShowHoldingForm(false);
+      setHoldingQuantity('');
+      setHoldingPrice('');
+      setHoldingDate('');
+
+      setActionMessage(
+        `${displaySymbol} was added to your holdings.`
+      );
+
+      navigate(
+        '/holdings'
+      );
+    } catch (error) {
+      console.error(
+        'Add holding failed:',
+        error
+      );
+
+      setActionError(
+        error.message ||
+          'Unable to add this holding.'
+      );
+    } finally {
+      setActionLoading(false);
+    }
+  }
+
+  /*
+   * --------------------------------------------------
+   * Formatting helpers
+   * --------------------------------------------------
+   */
+
+  function formatMoney(value) {
+    const number = toNumber(value);
+
+    if (number === null) {
+      return '—';
+    }
+
+    return `$${number.toFixed(2)}`;
+  }
+
+  function formatChange(value) {
+    const number = toNumber(value);
+
+    if (number === null) {
+      return '—';
+    }
+
+    return `${
+      number >= 0
+        ? '+'
+        : ''
+    }${number.toFixed(2)}`;
+  }
+
+  function formatPercent(value) {
+    const number = toNumber(value);
+
+    if (number === null) {
+      return '—';
+    }
+
+    return `${
+      number >= 0
+        ? '+'
+        : ''
+    }${number.toFixed(2)}%`;
+  }
+
+  function getChangeClass(value) {
+    const number = toNumber(value);
+
+    if (number === null) {
+      return '';
+    }
+
+    return number >= 0
+      ? 'positive'
+      : 'negative';
+  }
 
   function formatDate(value) {
     if (!value) {
       return '';
     }
 
-    const date = new Date(value);
+    const date =
+      new Date(value);
 
-    if (Number.isNaN(date.getTime())) {
+    if (
+      Number.isNaN(
+        date.getTime()
+      )
+    ) {
       return value;
     }
 
     return date.toLocaleDateString(
-      'en-US',
+      undefined,
       {
         month: 'short',
-        year: 'numeric',
+        day: 'numeric',
       }
     );
   }
 
-
-  function formatTooltipDate(value) {
+  function formatTooltipDate(
+    value
+  ) {
     if (!value) {
       return '';
     }
 
-    const date = new Date(value);
+    const date =
+      new Date(value);
 
-    if (Number.isNaN(date.getTime())) {
+    if (
+      Number.isNaN(
+        date.getTime()
+      )
+    ) {
       return value;
     }
 
-    return date.toLocaleDateString(
-      'en-US',
+    return date.toLocaleString(
+      undefined,
       {
         month: 'short',
         day: 'numeric',
         year: 'numeric',
+        hour:
+          historyRange === '1D'
+            ? 'numeric'
+            : undefined,
+        minute:
+          historyRange === '1D'
+            ? '2-digit'
+            : undefined,
       }
     );
   }
 
-async function getOrCreateStock() {
-  return ensureStock({
-    symbol: displaySymbol,
-    description:
-      company?.description ||
-      displaySymbol,
-    exchange:
-      company?.exchange ||
-      '',
-  });
-}
-  // --------------------------------------------------
-  // Page
-  // --------------------------------------------------
+  const changeClass =
+    getChangeClass(
+      quote?.change
+    );
+
+  /*
+   * --------------------------------------------------
+   * Render
+   * --------------------------------------------------
+   */
 
   return (
-    <main className="page-section">
+    <main className="page-content">
 
-      {/* Back navigation */}
+      <div className="company-page-header">
 
-      <p>
-        <Link to="/dashboard">
-          ← Back to Dashboard
-        </Link>
-      </p>
-
-
-      {/* Company */}
-
-      <div className="page-header">
         <div>
-          <h1>{displaySymbol}</h1>
+          <Link
+            to="/dashboard"
+            className="company-back-link"
+          >
+            ← Back
+          </Link>
+
+          <span className="company-section-eyebrow">
+            Company Details
+          </span>
+
+          <h1>
+            {companyName}
+          </h1>
 
           <p>
-            Company market information
+            <strong>
+              {displaySymbol}
+            </strong>
+
+            {companyExchange
+              ? ` · ${companyExchange}`
+              : ''}
           </p>
         </div>
+
       </div>
 
-
-      {/* Current Quote */}
+      {/* ------------------------------------------------ */}
+      {/* Current Market Data                              */}
+      {/* ------------------------------------------------ */}
 
       <section className="page-card company-market-card">
+
         <div className="company-section-header">
-          <h2>Current Market Data</h2>
+          <div>
+            <span className="company-section-eyebrow">
+              Market Snapshot
+            </span>
+
+            <h2>
+              Current Market Data
+            </h2>
+          </div>
+
+          {!quoteLoading &&
+            quote?.currentPrice !== null &&
+            quote?.currentPrice !== undefined && (
+              <span className="company-live-badge">
+                Live
+              </span>
+            )}
         </div>
 
         {quoteLoading && (
           <p className="page-status">
-            Loading current price...
-          </p>
-        )}
-
-        {quoteError && (
-          <p className="page-error">
-            Error: {quoteError}
+            Loading current market data...
           </p>
         )}
 
         {!quoteLoading &&
+          quoteError && (
+            <p className="page-error">
+              {quoteError}
+            </p>
+          )}
+
+        {!quoteLoading &&
           !quoteError &&
           quote && (
-            <div className="company-quote-grid">
+            <div className="company-market-grid">
 
-              <div>
-                <span className="company-quote-label">
+              <article className="company-market-primary">
+
+                <span>
                   Current Price
                 </span>
 
-                <strong className="company-quote-price">
-                  $
-                  {quote.currentPrice?.toFixed(2)}
+                <strong>
+                  {formatMoney(
+                    quote.currentPrice
+                  )}
                 </strong>
-              </div>
 
-              <div>
-                <span className="company-quote-label">
-                  Change
-                </span>
+                <div
+                  className={`company-market-change ${changeClass}`}
+                >
+                  {formatChange(
+                    quote.change
+                  )}
+
+                  {' '}
+
+                  {formatPercent(
+                    quote.percentChange
+                  )}
+                </div>
+
+              </article>
+
+              <article className="company-market-stat">
+                <span>Open</span>
 
                 <strong>
-                  {quote.change >= 0
-                    ? '+'
-                    : ''}
-                  {quote.change?.toFixed(2)}
+                  {formatMoney(
+                    quote.open
+                  )}
                 </strong>
-              </div>
+              </article>
 
-              <div>
-                <span className="company-quote-label">
-                  Change %
-                </span>
-
-                <strong>
-                  {quote.percentChange >= 0
-                    ? '+'
-                    : ''}
-                  {quote.percentChange?.toFixed(2)}
-                  %
-                </strong>
-              </div>
-
-              <div>
-                <span className="company-quote-label">
-                  Open
-                </span>
-
-                <strong>
-                  $
-                  {quote.open?.toFixed(2)}
-                </strong>
-              </div>
-
-              <div>
-                <span className="company-quote-label">
+              <article className="company-market-stat">
+                <span>
                   Previous Close
                 </span>
 
                 <strong>
-                  $
-                  {quote.previousClose?.toFixed(
-                    2
+                  {formatMoney(
+                    quote.previousClose
                   )}
                 </strong>
-              </div>
+              </article>
 
-              <div>
-                <span className="company-quote-label">
+              <article className="company-market-stat">
+                <span>
                   Day High
                 </span>
 
                 <strong>
-                  $
-                  {quote.high?.toFixed(2)}
+                  {formatMoney(
+                    quote.high
+                  )}
                 </strong>
-              </div>
+              </article>
 
-              <div>
-                <span className="company-quote-label">
+              <article className="company-market-stat">
+                <span>
                   Day Low
                 </span>
 
                 <strong>
-                  $
-                  {quote.low?.toFixed(2)}
+                  {formatMoney(
+                    quote.low
+                  )}
                 </strong>
-              </div>
+              </article>
 
             </div>
           )}
+
       </section>
 
+      {/* ------------------------------------------------ */}
+      {/* Price History                                    */}
+      {/* ------------------------------------------------ */}
 
-      {/* Historical Chart */}
+      <section className="page-card company-chart-card">
 
-      <section className="page-card company-history-card">
         <div className="company-section-header">
-          <h2>5-Year Historical Price</h2>
 
-          {!historyLoading &&
-            !historyError &&
-            chartData.length > 0 && (
-              <span className="company-history-count">
-                {chartData.length.toLocaleString()}
-                {' '}
-                trading days
-              </span>
-            )}
+          <div>
+            <span className="company-section-eyebrow">
+              Price History
+            </span>
+
+            <h2>
+              Historical Performance
+            </h2>
+          </div>
+
+          <div className="company-chart-ranges">
+
+            {[
+              '1D',
+              '1W',
+              '1M',
+              '3M',
+              '6M',
+              '1Y',
+            ].map((range) => (
+              <button
+                key={range}
+                type="button"
+                className={
+                  historyRange === range
+                    ? 'active'
+                    : ''
+                }
+                onClick={() =>
+                  setHistoryRange(
+                    range
+                  )
+                }
+                disabled={
+                  historyLoading
+                }
+              >
+                {range}
+              </button>
+            ))}
+
+          </div>
+
         </div>
 
         {historyLoading && (
@@ -686,7 +1023,7 @@ async function getOrCreateStock() {
 
         {historyError && (
           <p className="page-error">
-            Error: {historyError}
+            {historyError}
           </p>
         )}
 
@@ -714,7 +1051,9 @@ async function getOrCreateStock() {
                 >
                   <XAxis
                     dataKey="date"
-                    tickFormatter={formatDate}
+                    tickFormatter={
+                      formatDate
+                    }
                     minTickGap={50}
                   />
 
@@ -724,9 +1063,9 @@ async function getOrCreateStock() {
                       'auto',
                     ]}
                     tickFormatter={(value) =>
-                      `$${Number(value).toFixed(
-                        0
-                      )}`
+                      `$${Number(
+                        value
+                      ).toFixed(0)}`
                     }
                   />
 
@@ -735,9 +1074,9 @@ async function getOrCreateStock() {
                       formatTooltipDate
                     }
                     formatter={(value) => [
-                      `$${Number(value).toFixed(
-                        2
-                      )}`,
+                      formatMoney(
+                        value
+                      ),
                       'Close',
                     ]}
                   />
@@ -761,57 +1100,72 @@ async function getOrCreateStock() {
               No historical data available.
             </p>
           )}
+
       </section>
 
-
-      {/* Actions */}
+      {/* ------------------------------------------------ */}
+      {/* Actions                                          */}
+      {/* ------------------------------------------------ */}
 
       <section className="page-card company-actions">
 
         <div className="company-section-header">
-          <h2>Actions</h2>
+          <div>
+            <span className="company-section-eyebrow">
+              Portfolio
+            </span>
+
+            <h2>
+              Manage Company
+            </h2>
+          </div>
         </div>
 
         <div className="company-action-buttons">
 
           <button
             type="button"
-            onClick={handleWatchlist}
-            disabled={actionLoading}
+            onClick={
+              handleWatchlist
+            }
+            disabled={
+              actionLoading
+            }
           >
             {isInWatchlist
               ? 'Remove from Watchlist'
               : 'Add to Watchlist'}
           </button>
 
-
           <button
             type="button"
-            onClick={handleWishlist}
-            disabled={actionLoading}
+            onClick={
+              handleWishlist
+            }
+            disabled={
+              actionLoading
+            }
           >
             {isInWishlist
               ? 'Remove from Wishlist'
               : 'Add to Wishlist'}
           </button>
 
-
           <button
             type="button"
-            disabled
+            onClick={handleAddToHoldings}
+            disabled={actionLoading}
           >
-            Add to Portfolio
+            Add to My Holdings
           </button>
 
         </div>
-
 
         {actionMessage && (
           <p className="company-action-success">
             {actionMessage}
           </p>
         )}
-
 
         {actionError && (
           <p className="company-action-error">

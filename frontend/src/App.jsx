@@ -13,6 +13,7 @@ import Settings from './pages/Settings';
 import TopCompanies from './pages/TopCompanies';
 import Watchlist from './pages/Watchlist';
 import Wishlist from './pages/Wishlist';
+import AddHolding from './pages/AddHolding';
 
 function PublicOnlyRoute({ children }) {
   return children;
@@ -93,6 +94,11 @@ function App() {
         <Route
           path="/company/:symbol"
           element={<CompanyDetail />}
+        />
+
+        <Route
+          path="/holdings/add/:symbol"
+          element={<AddHolding />}
         />
       </Route>
 
