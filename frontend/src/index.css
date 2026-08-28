@@ -2992,3 +2992,7276 @@ a {
     font-size: 19px;
   }
 }
+/* =========================================================
+   PORTFOLIO — PREMIUM FINTECH UI
+   ========================================================= */
+
+.portfolio-header {
+  margin-bottom: 24px;
+}
+
+.portfolio-summary-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 15px;
+  margin-bottom: 22px;
+}
+
+.portfolio-summary-card {
+  min-height: 125px;
+  padding: 20px;
+  box-sizing: border-box;
+
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  border-radius: 18px;
+
+  background: rgba(255, 255, 255, 0.76);
+
+  box-shadow:
+    0 12px 32px rgba(37, 99, 235, 0.06),
+    inset 0 1px 0 rgba(255, 255, 255, 0.95);
+
+  backdrop-filter: blur(16px);
+}
+
+.portfolio-summary-card.primary {
+  background:
+    linear-gradient(
+      145deg,
+      rgba(239, 246, 255, 0.95),
+      rgba(255, 255, 255, 0.78)
+    );
+}
+
+.portfolio-summary-card.profit {
+  background:
+    linear-gradient(
+      145deg,
+      rgba(240, 253, 244, 0.92),
+      rgba(255, 255, 255, 0.76)
+    );
+}
+
+.portfolio-summary-card.loss {
+  background:
+    linear-gradient(
+      145deg,
+      rgba(254, 242, 242, 0.92),
+      rgba(255, 255, 255, 0.76)
+    );
+}
+
+.portfolio-summary-card span {
+  display: block;
+  margin-bottom: 9px;
+
+  color: #64748b;
+
+  font-size: 11px;
+  font-weight: 750;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.portfolio-summary-card strong {
+  display: block;
+
+  color: #102a56;
+
+  font-size: 24px;
+  font-weight: 800;
+  letter-spacing: -0.4px;
+}
+
+.portfolio-summary-card.profit strong {
+  color: #15803d;
+}
+
+.portfolio-summary-card.loss strong {
+  color: #dc2626;
+}
+
+.portfolio-summary-card small {
+  display: block;
+  margin-top: 7px;
+
+  color: #94a3b8;
+
+  font-size: 11px;
+}
+
+
+/* ---------------------------------------------------------
+   TABLE CARD
+   --------------------------------------------------------- */
+
+.portfolio-table-card {
+  overflow: hidden;
+  padding: 0;
+
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  border-radius: 20px;
+
+  background: rgba(255, 255, 255, 0.78);
+
+  box-shadow:
+    0 18px 45px rgba(37, 99, 235, 0.07),
+    inset 0 1px 0 rgba(255, 255, 255, 0.95);
+
+  backdrop-filter: blur(18px);
+}
+
+.portfolio-table-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 22px 24px;
+
+  border-bottom: 1px solid #eef2f7;
+}
+
+.portfolio-table-header h2 {
+  margin: 5px 0 0;
+
+  color: #102a56;
+
+  font-size: 18px;
+  font-weight: 800;
+}
+
+.portfolio-count {
+  padding: 7px 11px;
+
+  border: 1px solid #dbeafe;
+  border-radius: 999px;
+
+  background: #eff6ff;
+
+  color: #2563eb;
+
+  font-size: 11px;
+  font-weight: 750;
+}
+
+
+/* ---------------------------------------------------------
+   COMPANY
+   --------------------------------------------------------- */
+
+.portfolio-company-button {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+
+  gap: 3px;
+
+  padding: 0;
+
+  border: 0;
+  background: transparent;
+
+  cursor: pointer;
+
+  text-align: left;
+}
+
+.portfolio-company-button strong {
+  color: #2563eb;
+
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.portfolio-company-button span {
+  max-width: 190px;
+
+  overflow: hidden;
+
+  color: #64748b;
+
+  font-size: 11px;
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.portfolio-company-button:hover strong {
+  color: #1d4ed8;
+  text-decoration: underline;
+}
+
+
+/* ---------------------------------------------------------
+   PROFIT / LOSS
+   --------------------------------------------------------- */
+
+.portfolio-profit {
+  color: #15803d !important;
+  font-weight: 750;
+}
+
+.portfolio-loss {
+  color: #dc2626 !important;
+  font-weight: 750;
+}
+
+
+/* ---------------------------------------------------------
+   EMPTY STATE
+   --------------------------------------------------------- */
+
+.portfolio-empty {
+  max-width: 600px;
+
+  margin: 50px auto;
+
+  padding: 42px 30px;
+
+  text-align: center;
+}
+
+.portfolio-empty-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 58px;
+  height: 58px;
+
+  margin: 0 auto 18px;
+
+  border-radius: 16px;
+
+  background: #eff6ff;
+
+  color: #2563eb;
+
+  font-size: 24px;
+  font-weight: 800;
+}
+
+.portfolio-empty h2 {
+  margin: 0 0 8px;
+
+  color: #102a56;
+
+  font-size: 21px;
+}
+
+.portfolio-empty p {
+  max-width: 440px;
+
+  margin: 0 auto 22px;
+
+  color: #64748b;
+
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.portfolio-empty button {
+  min-height: 43px;
+
+  padding: 10px 18px;
+
+  border: 0;
+  border-radius: 11px;
+
+  background: #2563eb;
+
+  color: #ffffff;
+
+  cursor: pointer;
+
+  font-size: 13px;
+  font-weight: 750;
+
+  box-shadow:
+    0 8px 20px rgba(37, 99, 235, 0.2);
+}
+
+
+/* ---------------------------------------------------------
+   RESPONSIVE
+   --------------------------------------------------------- */
+
+@media (max-width: 1100px) {
+  .portfolio-summary-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 700px) {
+  .portfolio-summary-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .portfolio-table-header {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 12px;
+  }
+}
+/* =========================================================
+   MY HOLDINGS — PREMIUM FINTECH UI
+   ========================================================= */
+
+.holdings-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.holdings-add-button {
+  min-height: 43px;
+  padding: 10px 17px;
+
+  border: 1px solid #2563eb;
+  border-radius: 11px;
+
+  background: #2563eb;
+  color: #ffffff;
+
+  cursor: pointer;
+
+  font-size: 13px;
+  font-weight: 750;
+
+  box-shadow:
+    0 8px 20px rgba(37, 99, 235, 0.18);
+}
+
+.holdings-add-button:hover {
+  background: #1d4ed8;
+}
+
+
+/* ---------------------------------------------------------
+   SUMMARY
+   --------------------------------------------------------- */
+
+.holdings-summary-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 15px;
+  margin-bottom: 22px;
+}
+
+.holdings-summary-card {
+  min-height: 120px;
+  padding: 20px;
+
+  box-sizing: border-box;
+
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  border-radius: 18px;
+
+  background: rgba(255, 255, 255, 0.76);
+
+  box-shadow:
+    0 12px 32px rgba(37, 99, 235, 0.06),
+    inset 0 1px 0 rgba(255, 255, 255, 0.95);
+
+  backdrop-filter: blur(16px);
+}
+
+.holdings-summary-card.primary {
+  background:
+    linear-gradient(
+      145deg,
+      rgba(239, 246, 255, 0.95),
+      rgba(255, 255, 255, 0.78)
+    );
+}
+
+.holdings-summary-card.profit {
+  background:
+    linear-gradient(
+      145deg,
+      rgba(240, 253, 244, 0.92),
+      rgba(255, 255, 255, 0.76)
+    );
+}
+
+.holdings-summary-card.loss {
+  background:
+    linear-gradient(
+      145deg,
+      rgba(254, 242, 242, 0.92),
+      rgba(255, 255, 255, 0.76)
+    );
+}
+
+.holdings-summary-card span {
+  display: block;
+  margin-bottom: 9px;
+
+  color: #64748b;
+
+  font-size: 11px;
+  font-weight: 750;
+
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.holdings-summary-card strong {
+  display: block;
+
+  color: #102a56;
+
+  font-size: 24px;
+  font-weight: 800;
+}
+
+.holdings-summary-card.profit strong {
+  color: #15803d;
+}
+
+.holdings-summary-card.loss strong {
+  color: #dc2626;
+}
+
+.holdings-summary-card small {
+  display: block;
+  margin-top: 7px;
+
+  color: #94a3b8;
+
+  font-size: 11px;
+}
+
+
+/* ---------------------------------------------------------
+   TABLE
+   --------------------------------------------------------- */
+
+.holdings-table-card {
+  overflow: hidden;
+
+  padding: 0;
+
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  border-radius: 20px;
+
+  background: rgba(255, 255, 255, 0.78);
+
+  box-shadow:
+    0 18px 45px rgba(37, 99, 235, 0.07),
+    inset 0 1px 0 rgba(255, 255, 255, 0.95);
+
+  backdrop-filter: blur(18px);
+}
+
+.holdings-table-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 22px 24px;
+
+  border-bottom: 1px solid #eef2f7;
+}
+
+.holdings-table-header h2 {
+  margin: 5px 0 0;
+
+  color: #102a56;
+
+  font-size: 18px;
+  font-weight: 800;
+}
+
+.holdings-count {
+  padding: 7px 11px;
+
+  border: 1px solid #dbeafe;
+  border-radius: 999px;
+
+  background: #eff6ff;
+
+  color: #2563eb;
+
+  font-size: 11px;
+  font-weight: 750;
+}
+
+
+/* ---------------------------------------------------------
+   COMPANY
+   --------------------------------------------------------- */
+
+.holding-company-button {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+
+  gap: 3px;
+
+  padding: 0;
+
+  border: 0;
+  background: transparent;
+
+  cursor: pointer;
+
+  text-align: left;
+}
+
+.holding-company-button strong {
+  color: #2563eb;
+
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.holding-company-button span {
+  max-width: 180px;
+
+  overflow: hidden;
+
+  color: #64748b;
+
+  font-size: 11px;
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.holding-company-button:hover strong {
+  color: #1d4ed8;
+  text-decoration: underline;
+}
+
+
+/* ---------------------------------------------------------
+   PROFIT / LOSS
+   --------------------------------------------------------- */
+
+.holding-profit {
+  color: #15803d !important;
+  font-weight: 750;
+}
+
+.holding-loss {
+  color: #dc2626 !important;
+  font-weight: 750;
+}
+
+
+/* ---------------------------------------------------------
+   REMOVE
+   --------------------------------------------------------- */
+
+.holding-remove-button {
+  padding: 7px 10px;
+
+  border: 1px solid #fecaca;
+  border-radius: 8px;
+
+  background: #fffafa;
+  color: #dc2626;
+
+  cursor: pointer;
+
+  font-size: 11px;
+  font-weight: 750;
+}
+
+.holding-remove-button:hover {
+  background: #fef2f2;
+  border-color: #fca5a5;
+}
+
+
+/* ---------------------------------------------------------
+   EMPTY STATE
+   --------------------------------------------------------- */
+
+.holdings-empty {
+  max-width: 580px;
+
+  margin: 50px auto;
+
+  padding: 42px 30px;
+
+  text-align: center;
+}
+
+.holdings-empty-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 58px;
+  height: 58px;
+
+  margin: 0 auto 18px;
+
+  border-radius: 16px;
+
+  background: #eff6ff;
+
+  color: #2563eb;
+
+  font-size: 26px;
+  font-weight: 700;
+}
+
+.holdings-empty h2 {
+  margin: 0 0 8px;
+
+  color: #102a56;
+
+  font-size: 21px;
+}
+
+.holdings-empty p {
+  max-width: 430px;
+
+  margin: 0 auto 22px;
+
+  color: #64748b;
+
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.holdings-empty button {
+  min-height: 43px;
+
+  padding: 10px 18px;
+
+  border: 0;
+  border-radius: 11px;
+
+  background: #2563eb;
+  color: #ffffff;
+
+  cursor: pointer;
+
+  font-size: 13px;
+  font-weight: 750;
+}
+
+
+/* ---------------------------------------------------------
+   REMOVE CONFIRMATION MODAL
+   --------------------------------------------------------- */
+
+.holding-modal-backdrop {
+  position: fixed;
+
+  inset: 0;
+
+  z-index: 1000;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 20px;
+
+  background: rgba(15, 23, 42, 0.35);
+
+  backdrop-filter: blur(7px);
+}
+
+.holding-confirm-modal {
+  width: min(430px, 100%);
+
+  padding: 28px;
+
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  border-radius: 20px;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.97),
+      rgba(248, 250, 252, 0.95)
+    );
+
+  box-shadow:
+    0 30px 80px rgba(15, 23, 42, 0.2);
+
+  text-align: center;
+}
+
+.holding-confirm-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 48px;
+  height: 48px;
+
+  margin: 0 auto 15px;
+
+  border-radius: 14px;
+
+  background: #fff7ed;
+
+  color: #ea580c;
+
+  font-size: 20px;
+  font-weight: 800;
+}
+
+.holding-confirm-modal h2 {
+  margin: 0 0 8px;
+
+  color: #102a56;
+
+  font-size: 20px;
+  font-weight: 800;
+}
+
+.holding-confirm-modal p {
+  margin: 0 0 7px;
+
+  color: #334155;
+
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.holding-confirm-modal > span {
+  display: block;
+
+  color: #64748b;
+
+  font-size: 12px;
+  line-height: 1.55;
+}
+
+.holding-remove-error {
+  margin-top: 15px;
+
+  padding: 11px;
+
+  border-radius: 9px;
+
+  background: #fef2f2;
+
+  color: #dc2626;
+
+  font-size: 12px;
+}
+
+.holding-confirm-actions {
+  display: flex;
+  justify-content: center;
+
+  gap: 10px;
+
+  margin-top: 22px;
+}
+
+.holding-confirm-actions button {
+  min-height: 41px;
+
+  padding: 9px 17px;
+
+  border: 1px solid #dbe4f0;
+  border-radius: 10px;
+
+  background: #ffffff;
+
+  color: #475569;
+
+  cursor: pointer;
+
+  font-size: 12px;
+  font-weight: 750;
+}
+
+.holding-confirm-actions button.danger {
+  border-color: #dc2626;
+
+  background: #dc2626;
+
+  color: #ffffff;
+}
+
+.holding-confirm-actions button.danger:hover:not(:disabled) {
+  background: #b91c1c;
+}
+
+.holding-confirm-actions button:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+
+/* ---------------------------------------------------------
+   RESPONSIVE
+   --------------------------------------------------------- */
+
+@media (max-width: 1100px) {
+  .holdings-summary-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .holdings-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 700px) {
+  .holdings-summary-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .holdings-table-header {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .holding-confirm-actions {
+    flex-direction: column;
+  }
+
+  .holding-confirm-actions button {
+    width: 100%;
+  }
+}
+/* =========================================================
+   WATCHLIST — PREMIUM FINTECH UI
+   ========================================================= */
+
+.watchlist-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.watchlist-add-button {
+  min-height: 43px;
+  padding: 10px 17px;
+
+  border: 1px solid #2563eb;
+  border-radius: 11px;
+
+  background: #2563eb;
+  color: #ffffff;
+
+  cursor: pointer;
+
+  font-size: 13px;
+  font-weight: 750;
+
+  box-shadow:
+    0 8px 20px rgba(37, 99, 235, 0.18);
+}
+
+.watchlist-add-button:hover {
+  background: #1d4ed8;
+}
+
+
+/* ---------------------------------------------------------
+   CARD
+   --------------------------------------------------------- */
+
+.watchlist-card {
+  overflow: hidden;
+
+  padding: 0;
+
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  border-radius: 20px;
+
+  background: rgba(255, 255, 255, 0.78);
+
+  box-shadow:
+    0 18px 45px rgba(37, 99, 235, 0.07),
+    inset 0 1px 0 rgba(255, 255, 255, 0.95);
+
+  backdrop-filter: blur(18px);
+}
+
+.watchlist-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 22px 24px;
+
+  border-bottom: 1px solid #eef2f7;
+}
+
+.watchlist-card-header h2 {
+  margin: 5px 0 0;
+
+  color: #102a56;
+
+  font-size: 18px;
+  font-weight: 800;
+}
+
+.watchlist-count {
+  padding: 7px 11px;
+
+  border: 1px solid #dbeafe;
+  border-radius: 999px;
+
+  background: #eff6ff;
+
+  color: #2563eb;
+
+  font-size: 11px;
+  font-weight: 750;
+}
+
+
+/* ---------------------------------------------------------
+   ROW
+   --------------------------------------------------------- */
+
+.watchlist-row {
+  display: grid;
+
+  grid-template-columns:
+    minmax(250px, 1.7fr)
+    minmax(150px, 0.8fr)
+    minmax(150px, 0.7fr);
+
+  align-items: center;
+
+  gap: 20px;
+
+  padding: 19px 24px;
+
+  border-bottom: 1px solid #f0f2f5;
+
+  transition:
+    background 0.18s ease;
+}
+
+.watchlist-row:last-child {
+  border-bottom: 0;
+}
+
+.watchlist-row:hover {
+  background: rgba(239, 246, 255, 0.38);
+}
+
+
+/* ---------------------------------------------------------
+   COMPANY
+   --------------------------------------------------------- */
+
+.watchlist-company {
+  display: flex;
+  align-items: center;
+
+  min-width: 0;
+
+  gap: 13px;
+
+  padding: 0;
+
+  border: 0;
+
+  background: transparent;
+
+  cursor: pointer;
+
+  text-align: left;
+}
+
+.watchlist-symbol {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  min-width: 46px;
+  height: 46px;
+
+  border-radius: 13px;
+
+  background:
+    linear-gradient(
+      145deg,
+      #eff6ff,
+      #dbeafe
+    );
+
+  color: #2563eb;
+
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.watchlist-company-info {
+  min-width: 0;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 4px;
+}
+
+.watchlist-company-info strong {
+  overflow: hidden;
+
+  color: #172033;
+
+  font-size: 13px;
+  font-weight: 750;
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.watchlist-company-info span {
+  color: #94a3b8;
+
+  font-size: 11px;
+}
+
+.watchlist-company:hover .watchlist-company-info strong {
+  color: #2563eb;
+}
+
+
+/* ---------------------------------------------------------
+   MARKET
+   --------------------------------------------------------- */
+
+.watchlist-market {
+  display: flex;
+  flex-direction: column;
+
+  gap: 5px;
+}
+
+.watchlist-price {
+  color: #102a56;
+
+  font-size: 15px;
+  font-weight: 800;
+}
+
+.watchlist-change {
+  display: flex;
+
+  gap: 7px;
+
+  font-size: 11px;
+  font-weight: 750;
+}
+
+.watchlist-change.positive {
+  color: #15803d;
+}
+
+.watchlist-change.negative {
+  color: #dc2626;
+}
+
+
+/* ---------------------------------------------------------
+   META
+   --------------------------------------------------------- */
+
+.watchlist-meta {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+
+  gap: 13px;
+}
+
+.watchlist-meta > span {
+  color: #94a3b8;
+
+  font-size: 10px;
+}
+
+.watchlist-remove {
+  padding: 7px 10px;
+
+  border: 1px solid #fecaca;
+  border-radius: 8px;
+
+  background: #fffafa;
+
+  color: #dc2626;
+
+  cursor: pointer;
+
+  font-size: 10px;
+  font-weight: 750;
+}
+
+.watchlist-remove:hover {
+  background: #fef2f2;
+}
+
+
+/* ---------------------------------------------------------
+   EMPTY STATE
+   --------------------------------------------------------- */
+
+.watchlist-empty {
+  max-width: 580px;
+
+  margin: 50px auto;
+
+  padding: 42px 30px;
+
+  text-align: center;
+}
+
+.watchlist-empty-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 58px;
+  height: 58px;
+
+  margin: 0 auto 18px;
+
+  border-radius: 16px;
+
+  background: #eff6ff;
+
+  color: #2563eb;
+
+  font-size: 25px;
+  font-weight: 700;
+}
+
+.watchlist-empty h2 {
+  margin: 0 0 8px;
+
+  color: #102a56;
+
+  font-size: 21px;
+}
+
+.watchlist-empty p {
+  max-width: 430px;
+
+  margin: 0 auto 22px;
+
+  color: #64748b;
+
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.watchlist-empty button {
+  min-height: 43px;
+
+  padding: 10px 18px;
+
+  border: 0;
+  border-radius: 11px;
+
+  background: #2563eb;
+  color: #ffffff;
+
+  cursor: pointer;
+
+  font-size: 13px;
+  font-weight: 750;
+}
+
+
+/* ---------------------------------------------------------
+   CONFIRMATION MODAL
+   --------------------------------------------------------- */
+
+.watchlist-modal-backdrop {
+  position: fixed;
+
+  inset: 0;
+
+  z-index: 1000;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 20px;
+
+  background: rgba(15, 23, 42, 0.35);
+
+  backdrop-filter: blur(7px);
+}
+
+.watchlist-confirm-modal {
+  width: min(430px, 100%);
+
+  padding: 28px;
+
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  border-radius: 20px;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.97),
+      rgba(248, 250, 252, 0.95)
+    );
+
+  box-shadow:
+    0 30px 80px rgba(15, 23, 42, 0.2);
+
+  text-align: center;
+}
+
+.watchlist-confirm-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 48px;
+  height: 48px;
+
+  margin: 0 auto 15px;
+
+  border-radius: 14px;
+
+  background: #fff7ed;
+
+  color: #ea580c;
+
+  font-size: 20px;
+  font-weight: 800;
+}
+
+.watchlist-confirm-modal h2 {
+  margin: 0 0 8px;
+
+  color: #102a56;
+
+  font-size: 20px;
+  font-weight: 800;
+}
+
+.watchlist-confirm-modal p {
+  margin: 0 0 7px;
+
+  color: #334155;
+
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.watchlist-confirm-modal > span {
+  display: block;
+
+  color: #64748b;
+
+  font-size: 12px;
+  line-height: 1.55;
+}
+
+.watchlist-remove-error {
+  margin-top: 15px;
+
+  padding: 11px;
+
+  border-radius: 9px;
+
+  background: #fef2f2;
+
+  color: #dc2626;
+
+  font-size: 12px;
+}
+
+.watchlist-confirm-actions {
+  display: flex;
+  justify-content: center;
+
+  gap: 10px;
+
+  margin-top: 22px;
+}
+
+.watchlist-confirm-actions button {
+  min-height: 41px;
+
+  padding: 9px 17px;
+
+  border: 1px solid #dbe4f0;
+  border-radius: 10px;
+
+  background: #ffffff;
+
+  color: #475569;
+
+  cursor: pointer;
+
+  font-size: 12px;
+  font-weight: 750;
+}
+
+.watchlist-confirm-actions button.danger {
+  border-color: #dc2626;
+
+  background: #dc2626;
+
+  color: #ffffff;
+}
+
+.watchlist-confirm-actions button.danger:hover:not(:disabled) {
+  background: #b91c1c;
+}
+
+.watchlist-confirm-actions button:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+
+/* ---------------------------------------------------------
+   RESPONSIVE
+   --------------------------------------------------------- */
+
+@media (max-width: 900px) {
+  .watchlist-row {
+    grid-template-columns:
+      1fr
+      1fr;
+  }
+
+  .watchlist-meta {
+    justify-content: flex-start;
+  }
+}
+
+@media (max-width: 700px) {
+  .watchlist-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .watchlist-card-header {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .watchlist-row {
+    grid-template-columns: 1fr;
+    gap: 13px;
+  }
+
+  .watchlist-meta {
+    justify-content: space-between;
+  }
+
+  .watchlist-confirm-actions {
+    flex-direction: column;
+  }
+
+  .watchlist-confirm-actions button {
+    width: 100%;
+  }
+}
+/* =========================================================
+   WISHLIST — PREMIUM FINTECH UI
+   ========================================================= */
+
+.wishlist-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.wishlist-add-button {
+  min-height: 43px;
+  padding: 10px 17px;
+
+  border: 1px solid #2563eb;
+  border-radius: 11px;
+
+  background: #2563eb;
+  color: #ffffff;
+
+  cursor: pointer;
+
+  font-size: 13px;
+  font-weight: 750;
+
+  box-shadow:
+    0 8px 20px rgba(37, 99, 235, 0.18);
+}
+
+.wishlist-add-button:hover {
+  background: #1d4ed8;
+}
+
+
+/* ---------------------------------------------------------
+   MAIN CARD
+   --------------------------------------------------------- */
+
+.wishlist-card {
+  overflow: hidden;
+  padding: 0;
+
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  border-radius: 20px;
+
+  background: rgba(255, 255, 255, 0.78);
+
+  box-shadow:
+    0 18px 45px rgba(37, 99, 235, 0.07),
+    inset 0 1px 0 rgba(255, 255, 255, 0.95);
+
+  backdrop-filter: blur(18px);
+}
+
+.wishlist-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 22px 24px;
+
+  border-bottom: 1px solid #eef2f7;
+}
+
+.wishlist-card-header h2 {
+  margin: 5px 0 0;
+
+  color: #102a56;
+
+  font-size: 18px;
+  font-weight: 800;
+}
+
+.wishlist-count {
+  padding: 7px 11px;
+
+  border: 1px solid #dbeafe;
+  border-radius: 999px;
+
+  background: #eff6ff;
+
+  color: #2563eb;
+
+  font-size: 11px;
+  font-weight: 750;
+}
+
+
+/* ---------------------------------------------------------
+   ROW
+   --------------------------------------------------------- */
+
+.wishlist-row {
+  display: grid;
+
+  grid-template-columns:
+    minmax(250px, 1.7fr)
+    minmax(130px, 0.8fr)
+    minmax(80px, 0.45fr)
+    minmax(150px, 0.8fr);
+
+  align-items: center;
+
+  gap: 20px;
+
+  padding: 19px 24px;
+
+  border-bottom: 1px solid #f0f2f5;
+
+  transition:
+    background 0.18s ease;
+}
+
+.wishlist-row:last-child {
+  border-bottom: 0;
+}
+
+.wishlist-row:hover {
+  background: rgba(239, 246, 255, 0.38);
+}
+
+
+/* ---------------------------------------------------------
+   COMPANY
+   --------------------------------------------------------- */
+
+.wishlist-company {
+  display: flex;
+  align-items: center;
+
+  min-width: 0;
+
+  gap: 13px;
+
+  padding: 0;
+
+  border: 0;
+
+  background: transparent;
+
+  cursor: pointer;
+
+  text-align: left;
+}
+
+.wishlist-symbol {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  min-width: 46px;
+  height: 46px;
+
+  border-radius: 13px;
+
+  background:
+    linear-gradient(
+      145deg,
+      #eff6ff,
+      #dbeafe
+    );
+
+  color: #2563eb;
+
+  font-size: 20px;
+}
+
+.wishlist-company-info {
+  min-width: 0;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 4px;
+}
+
+.wishlist-company-info strong {
+  overflow: hidden;
+
+  color: #172033;
+
+  font-size: 13px;
+  font-weight: 750;
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.wishlist-company-info span {
+  color: #94a3b8;
+
+  font-size: 11px;
+}
+
+.wishlist-company:hover strong {
+  color: #2563eb;
+}
+
+
+/* ---------------------------------------------------------
+   PRICE
+   --------------------------------------------------------- */
+
+.wishlist-price-block {
+  display: flex;
+  flex-direction: column;
+
+  gap: 4px;
+}
+
+.wishlist-price-block span {
+  color: #94a3b8;
+
+  font-size: 9px;
+  font-weight: 700;
+
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.wishlist-price-block strong {
+  color: #102a56;
+
+  font-size: 15px;
+  font-weight: 800;
+}
+
+
+/* ---------------------------------------------------------
+   CHANGE
+   --------------------------------------------------------- */
+
+.wishlist-change {
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.wishlist-change.positive {
+  color: #15803d;
+}
+
+.wishlist-change.negative {
+  color: #dc2626;
+}
+
+
+/* ---------------------------------------------------------
+   META
+   --------------------------------------------------------- */
+
+.wishlist-meta {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+
+  gap: 13px;
+}
+
+.wishlist-meta > span {
+  color: #94a3b8;
+
+  font-size: 10px;
+}
+
+.wishlist-remove {
+  padding: 7px 10px;
+
+  border: 1px solid #fecaca;
+  border-radius: 8px;
+
+  background: #fffafa;
+
+  color: #dc2626;
+
+  cursor: pointer;
+
+  font-size: 10px;
+  font-weight: 750;
+}
+
+.wishlist-remove:hover {
+  background: #fef2f2;
+}
+
+
+/* ---------------------------------------------------------
+   EMPTY STATE
+   --------------------------------------------------------- */
+
+.wishlist-empty {
+  max-width: 580px;
+
+  margin: 50px auto;
+
+  padding: 44px 30px;
+
+  text-align: center;
+}
+
+.wishlist-empty-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 58px;
+  height: 58px;
+
+  margin: 0 auto 18px;
+
+  border-radius: 16px;
+
+  background: #eff6ff;
+
+  color: #2563eb;
+
+  font-size: 27px;
+}
+
+.wishlist-empty h2 {
+  margin: 0 0 8px;
+
+  color: #102a56;
+
+  font-size: 21px;
+}
+
+.wishlist-empty p {
+  max-width: 440px;
+
+  margin: 0 auto 22px;
+
+  color: #64748b;
+
+  font-size: 13px;
+  line-height: 1.65;
+}
+
+.wishlist-empty button {
+  min-height: 43px;
+
+  padding: 10px 18px;
+
+  border: 0;
+  border-radius: 11px;
+
+  background: #2563eb;
+
+  color: #ffffff;
+
+  cursor: pointer;
+
+  font-size: 13px;
+  font-weight: 750;
+
+  box-shadow:
+    0 8px 20px rgba(37, 99, 235, 0.18);
+}
+
+
+/* ---------------------------------------------------------
+   CONFIRMATION MODAL
+   --------------------------------------------------------- */
+
+.wishlist-modal-backdrop {
+  position: fixed;
+
+  inset: 0;
+
+  z-index: 1000;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 20px;
+
+  background: rgba(15, 23, 42, 0.35);
+
+  backdrop-filter: blur(7px);
+}
+
+.wishlist-confirm-modal {
+  width: min(430px, 100%);
+
+  padding: 28px;
+
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  border-radius: 20px;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.97),
+      rgba(248, 250, 252, 0.95)
+    );
+
+  box-shadow:
+    0 30px 80px rgba(15, 23, 42, 0.2);
+
+  text-align: center;
+}
+
+.wishlist-confirm-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 48px;
+  height: 48px;
+
+  margin: 0 auto 15px;
+
+  border-radius: 14px;
+
+  background: #fff7ed;
+
+  color: #ea580c;
+
+  font-size: 20px;
+  font-weight: 800;
+}
+
+.wishlist-confirm-modal h2 {
+  margin: 0 0 8px;
+
+  color: #102a56;
+
+  font-size: 20px;
+  font-weight: 800;
+}
+
+.wishlist-confirm-modal p {
+  margin: 0 0 7px;
+
+  color: #334155;
+
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.wishlist-confirm-modal > span {
+  display: block;
+
+  color: #64748b;
+
+  font-size: 12px;
+  line-height: 1.55;
+}
+
+.wishlist-remove-error {
+  margin-top: 15px;
+
+  padding: 11px;
+
+  border-radius: 9px;
+
+  background: #fef2f2;
+
+  color: #dc2626;
+
+  font-size: 12px;
+}
+
+.wishlist-confirm-actions {
+  display: flex;
+  justify-content: center;
+
+  gap: 10px;
+
+  margin-top: 22px;
+}
+
+.wishlist-confirm-actions button {
+  min-height: 41px;
+
+  padding: 9px 17px;
+
+  border: 1px solid #dbe4f0;
+  border-radius: 10px;
+
+  background: #ffffff;
+
+  color: #475569;
+
+  cursor: pointer;
+
+  font-size: 12px;
+  font-weight: 750;
+}
+
+.wishlist-confirm-actions button.danger {
+  border-color: #dc2626;
+
+  background: #dc2626;
+
+  color: #ffffff;
+}
+
+.wishlist-confirm-actions button.danger:hover:not(:disabled) {
+  background: #b91c1c;
+}
+
+.wishlist-confirm-actions button:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+
+/* ---------------------------------------------------------
+   RESPONSIVE
+   --------------------------------------------------------- */
+
+@media (max-width: 1000px) {
+  .wishlist-row {
+    grid-template-columns:
+      1.5fr
+      1fr
+      0.6fr;
+  }
+
+  .wishlist-meta {
+    justify-content: flex-start;
+  }
+}
+
+@media (max-width: 700px) {
+  .wishlist-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .wishlist-card-header {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .wishlist-row {
+    grid-template-columns: 1fr;
+    gap: 13px;
+  }
+
+  .wishlist-meta {
+    justify-content: space-between;
+  }
+
+  .wishlist-confirm-actions {
+    flex-direction: column;
+  }
+
+  .wishlist-confirm-actions button {
+    width: 100%;
+  }
+}
+/* =========================================================
+   TOP COMPANIES / MARKET OVERVIEW
+   ========================================================= */
+
+.top-companies-header {
+  margin-bottom: 26px;
+}
+
+.market-overview-section {
+  margin-bottom: 24px;
+}
+
+.top-companies-section-heading {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+
+  margin-bottom: 13px;
+}
+
+.top-companies-section-heading h2 {
+  margin: 5px 0 0;
+
+  color: #102a56;
+
+  font-size: 20px;
+  font-weight: 800;
+}
+
+.market-live-indicator {
+  display: flex;
+  align-items: center;
+
+  gap: 6px;
+
+  padding: 6px 10px;
+
+  border: 1px solid #bbf7d0;
+  border-radius: 999px;
+
+  background: #f0fdf4;
+
+  color: #15803d;
+
+  font-size: 10px;
+  font-weight: 750;
+}
+
+.market-live-indicator span {
+  width: 6px;
+  height: 6px;
+
+  border-radius: 50%;
+
+  background: #22c55e;
+}
+
+
+/* ---------------------------------------------------------
+   MARKET INDEX CARDS
+   --------------------------------------------------------- */
+
+.market-overview-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(3, 1fr);
+
+  gap: 15px;
+}
+
+.market-index-card {
+  padding: 20px;
+
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  border-radius: 18px;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.82),
+      rgba(239, 246, 255, 0.65)
+    );
+
+  box-shadow:
+    0 12px 30px rgba(37, 99, 235, 0.06),
+    inset 0 1px 0 rgba(255, 255, 255, 0.95);
+
+  cursor: pointer;
+
+  text-align: left;
+
+  backdrop-filter: blur(16px);
+
+  transition:
+    transform 0.18s ease,
+    box-shadow 0.18s ease;
+}
+
+.market-index-card:hover {
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 18px 35px rgba(37, 99, 235, 0.1);
+}
+
+.market-index-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  margin-bottom: 16px;
+}
+
+.market-index-symbol {
+  color: #2563eb;
+
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.market-index-change {
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.market-index-card strong {
+  display: block;
+
+  margin-bottom: 6px;
+
+  color: #102a56;
+
+  font-size: 24px;
+  font-weight: 800;
+}
+
+.market-index-card > span:last-child {
+  color: #94a3b8;
+
+  font-size: 11px;
+}
+
+
+/* ---------------------------------------------------------
+   TWO COLUMN MARKET LIST
+   --------------------------------------------------------- */
+
+.market-columns {
+  display: grid;
+
+  grid-template-columns:
+    repeat(2, 1fr);
+
+  gap: 18px;
+
+  margin-bottom: 20px;
+}
+
+.market-list-card {
+  overflow: hidden;
+
+  padding: 0;
+}
+
+.market-list-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 21px 22px;
+
+  border-bottom: 1px solid #eef2f7;
+}
+
+.market-list-header h2 {
+  margin: 5px 0 0;
+
+  color: #102a56;
+
+  font-size: 17px;
+  font-weight: 800;
+}
+
+.market-list-badge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  min-width: 32px;
+  min-height: 26px;
+
+  padding: 0 8px;
+
+  border-radius: 8px;
+
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.market-list-badge.positive {
+  background: #f0fdf4;
+  color: #15803d;
+}
+
+.market-list-badge.negative {
+  background: #fef2f2;
+  color: #dc2626;
+}
+
+.market-list-badge.blue {
+  background: #eff6ff;
+  color: #2563eb;
+}
+
+
+/* ---------------------------------------------------------
+   COMPANY ROWS
+   --------------------------------------------------------- */
+
+.market-company-list {
+  padding: 5px 0;
+}
+
+.market-company-row {
+  display: grid;
+
+  grid-template-columns:
+    42px minmax(0, 1fr) auto;
+
+  align-items: center;
+
+  width: 100%;
+
+  gap: 12px;
+
+  padding: 13px 20px;
+
+  border: 0;
+
+  border-bottom: 1px solid #f3f5f8;
+
+  background: transparent;
+
+  cursor: pointer;
+
+  text-align: left;
+}
+
+.market-company-row:last-child {
+  border-bottom: 0;
+}
+
+.market-company-row:hover {
+  background: #f8fbff;
+}
+
+.market-company-avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 40px;
+  height: 40px;
+
+  border-radius: 11px;
+
+  background: #eff6ff;
+
+  color: #2563eb;
+
+  font-size: 10px;
+  font-weight: 800;
+}
+
+.market-company-name {
+  min-width: 0;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 3px;
+}
+
+.market-company-name strong {
+  color: #172033;
+
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.market-company-name span {
+  overflow: hidden;
+
+  color: #94a3b8;
+
+  font-size: 10px;
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.market-company-value {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+
+  gap: 3px;
+}
+
+.market-company-value strong {
+  color: #102a56;
+
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.market-company-value span {
+  font-size: 10px;
+  font-weight: 800;
+}
+
+
+/* ---------------------------------------------------------
+   MOST ACTIVE
+   --------------------------------------------------------- */
+
+.market-active-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(5, 1fr);
+
+  gap: 1px;
+
+  background: #eef2f7;
+}
+
+.market-active-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+
+  min-height: 135px;
+
+  padding: 18px;
+
+  border: 0;
+
+  background: rgba(255, 255, 255, 0.86);
+
+  cursor: pointer;
+
+  text-align: left;
+
+  transition:
+    background 0.18s ease;
+}
+
+.market-active-card:hover {
+  background: #f8fbff;
+}
+
+.market-rank {
+  margin-bottom: 12px;
+
+  color: #94a3b8;
+
+  font-size: 10px;
+  font-weight: 750;
+}
+
+.market-active-card strong {
+  margin-bottom: 5px;
+
+  color: #2563eb;
+
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.market-active-card > span {
+  margin-bottom: 9px;
+
+  color: #102a56;
+
+  font-size: 13px;
+  font-weight: 750;
+}
+
+.market-active-card small {
+  color: #94a3b8;
+
+  font-size: 9px;
+}
+
+
+/* ---------------------------------------------------------
+   POPULAR COMPANIES
+   --------------------------------------------------------- */
+
+.popular-company-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(4, 1fr);
+
+  gap: 13px;
+
+  padding: 20px;
+}
+
+.popular-company-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+
+  min-height: 145px;
+
+  padding: 16px;
+
+  border: 1px solid #edf2f7;
+  border-radius: 15px;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.92),
+      rgba(248, 250, 252, 0.82)
+    );
+
+  cursor: pointer;
+
+  text-align: left;
+
+  transition:
+    transform 0.18s ease,
+    border-color 0.18s ease,
+    box-shadow 0.18s ease;
+}
+
+.popular-company-card:hover {
+  transform: translateY(-2px);
+
+  border-color: #bfdbfe;
+
+  box-shadow:
+    0 12px 24px rgba(37, 99, 235, 0.08);
+}
+
+.popular-company-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  width: 100%;
+
+  margin-bottom: 15px;
+}
+
+.popular-company-avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 36px;
+  height: 36px;
+
+  border-radius: 10px;
+
+  background: #eff6ff;
+
+  color: #2563eb;
+
+  font-size: 9px;
+  font-weight: 800;
+}
+
+.popular-company-top > span {
+  font-size: 10px;
+  font-weight: 800;
+}
+
+.popular-company-card > strong {
+  margin-bottom: 3px;
+
+  color: #102a56;
+
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.popular-company-card > span {
+  overflow: hidden;
+
+  width: 100%;
+
+  margin-bottom: 13px;
+
+  color: #94a3b8;
+
+  font-size: 10px;
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.popular-company-card > b {
+  color: #172033;
+
+  font-size: 13px;
+  font-weight: 800;
+}
+
+
+/* ---------------------------------------------------------
+   COMMON
+   --------------------------------------------------------- */
+
+.market-empty {
+  margin: 0;
+
+  padding: 24px 20px;
+
+  color: #94a3b8;
+
+  font-size: 12px;
+}
+
+.positive {
+  color: #15803d !important;
+}
+
+.negative {
+  color: #dc2626 !important;
+}
+
+
+/* ---------------------------------------------------------
+   RESPONSIVE
+   --------------------------------------------------------- */
+
+@media (max-width: 1050px) {
+  .popular-company-grid {
+    grid-template-columns:
+      repeat(2, 1fr);
+  }
+
+  .market-active-grid {
+    grid-template-columns:
+      repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 800px) {
+  .market-overview-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .market-columns {
+    grid-template-columns: 1fr;
+  }
+
+  .market-active-grid {
+    grid-template-columns:
+      repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .top-companies-section-heading {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .popular-company-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .market-active-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .market-company-row {
+    grid-template-columns:
+      40px minmax(0, 1fr) auto;
+  }
+}
+/* -------------------------------------------------- */
+/* Feedback                                            */
+/* -------------------------------------------------- */
+
+.feedback-page {
+  padding-bottom: 48px;
+}
+
+.feedback-header {
+  margin-bottom: 28px;
+}
+
+.feedback-layout {
+  display: grid;
+  grid-template-columns:
+    minmax(0, 1fr)
+    320px;
+  gap: 24px;
+  align-items: start;
+}
+
+.feedback-form-card {
+  padding: 28px;
+}
+
+.feedback-card-header {
+  padding-bottom: 22px;
+  border-bottom: 1px solid #edf0f5;
+}
+
+.feedback-card-header h2 {
+  margin: 6px 0 0;
+  color: #172033;
+  font-size: 22px;
+  letter-spacing: -0.02em;
+}
+
+.feedback-form {
+  padding-top: 26px;
+}
+
+.feedback-field {
+  position: relative;
+  margin-bottom: 26px;
+}
+
+.feedback-field > label {
+  display: block;
+  margin-bottom: 12px;
+  color: #172033;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.feedback-category-grid {
+  display: grid;
+  grid-template-columns:
+    repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.feedback-category {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  min-height: 112px;
+  padding: 16px;
+  border: 1px solid #e5e9f0;
+  border-radius: 14px;
+  background: #ffffff;
+  color: #172033;
+  text-align: left;
+  cursor: pointer;
+  transition:
+    border-color 0.18s ease,
+    box-shadow 0.18s ease,
+    transform 0.18s ease;
+}
+
+.feedback-category:hover {
+  border-color: #b9c7dd;
+  box-shadow:
+    0 8px 20px rgba(
+      37,
+      99,
+      235,
+      0.06
+    );
+  transform: translateY(-1px);
+}
+
+.feedback-category.selected {
+  border-color: #2563eb;
+  background: #f8fbff;
+  box-shadow:
+    0 0 0 3px rgba(
+      37,
+      99,
+      235,
+      0.08
+    );
+}
+
+.feedback-category-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  flex: 0 0 34px;
+  border-radius: 10px;
+  background: #f1f5f9;
+  color: #2563eb;
+  font-size: 16px;
+}
+
+.feedback-category.selected
+.feedback-category-icon {
+  background: #eaf2ff;
+}
+
+.feedback-category-content {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.feedback-category-content strong {
+  color: #172033;
+  font-size: 13px;
+}
+
+.feedback-category-content small {
+  color: #667085;
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+.feedback-rating {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.feedback-rating button {
+  width: 38px;
+  height: 38px;
+  padding: 0;
+  border: 1px solid #e1e6ee;
+  border-radius: 10px;
+  background: #ffffff;
+  color: #cbd2dc;
+  font-size: 20px;
+  line-height: 1;
+  cursor: pointer;
+  transition:
+    color 0.15s ease,
+    border-color 0.15s ease,
+    background 0.15s ease;
+}
+
+.feedback-rating button:hover,
+.feedback-rating button.active {
+  color: #f59e0b;
+  border-color: #f5d79b;
+  background: #fffaf0;
+}
+
+.feedback-rating > span {
+  margin-left: 8px;
+  color: #667085;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.feedback-field textarea {
+  width: 100%;
+  min-height: 170px;
+  padding: 14px 16px;
+  resize: vertical;
+  border: 1px solid #d9dee8;
+  border-radius: 12px;
+  outline: none;
+  background: #ffffff;
+  color: #172033;
+  font-family: inherit;
+  font-size: 13px;
+  line-height: 1.6;
+  transition:
+    border-color 0.18s ease,
+    box-shadow 0.18s ease;
+  box-sizing: border-box;
+}
+
+.feedback-field textarea::placeholder {
+  color: #98a2b3;
+}
+
+.feedback-field textarea:focus {
+  border-color: #2563eb;
+  box-shadow:
+    0 0 0 3px rgba(
+      37,
+      99,
+      235,
+      0.08
+    );
+}
+
+.feedback-character-count {
+  margin-top: 6px;
+  color: #98a2b3;
+  font-size: 11px;
+  text-align: right;
+}
+
+.feedback-alert {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 20px;
+  padding: 12px 14px;
+  border-radius: 10px;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.feedback-alert.error {
+  border: 1px solid #fecaca;
+  background: #fff7f7;
+  color: #b42318;
+}
+
+.feedback-alert.success {
+  border: 1px solid #bbf7d0;
+  background: #f0fdf4;
+  color: #15803d;
+}
+
+.feedback-form-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding-top: 20px;
+  border-top: 1px solid #edf0f5;
+}
+
+.feedback-form-footer p {
+  max-width: 420px;
+  margin: 0;
+  color: #667085;
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+.feedback-submit-button {
+  min-width: 160px;
+}
+
+.feedback-info-card {
+  position: relative;
+  overflow: hidden;
+  padding: 28px;
+  border: 1px solid rgba(
+    255,
+    255,
+    255,
+    0.85
+  );
+  border-radius: 18px;
+  background:
+    linear-gradient(
+      145deg,
+      #f8fbff,
+      #ffffff
+    );
+  box-shadow:
+    0 10px 30px
+      rgba(
+        37,
+        99,
+        235,
+        0.06
+      );
+}
+
+.feedback-info-card::after {
+  content: '';
+  position: absolute;
+  width: 180px;
+  height: 180px;
+  top: -90px;
+  right: -90px;
+  border-radius: 50%;
+  background: rgba(
+    37,
+    99,
+    235,
+    0.06
+  );
+}
+
+.feedback-info-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 46px;
+  height: 46px;
+  margin-bottom: 22px;
+  border: 1px solid #dbe7fb;
+  border-radius: 13px;
+  background: #ffffff;
+  color: #2563eb;
+  font-size: 20px;
+}
+
+.feedback-info-card h2 {
+  position: relative;
+  z-index: 1;
+  margin: 8px 0 12px;
+  color: #172033;
+  font-size: 22px;
+  letter-spacing: -0.02em;
+}
+
+.feedback-info-card > p {
+  position: relative;
+  z-index: 1;
+  margin: 0;
+  color: #667085;
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+.feedback-info-list {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-top: 28px;
+  padding-top: 22px;
+  border-top: 1px solid #e6ebf2;
+}
+
+.feedback-info-list > div {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.feedback-info-list > div > span {
+  color: #2563eb;
+  font-size: 10px;
+  font-weight: 800;
+}
+
+.feedback-info-list p {
+  margin: 0;
+  color: #344054;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+@media (max-width: 900px) {
+  .feedback-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .feedback-info-card {
+    order: -1;
+  }
+}
+
+@media (max-width: 700px) {
+  .feedback-category-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .feedback-form-card,
+  .feedback-info-card {
+    padding: 20px;
+  }
+
+  .feedback-form-footer {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .feedback-submit-button {
+    width: 100%;
+  }
+}
+/* -------------------------------------------------- */
+/* Settings                                            */
+/* -------------------------------------------------- */
+
+.settings-page {
+  padding-bottom: 48px;
+}
+
+.settings-header {
+  margin-bottom: 28px;
+}
+
+.settings-layout {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-width: 920px;
+}
+
+.settings-card {
+  padding: 26px;
+}
+
+.settings-card-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding-bottom: 22px;
+  border-bottom: 1px solid #edf0f5;
+}
+
+.settings-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  flex: 0 0 42px;
+  border: 1px solid #dbe5f4;
+  border-radius: 12px;
+  background: #f7faff;
+  color: #2563eb;
+  font-size: 17px;
+}
+
+.settings-card-header h2 {
+  margin: 5px 0 5px;
+  color: #172033;
+  font-size: 19px;
+  letter-spacing: -0.02em;
+}
+
+.settings-card-header p {
+  margin: 0;
+  color: #667085;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.settings-details {
+  padding-top: 6px;
+}
+
+.settings-detail-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 16px 0;
+  border-bottom: 1px solid #f0f2f5;
+}
+
+.settings-detail-row:last-child {
+  border-bottom: 0;
+}
+
+.settings-detail-row > span {
+  color: #667085;
+  font-size: 12px;
+}
+
+.settings-detail-row > strong {
+  color: #172033;
+  font-size: 13px;
+  text-align: right;
+}
+
+.settings-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.settings-status span {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #16a34a;
+}
+
+.settings-preference-list {
+  padding-top: 4px;
+}
+
+.settings-preference {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 18px 0;
+  border-bottom: 1px solid #f0f2f5;
+}
+
+.settings-preference:last-child {
+  border-bottom: 0;
+}
+
+.settings-preference > div {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.settings-preference strong {
+  color: #172033;
+  font-size: 13px;
+}
+
+.settings-preference span {
+  color: #667085;
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+.settings-enabled {
+  flex-shrink: 0;
+  padding: 6px 10px;
+  border: 1px solid #d7eadc;
+  border-radius: 999px;
+  background: #f3fbf5;
+  color: #15803d !important;
+  font-size: 10px !important;
+  font-weight: 700;
+}
+
+.settings-security {
+  padding-top: 4px;
+}
+
+.settings-security-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 18px 0;
+  border-bottom: 1px solid #f0f2f5;
+}
+
+.settings-security-row:last-child {
+  border-bottom: 0;
+}
+
+.settings-security-row > div {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.settings-security-row strong {
+  color: #172033;
+  font-size: 13px;
+}
+
+.settings-security-row span {
+  color: #667085;
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+.settings-security-badge {
+  flex-shrink: 0;
+  padding: 6px 10px;
+  border: 1px solid #dbe7fb;
+  border-radius: 999px;
+  background: #f5f9ff;
+  color: #2563eb !important;
+  font-size: 10px !important;
+  font-weight: 700;
+}
+
+.settings-info-panel {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 24px 26px;
+  border: 1px solid #dbe7fb;
+  border-radius: 16px;
+  background:
+    linear-gradient(
+      135deg,
+      #f7faff,
+      #ffffff
+    );
+}
+
+.settings-info-mark {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  flex: 0 0 42px;
+  border: 1px solid #dbe5f4;
+  border-radius: 12px;
+  background: #ffffff;
+  color: #2563eb;
+}
+
+.settings-info-panel h2 {
+  margin: 6px 0 8px;
+  color: #172033;
+  font-size: 18px;
+  letter-spacing: -0.02em;
+}
+
+.settings-info-panel p {
+  max-width: 650px;
+  margin: 0;
+  color: #667085;
+  font-size: 12px;
+  line-height: 1.7;
+}
+
+@media (max-width: 650px) {
+  .settings-card {
+    padding: 20px;
+  }
+
+  .settings-detail-row,
+  .settings-preference,
+  .settings-security-row {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .settings-detail-row > strong {
+    text-align: left;
+  }
+
+  .settings-info-panel {
+    padding: 20px;
+  }
+}
+.password-label-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.forgot-password-link {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #2563eb;
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.forgot-password-link:hover {
+  text-decoration: underline;
+}
+
+.auth-message-success {
+  border: 1px solid #bbf7d0;
+  background: #f0fdf4;
+  color: #15803d;
+}
+
+.auth-back-button {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #2563eb;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.auth-back-button:hover {
+  text-decoration: underline;
+}
+
+.password-requirement {
+  margin: -8px 0 20px;
+  color: #98a2b3;
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+.settings-password-form {
+  padding-top: 24px;
+}
+
+.settings-password-grid {
+  display: grid;
+  grid-template-columns:
+    repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.settings-password-footer {
+  display: flex;
+  justify-content: flex-end;
+  padding-top: 8px;
+}
+
+@media (max-width: 800px) {
+  .settings-password-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .settings-password-footer {
+    justify-content: stretch;
+  }
+
+  .settings-password-footer button {
+    width: 100%;
+  }
+}
+.settings-card-header-content {
+  min-width: 0;
+}
+
+.settings-password-collapsed {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding-top: 22px;
+}
+
+.settings-password-collapsed > div {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.settings-password-collapsed strong {
+  color: #172033;
+  font-size: 13px;
+}
+
+.settings-password-collapsed span {
+  color: #667085;
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+.settings-password-form {
+  padding-top: 26px;
+}
+
+.settings-password-grid {
+  display: grid;
+  grid-template-columns:
+    repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.settings-password-footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+  padding-top: 12px;
+}
+
+.settings-cancel-button {
+  min-width: 90px;
+  padding: 10px 16px;
+  border: 1px solid #d9dee8;
+  border-radius: 9px;
+  background: #ffffff;
+  color: #475467;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.settings-cancel-button:hover {
+  border-color: #b8c1ce;
+  background: #f8fafc;
+}
+
+@media (max-width: 800px) {
+  .settings-password-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .settings-password-collapsed {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .settings-password-collapsed button {
+    width: 100%;
+  }
+
+  .settings-password-footer {
+    justify-content: stretch;
+  }
+
+  .settings-password-footer button {
+    flex: 1;
+  }
+}
+/* ==================================================
+   INVESTTRACK THEME SYSTEM
+   ================================================== */
+
+:root {
+  color-scheme: light;
+
+  --it-bg: #f5f7fb;
+  --it-surface: #ffffff;
+  --it-surface-soft: #f8fafc;
+
+  --it-border: #e7ebf2;
+  --it-border-strong: #d9e0ea;
+
+  --it-text: #101828;
+  --it-text-secondary: #475467;
+  --it-text-muted: #667085;
+  --it-text-light: #98a2b3;
+
+  --it-primary: #155eef;
+  --it-primary-soft: #eff6ff;
+
+  --it-positive: #087443;
+  --it-negative: #b42318;
+}
+
+html[data-theme="dark"] {
+  color-scheme: dark;
+
+  --it-bg: #0b1120;
+  --it-surface: #111827;
+  --it-surface-soft: #182131;
+
+  --it-border: #263247;
+  --it-border-strong: #344158;
+
+  --it-text: #f2f4f7;
+  --it-text-secondary: #d0d5dd;
+  --it-text-muted: #98a2b3;
+  --it-text-light: #667085;
+
+  --it-primary: #5b8def;
+  --it-primary-soft: #172554;
+
+  --it-positive: #32d583;
+  --it-negative: #f97066;
+}
+
+
+/* --------------------------------------------------
+   Base
+   -------------------------------------------------- */
+
+html[data-theme="dark"] body {
+  background: var(--it-bg);
+  color: var(--it-text);
+}
+
+html[data-theme="dark"] {
+  background: var(--it-bg);
+}
+
+
+/* --------------------------------------------------
+   Typography
+   -------------------------------------------------- */
+
+html[data-theme="dark"] h1,
+html[data-theme="dark"] h2,
+html[data-theme="dark"] h3,
+html[data-theme="dark"] h4,
+html[data-theme="dark"] strong {
+  color: var(--it-text);
+}
+
+html[data-theme="dark"] p {
+  color: var(--it-text-muted);
+}
+
+
+/* --------------------------------------------------
+   Cards
+   -------------------------------------------------- */
+
+html[data-theme="dark"] .page-card {
+  border-color: var(--it-border);
+  background: var(--it-surface);
+  box-shadow:
+    0 8px 30px
+      rgba(0, 0, 0, 0.18);
+}
+
+html[data-theme="dark"] .page-card:hover {
+  border-color: var(--it-border-strong);
+}
+
+
+/* --------------------------------------------------
+   Inputs
+   -------------------------------------------------- */
+
+html[data-theme="dark"] input,
+html[data-theme="dark"] textarea,
+html[data-theme="dark"] select {
+  border-color: var(--it-border-strong);
+  background: #0f1726;
+  color: var(--it-text);
+}
+
+html[data-theme="dark"] input::placeholder,
+html[data-theme="dark"] textarea::placeholder {
+  color: #667085;
+}
+
+html[data-theme="dark"] input:focus,
+html[data-theme="dark"] textarea:focus,
+html[data-theme="dark"] select:focus {
+  border-color: var(--it-primary);
+}
+
+
+/* --------------------------------------------------
+   Tables
+   -------------------------------------------------- */
+
+html[data-theme="dark"] thead th {
+  border-color: var(--it-border);
+  color: var(--it-text-muted);
+}
+
+html[data-theme="dark"] tbody td {
+  border-color: #1e293b;
+  color: var(--it-text-secondary);
+}
+
+html[data-theme="dark"] tbody tr:hover {
+  background: #182131;
+}
+
+
+/* --------------------------------------------------
+   Financial values
+   -------------------------------------------------- */
+
+html[data-theme="dark"] .current-price,
+html[data-theme="dark"] .portfolio-value,
+html[data-theme="dark"] .metric-value,
+html[data-theme="dark"] .market-price-display .amount,
+html[data-theme="dark"] .stock-price,
+html[data-theme="dark"] .market-price,
+html[data-theme="dark"] .quote-value,
+html[data-theme="dark"] .stat-value {
+  color: var(--it-text);
+}
+
+html[data-theme="dark"] .positive,
+html[data-theme="dark"] .profit,
+html[data-theme="dark"] .gain,
+html[data-theme="dark"] .positive-value {
+  color: var(--it-positive);
+}
+
+html[data-theme="dark"] .negative,
+html[data-theme="dark"] .loss,
+html[data-theme="dark"] .negative-value {
+  color: var(--it-negative);
+}
+
+
+/* --------------------------------------------------
+   Buttons
+   -------------------------------------------------- */
+
+html[data-theme="dark"] .primary-button,
+html[data-theme="dark"] .auth-submit {
+  background: var(--it-primary);
+  border-color: var(--it-primary);
+  color: #ffffff;
+}
+
+
+/* --------------------------------------------------
+   Settings
+   -------------------------------------------------- */
+
+.theme-selector {
+  display: grid;
+  grid-template-columns:
+    repeat(3, minmax(0, 1fr));
+
+  gap: 14px;
+
+  padding-top: 24px;
+}
+
+.theme-option {
+  position: relative;
+
+  display: flex;
+  flex-direction: column;
+
+  padding: 10px;
+
+  border: 1px solid var(--it-border);
+  border-radius: 14px;
+
+  background: var(--it-surface);
+
+  text-align: left;
+
+  cursor: pointer;
+
+  transition:
+    border-color 160ms ease,
+    box-shadow 160ms ease,
+    transform 160ms ease;
+}
+
+.theme-option:hover {
+  border-color: #b9c7dd;
+
+  box-shadow:
+    0 8px 22px
+      rgba(16, 24, 40, 0.06);
+
+  transform: translateY(-1px);
+}
+
+.theme-option.selected {
+  border-color: var(--it-primary);
+
+  box-shadow:
+    0 0 0 3px
+      rgba(21, 94, 239, 0.08);
+}
+
+.theme-preview {
+  position: relative;
+
+  width: 100%;
+  height: 100px;
+
+  overflow: hidden;
+
+  border-radius: 9px;
+
+  margin-bottom: 12px;
+}
+
+.theme-preview-light {
+  background: #f5f7fb;
+}
+
+.theme-preview-dark {
+  background: #0b1120;
+}
+
+.theme-preview-top {
+  height: 17px;
+
+  margin: 8px;
+
+  border-radius: 4px;
+  background: rgba(
+    21,
+    94,
+    239,
+    0.85
+  );
+}
+
+.theme-preview-content {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+
+  margin: 10px;
+}
+
+.theme-preview-content span {
+  display: block;
+
+  height: 7px;
+
+  width: 70%;
+
+  border-radius: 4px;
+}
+
+.theme-preview-light
+.theme-preview-content span {
+  background: #d9e0ea;
+}
+
+.theme-preview-dark
+.theme-preview-content span {
+  background: #344158;
+}
+
+.theme-preview-content span:nth-child(2) {
+  width: 52%;
+}
+
+.theme-preview-content span:nth-child(3) {
+  width: 62%;
+}
+
+.theme-preview-system {
+  display: flex;
+  background: #0b1120;
+}
+
+.theme-preview-half {
+  width: 50%;
+  height: 100%;
+}
+
+.light-half {
+  background: #f5f7fb;
+}
+
+.dark-half {
+  background: #0b1120;
+}
+
+.theme-option-info {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+
+  padding: 0 5px 5px;
+}
+
+.theme-option-info strong {
+  color: var(--it-text);
+
+  font-size: 13px;
+}
+
+.theme-option-info span {
+  color: var(--it-text-muted);
+
+  font-size: 10px;
+}
+
+.theme-radio {
+  position: absolute;
+
+  top: 16px;
+  right: 16px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 20px;
+  height: 20px;
+
+  border: 1px solid
+    rgba(255, 255, 255, 0.8);
+
+  border-radius: 50%;
+
+  background: var(--it-primary);
+
+  color: white;
+
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.theme-option:not(.selected)
+.theme-radio {
+  background: rgba(
+    255,
+    255,
+    255,
+    0.9
+  );
+
+  border-color: #d0d5dd;
+
+  color: transparent;
+}
+
+
+/* --------------------------------------------------
+   Dark settings
+   -------------------------------------------------- */
+
+html[data-theme="dark"]
+.settings-card-header {
+  border-color: var(--it-border);
+}
+
+html[data-theme="dark"]
+.settings-detail-row,
+html[data-theme="dark"]
+.settings-preference,
+html[data-theme="dark"]
+.settings-security-row {
+  border-color: var(--it-border);
+}
+
+html[data-theme="dark"]
+.settings-icon {
+  border-color: var(--it-border);
+  background: #172033;
+  color: var(--it-primary);
+}
+
+html[data-theme="dark"]
+.settings-info-panel {
+  border-color: var(--it-border);
+  background:
+    linear-gradient(
+      135deg,
+      #111c30,
+      #111827
+    );
+}
+
+html[data-theme="dark"]
+.settings-info-mark {
+  border-color: var(--it-border);
+  background: #182131;
+  color: var(--it-primary);
+}
+
+html[data-theme="dark"]
+.settings-cancel-button {
+  border-color: var(--it-border-strong);
+  background: var(--it-surface);
+  color: var(--it-text-secondary);
+}
+
+
+/* --------------------------------------------------
+   Feedback
+   -------------------------------------------------- */
+
+html[data-theme="dark"]
+.feedback-category {
+  border-color: var(--it-border);
+  background: var(--it-surface);
+  color: var(--it-text);
+}
+
+html[data-theme="dark"]
+.feedback-category.selected {
+  border-color: var(--it-primary);
+  background: #111f3d;
+}
+
+html[data-theme="dark"]
+.feedback-category-icon {
+  background: #172033;
+}
+
+html[data-theme="dark"]
+.feedback-card-header,
+html[data-theme="dark"]
+.feedback-form-footer {
+  border-color: var(--it-border);
+}
+
+html[data-theme="dark"]
+.feedback-info-card {
+  border-color: var(--it-border);
+  background:
+    linear-gradient(
+      145deg,
+      #111c30,
+      #111827
+    );
+}
+
+html[data-theme="dark"]
+.feedback-info-list {
+  border-color: var(--it-border);
+}
+
+
+/* --------------------------------------------------
+   Status
+   -------------------------------------------------- */
+
+html[data-theme="dark"]
+.page-error {
+  border-color: #57201c;
+  background: #291616;
+}
+
+html[data-theme="dark"]
+.feedback-alert.error {
+  border-color: #57201c;
+  background: #291616;
+}
+
+html[data-theme="dark"]
+.feedback-alert.success {
+  border-color: #14532d;
+  background: #10271b;
+}
+
+
+/* --------------------------------------------------
+   Scrollbar
+   -------------------------------------------------- */
+
+html[data-theme="dark"]
+::-webkit-scrollbar-thumb {
+  background: #344158;
+}
+
+html[data-theme="dark"]
+::-webkit-scrollbar-thumb:hover {
+  background: #475569;
+}
+
+
+/* --------------------------------------------------
+   Responsive
+   -------------------------------------------------- */
+
+@media (max-width: 700px) {
+
+  .theme-selector {
+    grid-template-columns: 1fr;
+  }
+
+  .theme-preview {
+    height: 80px;
+  }
+}
+/* =========================================================
+   INVESTTRACK — FINAL DARK THEME
+   ========================================================= */
+
+html[data-theme="dark"] {
+  color-scheme: dark;
+
+  --it-bg: #0a0f1a;
+  --it-surface: #111827;
+  --it-surface-2: #151e2d;
+  --it-surface-3: #1a2435;
+
+  --it-border: #263247;
+  --it-border-light: #1e293b;
+
+  --it-text: #f8fafc;
+  --it-text-secondary: #cbd5e1;
+  --it-text-muted: #8b9ab0;
+  --it-text-light: #64748b;
+
+  --it-primary: #4f8cff;
+  --it-primary-hover: #6b9cff;
+  --it-primary-soft: rgba(79, 140, 255, 0.12);
+
+  --it-positive: #35d07f;
+  --it-negative: #ff6b6b;
+}
+
+
+/* =========================================================
+   GLOBAL PAGE
+   ========================================================= */
+
+html[data-theme="dark"],
+html[data-theme="dark"] body,
+html[data-theme="dark"] #root {
+  background: #0a0f1a !important;
+  color: #f8fafc !important;
+}
+
+html[data-theme="dark"] body {
+  min-height: 100vh;
+}
+
+
+/* =========================================================
+   APP SHELL
+   ========================================================= */
+
+html[data-theme="dark"] .app-shell {
+  background: #0a0f1a !important;
+}
+
+html[data-theme="dark"] main,
+html[data-theme="dark"] .main-content,
+html[data-theme="dark"] .app-content {
+  background: #0a0f1a !important;
+}
+
+
+/* =========================================================
+   TOP NAVIGATION
+   ========================================================= */
+
+html[data-theme="dark"] header,
+html[data-theme="dark"] .topbar,
+html[data-theme="dark"] .app-header,
+html[data-theme="dark"] .navbar {
+  background: #0d1422 !important;
+  border-color: #202c3f !important;
+}
+
+html[data-theme="dark"] .topbar *,
+html[data-theme="dark"] .app-header * {
+  border-color: #263247;
+}
+
+
+/* Search */
+
+html[data-theme="dark"] .search-input,
+html[data-theme="dark"] .global-search,
+html[data-theme="dark"] header input {
+  background: #111a29 !important;
+  border: 1px solid #2a3850 !important;
+
+  color: #f8fafc !important;
+}
+
+html[data-theme="dark"] header input::placeholder {
+  color: #718198 !important;
+}
+
+html[data-theme="dark"] header input:focus {
+  border-color: #4f8cff !important;
+
+  box-shadow:
+    0 0 0 3px
+    rgba(79, 140, 255, 0.12) !important;
+}
+
+
+/* =========================================================
+   SIDEBAR
+   ========================================================= */
+
+html[data-theme="dark"] .sidebar,
+html[data-theme="dark"] aside {
+  background: #0d1422 !important;
+
+  border-right:
+    1px solid #202c3f !important;
+}
+
+html[data-theme="dark"] .sidebar a,
+html[data-theme="dark"] aside a {
+  color: #9aa9bd !important;
+}
+
+html[data-theme="dark"] .sidebar a:hover,
+html[data-theme="dark"] aside a:hover {
+  background: #151f30 !important;
+  color: #f8fafc !important;
+}
+
+html[data-theme="dark"] .sidebar a.active,
+html[data-theme="dark"] aside a.active {
+  background: rgba(
+    79,
+    140,
+    255,
+    0.11
+  ) !important;
+
+  color: #6ea0ff !important;
+}
+
+
+/* =========================================================
+   PAGE HEADER
+   ========================================================= */
+
+html[data-theme="dark"] .page-header h1,
+html[data-theme="dark"] .settings-header h1 {
+  color: #f8fafc !important;
+
+  text-shadow: none !important;
+}
+
+html[data-theme="dark"] .page-header p,
+html[data-theme="dark"] .settings-header p {
+  color: #8b9ab0 !important;
+}
+
+html[data-theme="dark"]
+.company-section-eyebrow {
+  color: #6ea0ff !important;
+}
+
+
+/* =========================================================
+   CARDS
+   ========================================================= */
+
+html[data-theme="dark"] .page-card {
+  background: #111827 !important;
+
+  border:
+    1px solid #263247 !important;
+
+  box-shadow:
+    0 12px 32px
+    rgba(0, 0, 0, 0.18) !important;
+}
+
+html[data-theme="dark"] .page-card:hover {
+  border-color: #34445e !important;
+}
+
+
+/* =========================================================
+   SETTINGS
+   ========================================================= */
+
+html[data-theme="dark"] .settings-card {
+  background: #111827 !important;
+}
+
+html[data-theme="dark"] .settings-card-header {
+  border-bottom:
+    1px solid #263247 !important;
+}
+
+html[data-theme="dark"] .settings-card-header h2 {
+  color: #f8fafc !important;
+}
+
+html[data-theme="dark"] .settings-card-header p {
+  color: #8b9ab0 !important;
+}
+
+html[data-theme="dark"] .settings-details {
+  background: transparent !important;
+}
+
+html[data-theme="dark"] .settings-detail-row {
+  border-bottom:
+    1px solid #263247 !important;
+}
+
+html[data-theme="dark"] .settings-detail-row > span {
+  color: #8190a5 !important;
+}
+
+html[data-theme="dark"] .settings-detail-row strong {
+  color: #f1f5f9 !important;
+}
+
+
+/* =========================================================
+   SETTINGS ICONS
+   ========================================================= */
+
+html[data-theme="dark"] .settings-icon {
+  background: #172236 !important;
+
+  border:
+    1px solid #2b3a52 !important;
+
+  color: #6ea0ff !important;
+}
+
+
+/* =========================================================
+   THEME SELECTOR
+   ========================================================= */
+
+html[data-theme="dark"] .theme-option {
+  background: #111827 !important;
+
+  border:
+    1px solid #29374d !important;
+
+  color: #f8fafc !important;
+}
+
+html[data-theme="dark"] .theme-option:hover {
+  background: #151f30 !important;
+
+  border-color:
+    #405474 !important;
+}
+
+html[data-theme="dark"] .theme-option.selected {
+  background:
+    rgba(79, 140, 255, 0.08) !important;
+
+  border-color:
+    #4f8cff !important;
+
+  box-shadow:
+    0 0 0 3px
+    rgba(79, 140, 255, 0.08) !important;
+}
+
+html[data-theme="dark"] .theme-option-info strong {
+  color: #f8fafc !important;
+}
+
+html[data-theme="dark"] .theme-option-info span {
+  color: #8190a5 !important;
+}
+
+
+/* =========================================================
+   THEME PREVIEWS
+   ========================================================= */
+
+html[data-theme="dark"] .theme-preview {
+  border:
+    1px solid #29374d !important;
+}
+
+html[data-theme="dark"] .theme-preview-dark {
+  background: #0a0f1a !important;
+}
+
+
+/* =========================================================
+   TABLES
+   ========================================================= */
+
+html[data-theme="dark"] table {
+  background: transparent !important;
+}
+
+html[data-theme="dark"] thead th {
+  background: #111827 !important;
+
+  color: #7f8ea3 !important;
+
+  border-bottom:
+    1px solid #263247 !important;
+}
+
+html[data-theme="dark"] tbody td {
+  background: transparent !important;
+
+  color: #cbd5e1 !important;
+
+  border-bottom:
+    1px solid #1e293b !important;
+}
+
+html[data-theme="dark"] tbody tr:hover td {
+  background: #151f30 !important;
+}
+
+
+/* =========================================================
+   COMPANY / STOCK ROWS
+   ========================================================= */
+
+html[data-theme="dark"] .company-row,
+html[data-theme="dark"] .stock-row,
+html[data-theme="dark"] .holding-row {
+  color: #f8fafc !important;
+}
+
+html[data-theme="dark"] .company-row:hover,
+html[data-theme="dark"] .stock-row:hover,
+html[data-theme="dark"] .holding-row:hover {
+  background: #151f30 !important;
+}
+
+
+/* =========================================================
+   FINANCIAL NUMBERS
+   ========================================================= */
+
+html[data-theme="dark"] .current-price,
+html[data-theme="dark"] .portfolio-value,
+html[data-theme="dark"] .metric-value,
+html[data-theme="dark"] .market-price-display .amount,
+html[data-theme="dark"] .stock-price,
+html[data-theme="dark"] .market-price,
+html[data-theme="dark"] .quote-value,
+html[data-theme="dark"] .stat-value {
+  color: #f8fafc !important;
+
+  font-variant-numeric:
+    tabular-nums !important;
+
+  font-feature-settings:
+    "tnum" !important;
+}
+
+html[data-theme="dark"] .positive,
+html[data-theme="dark"] .profit,
+html[data-theme="dark"] .gain,
+html[data-theme="dark"] .positive-value {
+  color: #35d07f !important;
+}
+
+html[data-theme="dark"] .negative,
+html[data-theme="dark"] .loss,
+html[data-theme="dark"] .negative-value {
+  color: #ff6b6b !important;
+}
+
+
+/* =========================================================
+   BUTTONS
+   ========================================================= */
+
+html[data-theme="dark"] .primary-button,
+html[data-theme="dark"] .auth-submit {
+  background: #4f8cff !important;
+
+  border-color: #4f8cff !important;
+
+  color: #ffffff !important;
+}
+
+html[data-theme="dark"] .primary-button:hover,
+html[data-theme="dark"] .auth-submit:hover {
+  background: #6b9cff !important;
+
+  border-color: #6b9cff !important;
+}
+
+
+/* =========================================================
+   SECONDARY BUTTONS
+   ========================================================= */
+
+html[data-theme="dark"] .settings-cancel-button,
+html[data-theme="dark"] button.secondary {
+  background: #151f30 !important;
+
+  border:
+    1px solid #34445e !important;
+
+  color: #cbd5e1 !important;
+}
+
+html[data-theme="dark"] .settings-cancel-button:hover,
+html[data-theme="dark"] button.secondary:hover {
+  background: #1b2739 !important;
+
+  border-color: #465b7b !important;
+}
+
+
+/* =========================================================
+   INPUTS
+   ========================================================= */
+
+html[data-theme="dark"] input,
+html[data-theme="dark"] textarea,
+html[data-theme="dark"] select {
+  background: #0f1725 !important;
+
+  border:
+    1px solid #2c3a51 !important;
+
+  color: #f8fafc !important;
+}
+
+html[data-theme="dark"] input::placeholder,
+html[data-theme="dark"] textarea::placeholder {
+  color: #64748b !important;
+}
+
+html[data-theme="dark"] input:focus,
+html[data-theme="dark"] textarea:focus,
+html[data-theme="dark"] select:focus {
+  border-color: #4f8cff !important;
+
+  box-shadow:
+    0 0 0 3px
+    rgba(79, 140, 255, 0.10) !important;
+}
+
+
+/* =========================================================
+   FORM LABELS
+   ========================================================= */
+
+html[data-theme="dark"] label {
+  color: #dbe4ef !important;
+}
+
+
+/* =========================================================
+   EMPTY STATES
+   ========================================================= */
+
+html[data-theme="dark"] .page-empty,
+html[data-theme="dark"] .page-status {
+  color: #94a3b8 !important;
+}
+
+html[data-theme="dark"] .page-empty h2 {
+  color: #f8fafc !important;
+}
+
+html[data-theme="dark"] .page-empty p {
+  color: #8190a5 !important;
+}
+
+
+/* =========================================================
+   ERROR STATES
+   ========================================================= */
+
+html[data-theme="dark"] .page-error {
+  background: #291719 !important;
+
+  border-color: #5a282b !important;
+
+  color: #ff8a8a !important;
+}
+
+
+/* =========================================================
+   STATUS
+   ========================================================= */
+
+html[data-theme="dark"] .settings-status {
+  color: #f1f5f9 !important;
+}
+
+html[data-theme="dark"] .settings-status span {
+  background: #22c55e !important;
+}
+
+
+/* =========================================================
+   SETTINGS SECURITY
+   ========================================================= */
+
+html[data-theme="dark"] .settings-security-row {
+  border-bottom:
+    1px solid #263247 !important;
+}
+
+html[data-theme="dark"] .settings-security-row strong {
+  color: #f8fafc !important;
+}
+
+html[data-theme="dark"] .settings-security-row span {
+  color: #8190a5 !important;
+}
+
+
+/* =========================================================
+   PASSWORD SECTION
+   ========================================================= */
+
+html[data-theme="dark"]
+.settings-password-collapsed {
+  color: #cbd5e1 !important;
+}
+
+html[data-theme="dark"]
+.settings-password-collapsed strong {
+  color: #f8fafc !important;
+}
+
+html[data-theme="dark"]
+.settings-password-collapsed span {
+  color: #8190a5 !important;
+}
+
+html[data-theme="dark"]
+.password-requirement {
+  color: #718198 !important;
+}
+
+
+/* =========================================================
+   LINKS
+   ========================================================= */
+
+html[data-theme="dark"] a {
+  color: #6ea0ff;
+}
+
+html[data-theme="dark"] a:hover {
+  color: #8ab4ff;
+}
+
+
+/* =========================================================
+   RECHARTS
+   ========================================================= */
+
+html[data-theme="dark"] .recharts-cartesian-axis-tick-value {
+  fill: #8190a5 !important;
+}
+
+html[data-theme="dark"] .recharts-cartesian-axis-line,
+html[data-theme="dark"] .recharts-cartesian-grid line {
+  stroke: #263247 !important;
+}
+
+html[data-theme="dark"] .recharts-tooltip-wrapper {
+  outline: none !important;
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 800px) {
+
+  html[data-theme="dark"] .sidebar,
+  html[data-theme="dark"] aside {
+    background: #0d1422 !important;
+  }
+
+  html[data-theme="dark"] .page-card {
+    box-shadow:
+      0 8px 24px
+      rgba(0, 0, 0, 0.16) !important;
+  }
+}
+/* =========================================================
+   INVESTTRACK — DARK THEME GLOBAL OVERRIDE
+   FINAL UI LAYER
+   ========================================================= */
+
+html[data-theme="dark"] {
+  color-scheme: dark;
+
+  --it-bg: #0a0f1a;
+  --it-surface: #111827;
+  --it-surface-hover: #151f30;
+  --it-surface-soft: #0f1725;
+
+  --it-border: #263247;
+  --it-border-soft: #1d2939;
+
+  --it-text: #f8fafc;
+  --it-text-secondary: #cbd5e1;
+  --it-text-muted: #8b9ab0;
+  --it-text-light: #64748b;
+
+  --it-primary: #4f8cff;
+  --it-primary-hover: #6b9cff;
+
+  --it-positive: #35d07f;
+  --it-negative: #ff6b6b;
+}
+
+
+/* =========================================================
+   ROOT / BODY
+   ========================================================= */
+
+html[data-theme="dark"],
+html[data-theme="dark"] body,
+html[data-theme="dark"] #root {
+  background: #0a0f1a !important;
+  color: #f8fafc !important;
+}
+
+
+/* =========================================================
+   APP BACKGROUND
+   ========================================================= */
+
+html[data-theme="dark"] .app-shell,
+html[data-theme="dark"] .app-layout,
+html[data-theme="dark"] .main-content,
+html[data-theme="dark"] .app-content,
+html[data-theme="dark"] .content,
+html[data-theme="dark"] main {
+  background: #0a0f1a !important;
+}
+
+
+/* =========================================================
+   SIDEBAR
+   ========================================================= */
+
+html[data-theme="dark"] aside,
+html[data-theme="dark"] .sidebar {
+  background: #0d1422 !important;
+
+  border-color: #202c3f !important;
+}
+
+html[data-theme="dark"] aside a,
+html[data-theme="dark"] .sidebar a {
+  color: #9aa9bd !important;
+}
+
+html[data-theme="dark"] aside a:hover,
+html[data-theme="dark"] .sidebar a:hover {
+  background: #151f30 !important;
+  color: #f8fafc !important;
+}
+
+html[data-theme="dark"] aside a.active,
+html[data-theme="dark"] .sidebar a.active {
+  background: #172440 !important;
+  color: #6ea0ff !important;
+}
+
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+
+html[data-theme="dark"] header,
+html[data-theme="dark"] .topbar,
+html[data-theme="dark"] .app-header,
+html[data-theme="dark"] .navbar {
+  background: #0d1422 !important;
+
+  border-bottom:
+    1px solid #202c3f !important;
+}
+
+
+/* =========================================================
+   SEARCH
+   ========================================================= */
+
+html[data-theme="dark"] header input,
+html[data-theme="dark"] .search-input,
+html[data-theme="dark"] .global-search {
+  background: #111a29 !important;
+
+  border:
+    1px solid #2b3a52 !important;
+
+  color: #f8fafc !important;
+}
+
+html[data-theme="dark"] header input::placeholder,
+html[data-theme="dark"] .search-input::placeholder {
+  color: #6f8098 !important;
+}
+
+
+/* =========================================================
+   PAGE HEADINGS
+   ========================================================= */
+
+html[data-theme="dark"] h1,
+html[data-theme="dark"] h2,
+html[data-theme="dark"] h3,
+html[data-theme="dark"] h4 {
+  color: #f8fafc !important;
+}
+
+html[data-theme="dark"] .page-header h1,
+html[data-theme="dark"] .settings-header h1 {
+  color: #f8fafc !important;
+}
+
+html[data-theme="dark"] .page-header p,
+html[data-theme="dark"] .settings-header p {
+  color: #8b9ab0 !important;
+}
+
+html[data-theme="dark"] .company-section-eyebrow {
+  color: #6ea0ff !important;
+}
+
+
+/* =========================================================
+   UNIVERSAL CARDS
+   ========================================================= */
+
+html[data-theme="dark"] .page-card,
+html[data-theme="dark"] .card,
+html[data-theme="dark"] .metric-card,
+html[data-theme="dark"] .stat-card,
+html[data-theme="dark"] .summary-card,
+html[data-theme="dark"] .company-card,
+html[data-theme="dark"] .market-card {
+  background: #111827 !important;
+
+  background-color: #111827 !important;
+
+  border:
+    1px solid #263247 !important;
+
+  color: #f8fafc !important;
+
+  box-shadow:
+    0 10px 30px
+    rgba(0, 0, 0, 0.18) !important;
+}
+
+
+/* Remove unwanted gray/white surfaces */
+
+html[data-theme="dark"] .page-card *,
+html[data-theme="dark"] .metric-card *,
+html[data-theme="dark"] .stat-card *,
+html[data-theme="dark"] .summary-card *,
+html[data-theme="dark"] .company-card *,
+html[data-theme="dark"] .market-card * {
+  border-color: #263247;
+}
+
+
+/* =========================================================
+   PORTFOLIO
+   ========================================================= */
+
+html[data-theme="dark"] .portfolio-card,
+html[data-theme="dark"] .portfolio-summary,
+html[data-theme="dark"] .portfolio-stat,
+html[data-theme="dark"] .portfolio-table-card,
+html[data-theme="dark"] .portfolio-holdings {
+  background: #111827 !important;
+
+  color: #f8fafc !important;
+
+  border-color: #263247 !important;
+}
+
+
+/* =========================================================
+   HOLDINGS
+   ========================================================= */
+
+html[data-theme="dark"] .holdings-table-wrapper {
+  background: #111827 !important;
+
+  border-color: #263247 !important;
+}
+
+html[data-theme="dark"] .holdings-table {
+  background: #111827 !important;
+}
+
+html[data-theme="dark"] .holdings-table thead {
+  background: #0f1725 !important;
+}
+
+html[data-theme="dark"] .holdings-table tbody {
+  background: #111827 !important;
+}
+
+
+/* =========================================================
+   ALL TABLES
+   ========================================================= */
+
+html[data-theme="dark"] table {
+  background: #111827 !important;
+}
+
+html[data-theme="dark"] thead {
+  background: #0f1725 !important;
+}
+
+html[data-theme="dark"] thead th {
+  background: #0f1725 !important;
+
+  color: #8190a5 !important;
+
+  border-bottom:
+    1px solid #263247 !important;
+}
+
+html[data-theme="dark"] tbody {
+  background: #111827 !important;
+}
+
+html[data-theme="dark"] tbody tr {
+  background: #111827 !important;
+}
+
+html[data-theme="dark"] tbody tr:hover {
+  background: #151f30 !important;
+}
+
+html[data-theme="dark"] tbody td {
+  background: transparent !important;
+
+  color: #cbd5e1 !important;
+
+  border-bottom:
+    1px solid #1d2939 !important;
+}
+
+
+/* =========================================================
+   COMPANY NAMES
+   ========================================================= */
+
+html[data-theme="dark"] td strong,
+html[data-theme="dark"] .company-name,
+html[data-theme="dark"] .stock-name {
+  color: #f8fafc !important;
+}
+
+
+/* =========================================================
+   FINANCIAL NUMBERS
+   ========================================================= */
+
+html[data-theme="dark"] .current-price,
+html[data-theme="dark"] .portfolio-value,
+html[data-theme="dark"] .metric-value,
+html[data-theme="dark"] .stat-value,
+html[data-theme="dark"] .stock-price,
+html[data-theme="dark"] .market-price,
+html[data-theme="dark"] .quote-value,
+html[data-theme="dark"] .price {
+  color: #f8fafc !important;
+
+  font-variant-numeric:
+    tabular-nums !important;
+
+  font-feature-settings:
+    "tnum" !important;
+}
+
+
+/* Positive */
+
+html[data-theme="dark"] .positive,
+html[data-theme="dark"] .profit,
+html[data-theme="dark"] .gain,
+html[data-theme="dark"] .positive-value {
+  color: #35d07f !important;
+}
+
+
+/* Negative */
+
+html[data-theme="dark"] .negative,
+html[data-theme="dark"] .loss,
+html[data-theme="dark"] .negative-value {
+  color: #ff6b6b !important;
+}
+
+
+/* =========================================================
+   METRIC LABELS
+   ========================================================= */
+
+html[data-theme="dark"] .metric-label,
+html[data-theme="dark"] .stat-label,
+html[data-theme="dark"] .card-label {
+  color: #8190a5 !important;
+}
+
+
+/* =========================================================
+   GENERAL TEXT
+   ========================================================= */
+
+html[data-theme="dark"] .page-card p,
+html[data-theme="dark"] .card p {
+  color: #8b9ab0 !important;
+}
+
+html[data-theme="dark"] .page-card span,
+html[data-theme="dark"] .card span {
+  color: #94a3b8;
+}
+
+
+/* =========================================================
+   BUTTONS
+   ========================================================= */
+
+html[data-theme="dark"] .primary-button,
+html[data-theme="dark"] button.primary,
+html[data-theme="dark"] .auth-submit {
+  background: #4f8cff !important;
+
+  border-color: #4f8cff !important;
+
+  color: #ffffff !important;
+}
+
+html[data-theme="dark"] .primary-button:hover,
+html[data-theme="dark"] button.primary:hover {
+  background: #6b9cff !important;
+}
+
+
+/* =========================================================
+   SECONDARY BUTTON
+   ========================================================= */
+
+html[data-theme="dark"] button.secondary,
+html[data-theme="dark"] .secondary-button,
+html[data-theme="dark"] .settings-cancel-button {
+  background: #151f30 !important;
+
+  border:
+    1px solid #34445e !important;
+
+  color: #cbd5e1 !important;
+}
+
+
+/* =========================================================
+   INPUTS
+   ========================================================= */
+
+html[data-theme="dark"] input,
+html[data-theme="dark"] textarea,
+html[data-theme="dark"] select {
+  background: #0f1725 !important;
+
+  border:
+    1px solid #2b3a52 !important;
+
+  color: #f8fafc !important;
+}
+
+html[data-theme="dark"] input::placeholder,
+html[data-theme="dark"] textarea::placeholder {
+  color: #64748b !important;
+}
+
+
+/* =========================================================
+   LABELS
+   ========================================================= */
+
+html[data-theme="dark"] label {
+  color: #dbe4ef !important;
+}
+
+
+/* =========================================================
+   SETTINGS
+   ========================================================= */
+
+html[data-theme="dark"] .settings-card {
+  background: #111827 !important;
+
+  border-color: #263247 !important;
+}
+
+html[data-theme="dark"] .settings-card-header {
+  border-bottom:
+    1px solid #263247 !important;
+}
+
+html[data-theme="dark"] .settings-detail-row {
+  border-bottom:
+    1px solid #263247 !important;
+}
+
+html[data-theme="dark"] .settings-detail-row > span {
+  color: #8190a5 !important;
+}
+
+html[data-theme="dark"] .settings-detail-row strong {
+  color: #f8fafc !important;
+}
+
+
+/* =========================================================
+   COMPANY DETAILS
+   ========================================================= */
+
+html[data-theme="dark"] .company-header,
+html[data-theme="dark"] .company-hero,
+html[data-theme="dark"] .company-price-card,
+html[data-theme="dark"] .company-market-card,
+html[data-theme="dark"] .company-chart-card {
+  background: #111827 !important;
+
+  border-color: #263247 !important;
+}
+
+
+/* =========================================================
+   TOP COMPANIES
+   ========================================================= */
+
+html[data-theme="dark"] .top-company-card,
+html[data-theme="dark"] .top-companies-card,
+html[data-theme="dark"] .market-overview-card,
+html[data-theme="dark"] .market-index-card {
+  background: #111827 !important;
+
+  border-color: #263247 !important;
+}
+
+
+/* =========================================================
+   WATCHLIST / WISHLIST
+   ========================================================= */
+
+html[data-theme="dark"] .watchlist-card,
+html[data-theme="dark"] .wishlist-card {
+  background: #111827 !important;
+
+  border-color: #263247 !important;
+}
+
+
+/* =========================================================
+   EMPTY STATES
+   ========================================================= */
+
+html[data-theme="dark"] .page-empty {
+  background: #111827 !important;
+
+  color: #8b9ab0 !important;
+}
+
+html[data-theme="dark"] .page-empty h2 {
+  color: #f8fafc !important;
+}
+
+html[data-theme="dark"] .page-empty p {
+  color: #8190a5 !important;
+}
+
+
+/* =========================================================
+   RECHARTS
+   ========================================================= */
+
+html[data-theme="dark"]
+.recharts-cartesian-axis-tick-value {
+  fill: #8190a5 !important;
+}
+
+html[data-theme="dark"]
+.recharts-cartesian-grid line {
+  stroke: #263247 !important;
+}
+
+html[data-theme="dark"]
+.recharts-cartesian-axis-line {
+  stroke: #34445e !important;
+}
+
+
+/* =========================================================
+   USER AREA
+   ========================================================= */
+
+html[data-theme="dark"] .user-menu,
+html[data-theme="dark"] .user-profile {
+  color: #cbd5e1 !important;
+}
+
+html[data-theme="dark"] .user-menu span,
+html[data-theme="dark"] .user-profile span {
+  color: #8b9ab0 !important;
+}
+
+
+/* =========================================================
+   LINKS
+   ========================================================= */
+
+html[data-theme="dark"] a {
+  color: #6ea0ff;
+}
+
+html[data-theme="dark"] a:hover {
+  color: #8ab4ff;
+}
+/* =========================================================
+   INVESTTRACK — ACTUAL DASHBOARD + TOP COMPANIES THEME
+   ========================================================= */
+
+
+/* =========================================================
+   DARK MODE — DASHBOARD
+   ========================================================= */
+
+html[data-theme="dark"] .dashboard {
+  background: #0a0f1a !important;
+  color: #f8fafc !important;
+}
+
+html[data-theme="dark"] .dashboard-header h1 {
+  color: #f8fafc !important;
+  font-size: 36px !important;
+  font-weight: 700 !important;
+  letter-spacing: -0.025em;
+}
+
+html[data-theme="dark"] .dashboard-header p {
+  color: #8b9ab0 !important;
+}
+
+
+/* =========================================================
+   PORTFOLIO SUMMARY CARDS
+   ========================================================= */
+
+html[data-theme="dark"] .portfolio-summary-card {
+  background: #111827 !important;
+  background-color: #111827 !important;
+
+  border: 1px solid #263247 !important;
+
+  border-radius: 18px !important;
+
+  box-shadow:
+    0 12px 30px rgba(0, 0, 0, 0.16) !important;
+
+  color: #f8fafc !important;
+}
+
+html[data-theme="dark"] .portfolio-summary-card:hover {
+  background: #141e2e !important;
+
+  border-color: #34445e !important;
+
+  transform: translateY(-1px);
+}
+
+html[data-theme="dark"] .portfolio-summary-card > span {
+  color: #8190a5 !important;
+
+  font-size: 12px !important;
+
+  font-weight: 700 !important;
+
+  letter-spacing: 0.06em !important;
+
+  text-transform: uppercase;
+}
+
+html[data-theme="dark"] .portfolio-summary-card > strong {
+  color: #f8fafc !important;
+
+  font-size: 30px !important;
+
+  line-height: 1.15 !important;
+
+  font-weight: 700 !important;
+
+  letter-spacing: -0.025em !important;
+
+  font-variant-numeric: tabular-nums !important;
+}
+
+html[data-theme="dark"] .portfolio-summary-card > small {
+  color: #718198 !important;
+
+  font-size: 13px !important;
+}
+
+
+/* Profit */
+
+html[data-theme="dark"] .portfolio-summary-card
+  > strong.profit {
+  color: #35d07f !important;
+}
+
+
+/* Loss */
+
+html[data-theme="dark"] .portfolio-summary-card
+  > strong.loss {
+  color: #ff6b6b !important;
+}
+
+
+/* Percentage below gain/loss */
+
+html[data-theme="dark"] .portfolio-summary-card
+  > small.profit {
+  color: #35d07f !important;
+}
+
+html[data-theme="dark"] .portfolio-summary-card
+  > small.loss {
+  color: #ff6b6b !important;
+}
+
+
+/* =========================================================
+   MARKET DATA NOTICE
+   ========================================================= */
+
+html[data-theme="dark"] .dashboard-market-notice {
+  background: #111a29 !important;
+
+  border: 1px solid #263247 !important;
+
+  color: #94a3b8 !important;
+
+  border-radius: 14px !important;
+}
+
+
+/* =========================================================
+   CURRENT HOLDINGS CARD
+   ========================================================= */
+
+html[data-theme="dark"] .dashboard-holdings-card {
+  background: #111827 !important;
+
+  border: 1px solid #263247 !important;
+
+  border-radius: 20px !important;
+
+  box-shadow:
+    0 12px 32px rgba(0, 0, 0, 0.16) !important;
+
+  overflow: hidden;
+}
+
+html[data-theme="dark"] .dashboard-section-header {
+  background: #111827 !important;
+
+  border-bottom:
+    1px solid #263247 !important;
+}
+
+html[data-theme="dark"] .dashboard-section-header h2 {
+  color: #f8fafc !important;
+
+  font-size: 21px !important;
+
+  font-weight: 700 !important;
+}
+
+html[data-theme="dark"] .dashboard-section-header p {
+  color: #8190a5 !important;
+}
+
+
+/* =========================================================
+   DASHBOARD HOLDINGS TABLE
+   ========================================================= */
+
+html[data-theme="dark"]
+.dashboard-holdings-card .holdings-table-wrapper {
+  background: #111827 !important;
+}
+
+html[data-theme="dark"]
+.dashboard-holdings-card .holdings-table {
+  background: #111827 !important;
+
+  color: #cbd5e1 !important;
+}
+
+html[data-theme="dark"]
+.dashboard-holdings-card .holdings-table thead {
+  background: #0e1624 !important;
+}
+
+html[data-theme="dark"]
+.dashboard-holdings-card .holdings-table thead th {
+  background: #0e1624 !important;
+
+  color: #718198 !important;
+
+  border-bottom:
+    1px solid #263247 !important;
+
+  font-size: 11px !important;
+
+  font-weight: 700 !important;
+
+  letter-spacing: 0.07em !important;
+
+  text-transform: uppercase;
+}
+
+html[data-theme="dark"]
+.dashboard-holdings-card .holdings-table tbody tr {
+  background: #111827 !important;
+
+  transition:
+    background 0.15s ease;
+}
+
+html[data-theme="dark"]
+.dashboard-holdings-card
+.holdings-table tbody tr:hover {
+  background: #151f30 !important;
+}
+
+html[data-theme="dark"]
+.dashboard-holdings-card
+.holdings-table tbody td {
+  background: transparent !important;
+
+  color: #cbd5e1 !important;
+
+  border-bottom:
+    1px solid #1d2939 !important;
+}
+
+
+/* =========================================================
+   COMPANY NAME
+   ========================================================= */
+
+html[data-theme="dark"]
+.holding-company strong {
+  color: #f8fafc !important;
+
+  font-size: 14px !important;
+
+  font-weight: 650 !important;
+}
+
+html[data-theme="dark"]
+.holding-company span {
+  color: #718198 !important;
+
+  font-size: 12px !important;
+}
+
+
+/* Symbol */
+
+html[data-theme="dark"]
+.dashboard-holdings-card
+.holdings-table td strong {
+  color: #e8eef7 !important;
+}
+
+
+/* =========================================================
+   FINANCIAL TABLE NUMBERS
+   ========================================================= */
+
+html[data-theme="dark"]
+.dashboard-holdings-card
+.holdings-table td {
+  font-variant-numeric: tabular-nums !important;
+}
+
+html[data-theme="dark"]
+.dashboard-holdings-card
+.holdings-table td:nth-child(3),
+html[data-theme="dark"]
+.dashboard-holdings-card
+.holdings-table td:nth-child(4) {
+  font-size: 14px !important;
+}
+
+
+/* =========================================================
+   DASHBOARD PROFIT / LOSS
+   ========================================================= */
+
+html[data-theme="dark"] .dashboard .profit {
+  color: #35d07f !important;
+}
+
+html[data-theme="dark"] .dashboard .loss {
+  color: #ff6b6b !important;
+}
+
+html[data-theme="dark"] .dashboard .neutral {
+  color: #718198 !important;
+}
+
+
+/* =========================================================
+   TOP COMPANIES PAGE
+   ========================================================= */
+
+html[data-theme="dark"] .top-companies-page {
+  background: #0a0f1a !important;
+
+  color: #f8fafc !important;
+}
+
+html[data-theme="dark"] .top-companies-header h1 {
+  color: #f8fafc !important;
+
+  font-size: 36px !important;
+
+  font-weight: 700 !important;
+
+  letter-spacing: -0.025em;
+}
+
+html[data-theme="dark"] .top-companies-header p {
+  color: #8b9ab0 !important;
+}
+
+
+/* =========================================================
+   TOP COMPANIES SECTION HEADERS
+   ========================================================= */
+
+html[data-theme="dark"]
+.top-companies-section-heading h2,
+html[data-theme="dark"]
+.market-list-header h2 {
+  color: #f8fafc !important;
+
+  font-size: 20px !important;
+
+  font-weight: 700 !important;
+}
+
+
+/* =========================================================
+   MARKET OVERVIEW
+   ========================================================= */
+
+html[data-theme="dark"] .market-overview-section {
+  background: #111827 !important;
+
+  border: 1px solid #263247 !important;
+
+  border-radius: 20px !important;
+
+  overflow: hidden;
+}
+
+html[data-theme="dark"] .market-overview-grid {
+  background: #111827 !important;
+}
+
+html[data-theme="dark"] .market-index-card {
+  background: #111827 !important;
+
+  color: #f8fafc !important;
+
+  border-color: #263247 !important;
+}
+
+html[data-theme="dark"] .market-index-card:hover {
+  background: #151f30 !important;
+}
+
+html[data-theme="dark"]
+.market-index-symbol {
+  color: #f8fafc !important;
+}
+
+html[data-theme="dark"]
+.market-index-card strong {
+  color: #f8fafc !important;
+
+  font-size: 25px !important;
+
+  font-variant-numeric: tabular-nums !important;
+}
+
+html[data-theme="dark"]
+.market-index-card > span:last-child {
+  color: #718198 !important;
+}
+
+
+/* =========================================================
+   GAINERS / LOSERS CARDS
+   ========================================================= */
+
+html[data-theme="dark"] .market-list-card {
+  background: #111827 !important;
+
+  border: 1px solid #263247 !important;
+
+  border-radius: 20px !important;
+
+  color: #f8fafc !important;
+}
+
+html[data-theme="dark"] .market-list-header {
+  background: #111827 !important;
+
+  border-bottom:
+    1px solid #263247 !important;
+}
+
+
+/* =========================================================
+   MARKET COMPANY ROW
+   ========================================================= */
+
+html[data-theme="dark"] .market-company-row {
+  background: #111827 !important;
+
+  color: #f8fafc !important;
+
+  border-bottom:
+    1px solid #1d2939 !important;
+}
+
+html[data-theme="dark"] .market-company-row:hover {
+  background: #151f30 !important;
+}
+
+html[data-theme="dark"] .market-company-avatar {
+  background: #18243a !important;
+
+  border: 1px solid #2b3a52 !important;
+
+  color: #6ea0ff !important;
+}
+
+html[data-theme="dark"] .market-company-name strong {
+  color: #f8fafc !important;
+}
+
+html[data-theme="dark"] .market-company-name span {
+  color: #718198 !important;
+}
+
+html[data-theme="dark"] .market-company-value strong {
+  color: #f1f5f9 !important;
+
+  font-variant-numeric: tabular-nums !important;
+}
+
+
+/* =========================================================
+   MARKET MOVERS
+   ========================================================= */
+
+html[data-theme="dark"] .market-active-grid {
+  background: #111827 !important;
+}
+
+html[data-theme="dark"] .market-active-card {
+  background: #151f30 !important;
+
+  border: 1px solid #2a3850 !important;
+
+  color: #f8fafc !important;
+
+  border-radius: 16px !important;
+}
+
+html[data-theme="dark"] .market-active-card:hover {
+  background: #1a2639 !important;
+
+  border-color: #405474 !important;
+
+  transform: translateY(-2px);
+}
+
+html[data-theme="dark"] .market-rank {
+  color: #718198 !important;
+}
+
+html[data-theme="dark"]
+.market-active-card > strong {
+  color: #f8fafc !important;
+
+  font-size: 15px !important;
+}
+
+html[data-theme="dark"]
+.market-active-card > span:not(.market-rank) {
+  color: #cbd5e1 !important;
+
+  font-size: 14px !important;
+
+  font-variant-numeric: tabular-nums !important;
+}
+
+html[data-theme="dark"]
+.market-active-card small {
+  font-weight: 700 !important;
+}
+
+
+/* =========================================================
+   POPULAR COMPANY CARDS
+   ========================================================= */
+
+html[data-theme="dark"] .popular-company-grid {
+  background: #111827 !important;
+}
+
+html[data-theme="dark"] .popular-company-card {
+  background: #151f30 !important;
+
+  border: 1px solid #2a3850 !important;
+
+  color: #f8fafc !important;
+
+  border-radius: 17px !important;
+
+  box-shadow:
+    0 8px 20px rgba(0, 0, 0, 0.12) !important;
+}
+
+html[data-theme="dark"]
+.popular-company-card:hover {
+  background: #1a2639 !important;
+
+  border-color: #405474 !important;
+
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 14px 28px rgba(0, 0, 0, 0.18) !important;
+}
+
+html[data-theme="dark"]
+.popular-company-avatar {
+  background: #edf4ff !important;
+
+  color: #2463d4 !important;
+
+  border: 1px solid #d5e3fa !important;
+}
+
+html[data-theme="dark"]
+.popular-company-card > strong {
+  color: #f8fafc !important;
+
+  font-size: 17px !important;
+
+  font-weight: 700 !important;
+}
+
+html[data-theme="dark"]
+.popular-company-card > span {
+  color: #8190a5 !important;
+
+  font-size: 13px !important;
+}
+
+html[data-theme="dark"]
+.popular-company-card > b {
+  color: #f8fafc !important;
+
+  font-size: 21px !important;
+
+  font-weight: 700 !important;
+
+  font-variant-numeric: tabular-nums !important;
+
+  letter-spacing: -0.015em;
+}
+
+
+/* =========================================================
+   POSITIVE / NEGATIVE
+   ========================================================= */
+
+html[data-theme="dark"] .positive {
+  color: #35d07f !important;
+}
+
+html[data-theme="dark"] .negative {
+  color: #ff6b6b !important;
+}
+
+
+/* =========================================================
+   LIVE INDICATOR
+   ========================================================= */
+
+html[data-theme="dark"] .market-live-indicator {
+  color: #8b9ab0 !important;
+}
+
+html[data-theme="dark"]
+.market-live-indicator > span {
+  background: #35d07f !important;
+
+  box-shadow:
+    0 0 0 4px
+    rgba(53, 208, 127, 0.10);
+}
+
+
+/* =========================================================
+   EMPTY STATES
+   ========================================================= */
+
+html[data-theme="dark"] .market-empty {
+  color: #718198 !important;
+}
+
+
+/* =========================================================
+   LOADING
+   ========================================================= */
+
+html[data-theme="dark"] .dashboard-loading,
+html[data-theme="dark"] .page-status {
+  background: #111827 !important;
+
+  border: 1px solid #263247 !important;
+
+  color: #8b9ab0 !important;
+}
+/* =========================================================
+   INVESTTRACK — MY HOLDINGS PREMIUM DARK THEME
+   ========================================================= */
+
+html[data-theme="dark"] .holdings-page {
+  background: #0a0f1a !important;
+  color: #f8fafc !important;
+}
+
+html[data-theme="dark"] .holdings-header h1 {
+  color: #f8fafc !important;
+  font-size: 36px !important;
+  line-height: 1.15 !important;
+  font-weight: 700 !important;
+  letter-spacing: -0.03em !important;
+}
+
+html[data-theme="dark"] .holdings-header p {
+  color: #8b9ab0 !important;
+}
+
+
+/* =========================================================
+   ADD INVESTMENT BUTTON
+   ========================================================= */
+
+html[data-theme="dark"] .holdings-add-button {
+  background: #2563eb !important;
+  color: #ffffff !important;
+  border: 1px solid #3b82f6 !important;
+  border-radius: 12px !important;
+  font-size: 14px !important;
+  font-weight: 700 !important;
+  padding: 12px 18px !important;
+  box-shadow:
+    0 8px 20px rgba(37, 99, 235, 0.20) !important;
+}
+
+html[data-theme="dark"] .holdings-add-button:hover {
+  background: #1d4ed8 !important;
+  transform: translateY(-1px);
+}
+
+
+/* =========================================================
+   SUMMARY CARDS
+   ========================================================= */
+
+html[data-theme="dark"] .holdings-summary-card {
+  background: #111827 !important;
+  background-color: #111827 !important;
+
+  border: 1px solid #263247 !important;
+
+  border-radius: 18px !important;
+
+  box-shadow:
+    0 10px 28px rgba(0, 0, 0, 0.14) !important;
+
+  min-height: 150px !important;
+
+  padding: 22px 24px !important;
+
+  color: #f8fafc !important;
+
+  transition:
+    transform 0.18s ease,
+    border-color 0.18s ease,
+    background 0.18s ease;
+}
+
+html[data-theme="dark"] .holdings-summary-card:hover {
+  background: #141e2e !important;
+
+  border-color: #34445e !important;
+
+  transform: translateY(-2px);
+}
+
+
+/* Card label */
+
+html[data-theme="dark"] .holdings-summary-card > span {
+  color: #8190a5 !important;
+
+  font-size: 11px !important;
+
+  line-height: 1.2 !important;
+
+  font-weight: 700 !important;
+
+  letter-spacing: 0.07em !important;
+
+  text-transform: uppercase !important;
+}
+
+
+/* Financial number */
+
+html[data-theme="dark"] .holdings-summary-card > strong {
+  display: block !important;
+
+  margin-top: 13px !important;
+
+  color: #f8fafc !important;
+
+  font-size: 28px !important;
+
+  line-height: 1.15 !important;
+
+  font-weight: 700 !important;
+
+  letter-spacing: -0.025em !important;
+
+  font-variant-numeric: tabular-nums !important;
+}
+
+
+/* Description */
+
+html[data-theme="dark"] .holdings-summary-card > small {
+  display: block !important;
+
+  margin-top: 9px !important;
+
+  color: #718198 !important;
+
+  font-size: 12px !important;
+}
+
+
+/* Current value */
+
+html[data-theme="dark"]
+.holdings-summary-card.primary > strong {
+  color: #f8fafc !important;
+}
+
+
+/* Profit */
+
+html[data-theme="dark"]
+.holdings-summary-card.profit > strong {
+  color: #35d07f !important;
+}
+
+
+/* Loss */
+
+html[data-theme="dark"]
+.holdings-summary-card.loss > strong {
+  color: #ff6b6b !important;
+}
+
+
+/* =========================================================
+   HOLDINGS TABLE CARD
+   ========================================================= */
+
+html[data-theme="dark"] .holdings-table-card {
+  background: #111827 !important;
+
+  border: 1px solid #263247 !important;
+
+  border-radius: 20px !important;
+
+  box-shadow:
+    0 12px 32px rgba(0, 0, 0, 0.15) !important;
+
+  overflow: hidden !important;
+
+  padding: 0 !important;
+}
+
+
+/* =========================================================
+   TABLE HEADER
+   ========================================================= */
+
+html[data-theme="dark"] .holdings-table-header {
+  background: #111827 !important;
+
+  border-bottom: 1px solid #263247 !important;
+
+  padding: 22px 24px !important;
+}
+
+html[data-theme="dark"] .holdings-table-header h2 {
+  margin: 5px 0 0 !important;
+
+  color: #f8fafc !important;
+
+  font-size: 20px !important;
+
+  line-height: 1.3 !important;
+
+  font-weight: 700 !important;
+}
+
+html[data-theme="dark"] .holdings-count {
+  color: #8190a5 !important;
+
+  background: #182235 !important;
+
+  border: 1px solid #2a3850 !important;
+
+  border-radius: 999px !important;
+
+  padding: 6px 10px !important;
+
+  font-size: 12px !important;
+
+  font-weight: 600 !important;
+}
+
+
+/* =========================================================
+   TABLE
+   ========================================================= */
+
+html[data-theme="dark"] .holdings-table-wrapper {
+  background: #111827 !important;
+
+  overflow-x: auto !important;
+}
+
+html[data-theme="dark"] .holdings-table {
+  width: 100% !important;
+
+  background: #111827 !important;
+
+  color: #cbd5e1 !important;
+
+  border-collapse: collapse !important;
+}
+
+
+/* Table heading */
+
+html[data-theme="dark"] .holdings-table thead {
+  background: #0e1624 !important;
+}
+
+html[data-theme="dark"] .holdings-table thead th {
+  background: #0e1624 !important;
+
+  color: #718198 !important;
+
+  border-bottom: 1px solid #263247 !important;
+
+  padding: 13px 18px !important;
+
+  font-size: 10px !important;
+
+  line-height: 1.2 !important;
+
+  font-weight: 700 !important;
+
+  letter-spacing: 0.065em !important;
+
+  text-transform: uppercase !important;
+
+  white-space: nowrap !important;
+}
+
+
+/* Rows */
+
+html[data-theme="dark"] .holdings-table tbody tr {
+  background: #111827 !important;
+
+  transition:
+    background 0.15s ease;
+}
+
+html[data-theme="dark"] .holdings-table tbody tr:hover {
+  background: #151f30 !important;
+}
+
+
+/* Cells */
+
+html[data-theme="dark"] .holdings-table tbody td {
+  background: transparent !important;
+
+  color: #cbd5e1 !important;
+
+  border-bottom: 1px solid #1d2939 !important;
+
+  padding: 17px 18px !important;
+
+  font-size: 13px !important;
+
+  font-variant-numeric: tabular-nums !important;
+
+  white-space: nowrap !important;
+}
+
+
+/* =========================================================
+   COMPANY BUTTON
+   ========================================================= */
+
+html[data-theme="dark"] .holding-company-button {
+  display: flex !important;
+
+  flex-direction: column !important;
+
+  align-items: flex-start !important;
+
+  gap: 4px !important;
+
+  background: transparent !important;
+
+  border: 0 !important;
+
+  padding: 0 !important;
+
+  margin: 0 !important;
+
+  cursor: pointer !important;
+
+  text-align: left !important;
+}
+
+html[data-theme="dark"]
+.holding-company-button strong {
+  color: #f8fafc !important;
+
+  font-size: 14px !important;
+
+  line-height: 1.2 !important;
+
+  font-weight: 700 !important;
+
+  letter-spacing: 0.01em !important;
+}
+
+html[data-theme="dark"]
+.holding-company-button span {
+  color: #718198 !important;
+
+  font-size: 11px !important;
+
+  line-height: 1.3 !important;
+
+  font-weight: 500 !important;
+
+  max-width: 190px !important;
+
+  overflow: hidden !important;
+
+  text-overflow: ellipsis !important;
+}
+
+html[data-theme="dark"]
+.holding-company-button:hover strong {
+  color: #6ea0ff !important;
+}
+
+
+/* =========================================================
+   PERFORMANCE
+   ========================================================= */
+
+html[data-theme="dark"] .holding-profit {
+  color: #35d07f !important;
+
+  font-weight: 700 !important;
+}
+
+html[data-theme="dark"] .holding-loss {
+  color: #ff6b6b !important;
+
+  font-weight: 700 !important;
+}
+
+
+/* =========================================================
+   REMOVE BUTTON
+   ========================================================= */
+
+html[data-theme="dark"] .holding-remove-button {
+  background: transparent !important;
+
+  color: #8b9ab0 !important;
+
+  border: 1px solid #334155 !important;
+
+  border-radius: 8px !important;
+
+  padding: 7px 11px !important;
+
+  font-size: 11px !important;
+
+  font-weight: 600 !important;
+
+  cursor: pointer !important;
+
+  transition:
+    color 0.15s ease,
+    border-color 0.15s ease,
+    background 0.15s ease;
+}
+
+html[data-theme="dark"]
+.holding-remove-button:hover {
+  color: #ff6b6b !important;
+
+  border-color: rgba(255, 107, 107, 0.45) !important;
+
+  background: rgba(255, 107, 107, 0.07) !important;
+}
+
+
+/* =========================================================
+   EMPTY STATE
+   ========================================================= */
+
+html[data-theme="dark"] .holdings-empty {
+  background: #111827 !important;
+
+  border: 1px solid #263247 !important;
+
+  border-radius: 20px !important;
+
+  color: #f8fafc !important;
+}
+
+html[data-theme="dark"] .holdings-empty-icon {
+  background: #18243a !important;
+
+  color: #6ea0ff !important;
+
+  border: 1px solid #2b3a52 !important;
+}
+
+html[data-theme="dark"] .holdings-empty h2 {
+  color: #f8fafc !important;
+}
+
+html[data-theme="dark"] .holdings-empty p {
+  color: #8190a5 !important;
+}
+
+html[data-theme="dark"] .holdings-empty button {
+  background: #2563eb !important;
+
+  color: #ffffff !important;
+
+  border: 1px solid #3b82f6 !important;
+
+  border-radius: 10px !important;
+
+  font-weight: 700 !important;
+}
+
+
+/* =========================================================
+   REMOVE CONFIRMATION MODAL
+   ========================================================= */
+
+html[data-theme="dark"] .holding-modal-backdrop {
+  background: rgba(2, 6, 23, 0.76) !important;
+
+  backdrop-filter: blur(5px) !important;
+}
+
+html[data-theme="dark"] .holding-confirm-modal {
+  background: #111827 !important;
+
+  border: 1px solid #2b3850 !important;
+
+  border-radius: 20px !important;
+
+  box-shadow:
+    0 24px 60px rgba(0, 0, 0, 0.40) !important;
+
+  color: #f8fafc !important;
+}
+
+html[data-theme="dark"] .holding-confirm-modal h2 {
+  color: #f8fafc !important;
+}
+
+html[data-theme="dark"] .holding-confirm-modal p {
+  color: #cbd5e1 !important;
+}
+
+html[data-theme="dark"] .holding-confirm-modal > span {
+  color: #718198 !important;
+}
+
+html[data-theme="dark"] .holding-confirm-icon {
+  background: rgba(255, 107, 107, 0.10) !important;
+
+  border: 1px solid rgba(255, 107, 107, 0.25) !important;
+
+  color: #ff6b6b !important;
+}
+
+html[data-theme="dark"] .holding-remove-error {
+  background: rgba(255, 107, 107, 0.08) !important;
+
+  border: 1px solid rgba(255, 107, 107, 0.20) !important;
+
+  color: #ff8b8b !important;
+}
+
+html[data-theme="dark"] .holding-confirm-actions button {
+  background: #182235 !important;
+
+  color: #cbd5e1 !important;
+
+  border: 1px solid #334155 !important;
+
+  border-radius: 9px !important;
+}
+
+html[data-theme="dark"]
+.holding-confirm-actions button.danger {
+  background: #dc2626 !important;
+
+  color: #ffffff !important;
+
+  border-color: #ef4444 !important;
+}
+
+
+/* =========================================================
+   APP PROFILE DROPDOWN
+   ========================================================= */
+
+html[data-theme="dark"] .app-profile-menu {
+  background: #111827 !important;
+
+  border: 1px solid #2b3850 !important;
+
+  border-radius: 16px !important;
+
+  box-shadow:
+    0 20px 50px rgba(0, 0, 0, 0.35) !important;
+
+  overflow: hidden !important;
+}
+
+html[data-theme="dark"] .app-profile-menu-user {
+  background: #111827 !important;
+
+  border-bottom: 1px solid #263247 !important;
+
+  padding: 16px 18px !important;
+}
+
+html[data-theme="dark"] .app-profile-menu-user span {
+  color: #718198 !important;
+
+  font-size: 11px !important;
+}
+
+html[data-theme="dark"] .app-profile-menu-user strong {
+  display: block !important;
+
+  margin-top: 5px !important;
+
+  color: #f8fafc !important;
+
+  font-size: 13px !important;
+
+  font-weight: 600 !important;
+
+  overflow: hidden !important;
+
+  text-overflow: ellipsis !important;
+}
+
+html[data-theme="dark"] .app-profile-menu-item {
+  background: #111827 !important;
+
+  color: #cbd5e1 !important;
+
+  border: 0 !important;
+
+  padding: 14px 18px !important;
+
+  font-size: 13px !important;
+
+  font-weight: 600 !important;
+
+  text-align: left !important;
+
+  width: 100% !important;
+
+  cursor: pointer !important;
+}
+
+html[data-theme="dark"]
+.app-profile-menu-item:hover {
+  background: #182235 !important;
+
+  color: #f8fafc !important;
+}
+
+html[data-theme="dark"]
+.app-profile-menu-item.app-profile-signout {
+  color: #ff8585 !important;
+
+  border-top: 1px solid #263247 !important;
+}
+
+html[data-theme="dark"]
+.app-profile-menu-item.app-profile-signout:hover {
+  background: rgba(255, 107, 107, 0.08) !important;
+
+  color: #ff6b6b !important;
+}
+
+
+/* =========================================================
+   PROFILE BUTTON
+   ========================================================= */
+
+html[data-theme="dark"] .app-profile-button {
+  background: transparent !important;
+
+  color: #cbd5e1 !important;
+}
+
+html[data-theme="dark"] .app-profile-button:hover {
+  background: #151f30 !important;
+}
+
+html[data-theme="dark"] .app-profile-label {
+  color: #cbd5e1 !important;
+}
+
+html[data-theme="dark"] .app-profile-chevron {
+  color: #718198 !important;
+}
+
+
+/* =========================================================
+   STATUS / ERROR
+   ========================================================= */
+
+html[data-theme="dark"] .holdings-page .page-status {
+  background: #111827 !important;
+
+  border: 1px solid #263247 !important;
+
+  color: #8190a5 !important;
+}
+
+html[data-theme="dark"] .holdings-page .page-error {
+  background: rgba(255, 107, 107, 0.07) !important;
+
+  border: 1px solid rgba(255, 107, 107, 0.20) !important;
+
+  color: #ff8b8b !important;
+}
+/* =========================================================
+   INVESTTRACK — DARK MODE SEARCH DROPDOWN
+   ========================================================= */
+
+html[data-theme="dark"] .app-search-results {
+  background: #111827 !important;
+  border: 1px solid #263247 !important;
+  border-radius: 16px !important;
+
+  box-shadow:
+    0 20px 50px rgba(0, 0, 0, 0.35) !important;
+
+  overflow: hidden !important;
+}
+
+
+/* Section title */
+
+html[data-theme="dark"] .app-search-section-title {
+  background: #111827 !important;
+  color: #8190a5 !important;
+
+  padding: 17px 20px 12px !important;
+
+  font-size: 11px !important;
+  font-weight: 700 !important;
+
+  letter-spacing: 0.08em !important;
+  text-transform: uppercase !important;
+
+  border-bottom: 1px solid #263247 !important;
+}
+
+
+/* Search result */
+
+html[data-theme="dark"] .app-search-result {
+  width: 100% !important;
+
+  display: flex !important;
+  align-items: center !important;
+
+  min-height: 78px !important;
+
+  padding: 13px 18px !important;
+
+  background: #111827 !important;
+
+  color: #f8fafc !important;
+
+  border: 0 !important;
+  border-bottom: 1px solid #1d2939 !important;
+
+  text-align: left !important;
+
+  cursor: pointer !important;
+
+  transition:
+    background 0.15s ease,
+    transform 0.15s ease;
+}
+
+
+/* Last item */
+
+html[data-theme="dark"]
+.app-search-result:last-child {
+  border-bottom: 0 !important;
+}
+
+
+/* Hover */
+
+html[data-theme="dark"]
+.app-search-result:hover,
+
+html[data-theme="dark"]
+.app-search-result.highlighted {
+  background: #182235 !important;
+}
+
+
+/* History icon */
+
+html[data-theme="dark"] .app-search-result-icon {
+  display: flex !important;
+
+  align-items: center !important;
+  justify-content: center !important;
+
+  flex: 0 0 38px !important;
+
+  width: 38px !important;
+  height: 38px !important;
+
+  margin-right: 14px !important;
+
+  background: #1a2538 !important;
+
+  border: 1px solid #2b3950 !important;
+
+  border-radius: 10px !important;
+
+  font-size: 16px !important;
+
+  filter: grayscale(0.2) !important;
+}
+
+
+/* Result content */
+
+html[data-theme="dark"]
+.app-search-result-content {
+  display: flex !important;
+
+  flex-direction: column !important;
+
+  align-items: flex-start !important;
+
+  justify-content: center !important;
+
+  min-width: 0 !important;
+
+  flex: 1 !important;
+
+  gap: 4px !important;
+}
+
+
+/* Company name */
+
+html[data-theme="dark"]
+.app-search-result-content strong {
+  display: block !important;
+
+  max-width: 250px !important;
+
+  overflow: hidden !important;
+
+  text-overflow: ellipsis !important;
+
+  white-space: nowrap !important;
+
+  color: #f1f5f9 !important;
+
+  font-size: 13px !important;
+
+  line-height: 1.25 !important;
+
+  font-weight: 650 !important;
+}
+
+
+/* Symbol */
+
+html[data-theme="dark"]
+.app-search-result-content > span {
+  color: #8190a5 !important;
+
+  font-size: 12px !important;
+
+  line-height: 1.2 !important;
+
+  font-weight: 500 !important;
+
+  letter-spacing: 0.02em !important;
+}
+
+
+/* Delete button */
+
+html[data-theme="dark"]
+.app-search-history-delete {
+  display: flex !important;
+
+  align-items: center !important;
+  justify-content: center !important;
+
+  flex: 0 0 30px !important;
+
+  width: 30px !important;
+  height: 30px !important;
+
+  margin-left: 10px !important;
+
+  border-radius: 8px !important;
+
+  color: #718198 !important;
+
+  font-size: 19px !important;
+  font-weight: 400 !important;
+
+  cursor: pointer !important;
+
+  transition:
+    color 0.15s ease,
+    background 0.15s ease;
+}
+
+html[data-theme="dark"]
+.app-search-history-delete:hover {
+  color: #ff6b6b !important;
+
+  background: rgba(255, 107, 107, 0.08) !important;
+}
+
+
+/* Search loading / empty state */
+
+html[data-theme="dark"]
+.app-search-status {
+  margin: 0 !important;
+
+  padding: 20px !important;
+
+  background: #111827 !important;
+
+  color: #718198 !important;
+
+  font-size: 12px !important;
+
+  text-align: center !important;
+}
+
+
+/* =========================================================
+   DARK SEARCH INPUT
+   ========================================================= */
+
+html[data-theme="dark"] .app-search-input {
+  background: #0e1624 !important;
+
+  color: #f8fafc !important;
+
+  border: 1px solid #2b3950 !important;
+
+  border-radius: 12px !important;
+}
+
+html[data-theme="dark"] .app-search-input::placeholder {
+  color: #68788f !important;
+}
+
+html[data-theme="dark"] .app-search-input:focus {
+  background: #111827 !important;
+
+  border-color: #3b82f6 !important;
+
+  box-shadow:
+    0 0 0 3px rgba(59, 130, 246, 0.12) !important;
+
+  outline: none !important;
+}
+/* =========================================================
+   INVESTTRACK AUTHENTICATION
+   Premium Light / Dark / System Theme
+   ========================================================= */
+
+
+/* =========================================================
+   AUTH PAGE
+   ========================================================= */
+
+.auth-page {
+  min-height: 100vh;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 40px 20px;
+
+  background: #f6f8fc;
+
+  color: #0f172a;
+}
+
+
+/* =========================================================
+   AUTH SHELL
+   ========================================================= */
+
+.auth-shell {
+  width: 100%;
+  max-width: 440px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+
+/* =========================================================
+   BRAND
+   ========================================================= */
+
+.auth-brand {
+  display: flex;
+  align-items: center;
+
+  gap: 11px;
+
+  margin-bottom: 28px;
+
+  color: #0f172a;
+
+  font-size: 25px;
+
+  font-weight: 750;
+
+  letter-spacing: -0.035em;
+}
+
+.auth-brand-mark {
+  width: 46px;
+  height: 46px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 13px;
+
+  background: #2563eb;
+
+  color: #ffffff;
+
+  font-size: 15px;
+
+  font-weight: 800;
+
+  letter-spacing: -0.03em;
+
+  box-shadow:
+    0 8px 20px rgba(37, 99, 235, 0.20);
+}
+
+
+/* =========================================================
+   AUTH CARD
+   ========================================================= */
+
+.auth-card {
+  width: 100%;
+
+  padding: 36px;
+
+  background: #ffffff;
+
+  border: 1px solid #e2e8f0;
+
+  border-radius: 20px;
+
+  box-shadow:
+    0 18px 45px rgba(15, 23, 42, 0.08);
+
+  box-sizing: border-box;
+}
+
+
+/* =========================================================
+   AUTH HEADER
+   ========================================================= */
+
+.auth-header {
+  margin-bottom: 30px;
+}
+
+.auth-header h1 {
+  margin: 0;
+
+  color: #0f172a;
+
+  font-size: 29px;
+
+  line-height: 1.2;
+
+  font-weight: 750;
+
+  letter-spacing: -0.035em;
+}
+
+.auth-header p {
+  margin: 10px 0 0;
+
+  color: #64748b;
+
+  font-size: 14px;
+
+  line-height: 1.65;
+}
+
+
+/* =========================================================
+   AUTH FORM
+   ========================================================= */
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+
+  gap: 21px;
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+
+  gap: 8px;
+}
+
+.form-field label {
+  color: #1e293b;
+
+  font-size: 13px;
+
+  font-weight: 650;
+}
+
+
+/* =========================================================
+   INPUTS
+   ========================================================= */
+
+.form-field input {
+  width: 100%;
+
+  min-height: 48px;
+
+  box-sizing: border-box;
+
+  padding: 0 14px;
+
+  background: #f8fafc;
+
+  color: #0f172a;
+
+  border: 1px solid #d8e0eb;
+
+  border-radius: 11px;
+
+  outline: none;
+
+  font-family: inherit;
+
+  font-size: 14px;
+
+  transition:
+    border-color 0.15s ease,
+    background 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+.form-field input::placeholder {
+  color: #94a3b8;
+}
+
+.form-field input:hover {
+  border-color: #c5d0df;
+}
+
+.form-field input:focus {
+  background: #ffffff;
+
+  border-color: #3b82f6;
+
+  box-shadow:
+    0 0 0 3px rgba(59, 130, 246, 0.11);
+}
+
+
+/* =========================================================
+   PASSWORD FIELD
+   ========================================================= */
+
+.password-field {
+  position: relative;
+
+  width: 100%;
+}
+
+.password-field input {
+  padding-right: 68px;
+}
+
+.password-toggle {
+  position: absolute;
+
+  top: 50%;
+  right: 13px;
+
+  transform: translateY(-50%);
+
+  padding: 5px 4px;
+
+  background: transparent;
+
+  border: 0;
+
+  color: #64748b;
+
+  font-family: inherit;
+
+  font-size: 12px;
+
+  font-weight: 650;
+
+  cursor: pointer;
+}
+
+.password-toggle:hover {
+  color: #2563eb;
+}
+
+
+/* =========================================================
+   PASSWORD LABEL ROW
+   ========================================================= */
+
+.password-label-row {
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+}
+
+.password-label-row label {
+  color: #1e293b;
+}
+
+.forgot-password-link {
+  padding: 0;
+
+  background: transparent;
+
+  border: 0;
+
+  color: #2563eb;
+
+  font-family: inherit;
+
+  font-size: 12px;
+
+  font-weight: 650;
+
+  cursor: pointer;
+}
+
+.forgot-password-link:hover {
+  color: #1d4ed8;
+
+  text-decoration: underline;
+}
+
+
+/* =========================================================
+   FORM HINT / PASSWORD REQUIREMENT
+   ========================================================= */
+
+.form-hint,
+.password-requirement {
+  margin-top: -2px;
+
+  color: #94a3b8;
+
+  font-size: 11px;
+
+  line-height: 1.5;
+}
+
+
+/* =========================================================
+   SUBMIT BUTTON
+   ========================================================= */
+
+.auth-submit {
+  width: 100%;
+
+  min-height: 48px;
+
+  margin-top: 2px;
+
+  padding: 0 18px;
+
+  background: #2563eb;
+
+  color: #ffffff;
+
+  border: 1px solid #2563eb;
+
+  border-radius: 11px;
+
+  font-family: inherit;
+
+  font-size: 13px;
+
+  font-weight: 700;
+
+  cursor: pointer;
+
+  box-shadow:
+    0 8px 18px rgba(37, 99, 235, 0.16);
+
+  transition:
+    background 0.15s ease,
+    transform 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+.auth-submit:hover:not(:disabled) {
+  background: #1d4ed8;
+
+  box-shadow:
+    0 10px 22px rgba(37, 99, 235, 0.20);
+
+  transform: translateY(-1px);
+}
+
+.auth-submit:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.auth-submit:disabled {
+  opacity: 0.65;
+
+  cursor: not-allowed;
+}
+
+
+/* =========================================================
+   AUTH MESSAGES
+   ========================================================= */
+
+.auth-message {
+  padding: 12px 13px;
+
+  border-radius: 10px;
+
+  font-size: 12px;
+
+  line-height: 1.5;
+}
+
+.auth-message-error {
+  background: #fff5f5;
+
+  color: #c24141;
+
+  border: 1px solid #fecaca;
+}
+
+.auth-message-success {
+  background: #f0fdf4;
+
+  color: #15803d;
+
+  border: 1px solid #bbf7d0;
+}
+
+
+/* =========================================================
+   AUTH FOOTER
+   ========================================================= */
+
+.auth-footer {
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  flex-wrap: wrap;
+
+  gap: 5px;
+
+  margin-top: 27px;
+
+  color: #64748b;
+
+  font-size: 12px;
+
+  line-height: 1.5;
+}
+
+.auth-footer a {
+  color: #2563eb;
+
+  font-weight: 650;
+
+  text-decoration: none;
+}
+
+.auth-footer a:hover {
+  color: #1d4ed8;
+
+  text-decoration: underline;
+}
+
+
+/* =========================================================
+   BACK TO LOGIN
+   ========================================================= */
+
+.auth-back-button {
+  padding: 0;
+
+  background: transparent;
+
+  border: 0;
+
+  color: #64748b;
+
+  font-family: inherit;
+
+  font-size: 12px;
+
+  font-weight: 600;
+
+  cursor: pointer;
+}
+
+.auth-back-button:hover {
+  color: #2563eb;
+}
+
+
+/* =========================================================
+   LEGAL / SECURITY TEXT
+   ========================================================= */
+
+.auth-legal {
+  margin: 20px 0 0;
+
+  color: #94a3b8;
+
+  font-size: 11px;
+
+  line-height: 1.5;
+
+  text-align: center;
+}
+
+
+/* =========================================================
+   DARK MODE
+   ========================================================= */
+
+html[data-theme="dark"] .auth-page {
+  background:
+    radial-gradient(
+      circle at 50% 0%,
+      rgba(37, 99, 235, 0.08),
+      transparent 38%
+    ),
+    #080d17;
+
+  color: #f8fafc;
+}
+
+html[data-theme="dark"] .auth-brand {
+  color: #f8fafc;
+}
+
+html[data-theme="dark"] .auth-brand-mark {
+  background: #2563eb;
+
+  color: #ffffff;
+
+  box-shadow:
+    0 8px 22px rgba(37, 99, 235, 0.24);
+}
+
+
+/* =========================================================
+   DARK AUTH CARD
+   ========================================================= */
+
+html[data-theme="dark"] .auth-card {
+  background: #111827;
+
+  border: 1px solid #263247;
+
+  box-shadow:
+    0 24px 60px rgba(0, 0, 0, 0.30);
+}
+
+html[data-theme="dark"] .auth-header h1 {
+  color: #f8fafc;
+}
+
+html[data-theme="dark"] .auth-header p {
+  color: #8b9ab0;
+}
+
+
+/* =========================================================
+   DARK FORM LABELS
+   ========================================================= */
+
+html[data-theme="dark"] .form-field label,
+html[data-theme="dark"] .password-label-row label {
+  color: #dbe4ef;
+}
+
+
+/* =========================================================
+   DARK INPUTS
+   ========================================================= */
+
+html[data-theme="dark"] .form-field input {
+  background: #0e1624;
+
+  color: #f8fafc;
+
+  border: 1px solid #2b3950;
+}
+
+html[data-theme="dark"] .form-field input::placeholder {
+  color: #68788f;
+}
+
+html[data-theme="dark"] .form-field input:hover {
+  border-color: #3a4a63;
+}
+
+html[data-theme="dark"] .form-field input:focus {
+  background: #111827;
+
+  border-color: #3b82f6;
+
+  box-shadow:
+    0 0 0 3px rgba(59, 130, 246, 0.13);
+}
+
+
+/* =========================================================
+   DARK PASSWORD TOGGLE
+   ========================================================= */
+
+html[data-theme="dark"] .password-toggle {
+  color: #8190a5;
+}
+
+html[data-theme="dark"] .password-toggle:hover {
+  color: #6ea0ff;
+}
+
+
+/* =========================================================
+   DARK FORGOT LINK
+   ========================================================= */
+
+html[data-theme="dark"] .forgot-password-link {
+  color: #6ea0ff;
+}
+
+html[data-theme="dark"] .forgot-password-link:hover {
+  color: #93b8ff;
+}
+
+
+/* =========================================================
+   DARK HINT
+   ========================================================= */
+
+html[data-theme="dark"] .form-hint,
+html[data-theme="dark"] .password-requirement {
+  color: #718198;
+}
+
+
+/* =========================================================
+   DARK SUBMIT
+   ========================================================= */
+
+html[data-theme="dark"] .auth-submit {
+  background: #2563eb;
+
+  border-color: #3b82f6;
+
+  color: #ffffff;
+
+  box-shadow:
+    0 8px 22px rgba(37, 99, 235, 0.20);
+}
+
+html[data-theme="dark"] .auth-submit:hover:not(:disabled) {
+  background: #1d4ed8;
+
+  box-shadow:
+    0 10px 25px rgba(37, 99, 235, 0.25);
+}
+
+
+/* =========================================================
+   DARK MESSAGES
+   ========================================================= */
+
+html[data-theme="dark"] .auth-message-error {
+  background: rgba(255, 107, 107, 0.07);
+
+  color: #ff9999;
+
+  border-color: rgba(255, 107, 107, 0.22);
+}
+
+html[data-theme="dark"] .auth-message-success {
+  background: rgba(53, 208, 127, 0.07);
+
+  color: #61dfa0;
+
+  border-color: rgba(53, 208, 127, 0.20);
+}
+
+
+/* =========================================================
+   DARK FOOTER
+   ========================================================= */
+
+html[data-theme="dark"] .auth-footer {
+  color: #8190a5;
+}
+
+html[data-theme="dark"] .auth-footer a {
+  color: #6ea0ff;
+}
+
+html[data-theme="dark"] .auth-footer a:hover {
+  color: #93b8ff;
+}
+
+html[data-theme="dark"] .auth-back-button {
+  color: #8190a5;
+}
+
+html[data-theme="dark"] .auth-back-button:hover {
+  color: #6ea0ff;
+}
+
+
+/* =========================================================
+   DARK LEGAL
+   ========================================================= */
+
+html[data-theme="dark"] .auth-legal {
+  color: #64748b;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 520px) {
+  .auth-page {
+    padding: 28px 16px;
+  }
+
+  .auth-card {
+    padding: 28px 22px;
+
+    border-radius: 18px;
+  }
+
+  .auth-header h1 {
+    font-size: 26px;
+  }
+
+  .auth-brand {
+    margin-bottom: 22px;
+
+    font-size: 23px;
+  }
+
+  .auth-brand-mark {
+    width: 42px;
+    height: 42px;
+
+    border-radius: 12px;
+  }
+}

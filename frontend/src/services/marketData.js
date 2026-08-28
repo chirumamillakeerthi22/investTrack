@@ -65,6 +65,7 @@ export async function getStockQuote(symbol) {
   return data.quote;
 }
 
+
 export async function getStockHistory(
   symbol,
   range = '1Y'

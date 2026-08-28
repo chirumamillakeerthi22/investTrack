@@ -14,6 +14,7 @@ import TopCompanies from './pages/TopCompanies';
 import Watchlist from './pages/Watchlist';
 import Wishlist from './pages/Wishlist';
 import AddHolding from './pages/AddHolding';
+import ResetPassword from './pages/ResetPassword';
 
 function PublicOnlyRoute({ children }) {
   return children;
@@ -39,6 +40,13 @@ function App() {
           <PublicOnlyRoute>
             <Register />
           </PublicOnlyRoute>
+        }
+      />
+
+      <Route
+        path="/reset-password"
+        element={
+          <ResetPassword />
         }
       />
 

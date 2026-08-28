@@ -37,6 +37,8 @@ function AppShell() {
     const [isProfileOpen, setIsProfileOpen] =
         useState(false);
 
+    const profileMenuRef = useRef(null);
+
     const navigationItems = [
         {
             label: 'Dashboard',
@@ -67,6 +69,50 @@ function AppShell() {
             path: '/feedback',
         },
     ];
+
+    useEffect(() => {
+        function handleOutsideClick(event) {
+            if (!profileMenuRef.current) {
+                return;
+            }
+
+            if (
+                !profileMenuRef.current.contains(
+                    event.target
+                )
+            ) {
+                setIsProfileOpen(false);
+            }
+        }
+
+        function handleEscape(event) {
+            if (event.key === 'Escape') {
+                setIsProfileOpen(false);
+            }
+        }
+
+        document.addEventListener(
+            'pointerdown',
+            handleOutsideClick
+        );
+
+        document.addEventListener(
+            'keydown',
+            handleEscape
+        );
+
+        return () => {
+            document.removeEventListener(
+                'pointerdown',
+                handleOutsideClick
+            );
+
+            document.removeEventListener(
+                'keydown',
+                handleEscape
+            );
+        };
+    }, []);
 
     // --------------------------------------------------
     // Load recent searches
@@ -675,7 +721,10 @@ function AppShell() {
 
                 {/* Profile */}
 
-                <div className="app-profile">
+                <div
+                    className="app-profile-section"
+                    ref={profileMenuRef}
+                >
                     <button
                         type="button"
                         className="app-profile-button"

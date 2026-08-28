@@ -188,12 +188,8 @@ function AddHolding() {
           .insert({
             stock_id: stock.id,
             quantity: Number(quantity),
-            average_price:
-              Number(purchasePrice),
-            created_at:
-              new Date(
-                `${purchaseDate}T00:00:00`
-              ).toISOString(),
+            average_price: Number(purchasePrice),
+            purchase_date: purchaseDate,
           });
 
       if (insertError) {
